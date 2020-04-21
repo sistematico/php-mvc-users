@@ -4,10 +4,11 @@ PHP MVC CRUD using SQLite to create user log-in &amp; signup system
 Simple CRUD project (Create, Read, Update, Delete) made with [PHP](https://php.net), [Mini3](https://github.com/panique/mini3) and [Twitter Boostrap 4](https://getbootstrap.com) with [SQLite3](https://www.sqlite.org) as database.
 
 ## Prerequisites
-- Nginx or Apache
-- PHP
-- Composer
-- Faith
+- [Nginx](https://www.nginx.com) or [Apache](https://www.apache.org)
+- [PHP](https://php.net)
+- [Composer](https://getcomposer.org)
+- [Docker(opcional)](https://www.docker.com/)
+- [Faith](https://en.wikipedia.org/wiki/Faith)
 
 ## Installation
 - Unzip or clone this repository on your web server's webroot: `cd /var/www/html && git clone https://github.com/sistematico/php-mvc-lite`
