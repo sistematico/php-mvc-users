@@ -50,7 +50,7 @@ class User extends Model
         return $query->fetchAll();
     }
 
-    public function deleteUser($id)
+    public function delete($id)
     {
         $sql = "DELETE FROM user WHERE id = :id";
         $query = $this->db->prepare($sql);

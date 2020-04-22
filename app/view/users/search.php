@@ -8,10 +8,8 @@
         </ol>
     </nav>
 
-    <h1>Users</h1>
-
-    <h3>List of users (data from model)</h3>
-    <table class="table">
+    <h1>Search</h1>
+    <table class="table table-striped table-dark">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -27,8 +25,8 @@
                 <th scope="row"><?php if (isset($user['id'])) echo htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?></th>
                 <td><?php if (isset($user['email'])) echo htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php if (isset($user['password'])) echo htmlspecialchars($user['password'], ENT_QUOTES, 'UTF-8'); ?></td>
-                <td><a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/deleteuser/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>">delete</a></td>
-                <td><a href="<?php echo URL . 'users/edituser/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>">edit</a></td>
+                <td><a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>">delete</a></td>
+                <td><a href="<?php echo URL . 'users/edit/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>">edit</a></td>
             </tr>
             <?php } ?>
         </tbody>

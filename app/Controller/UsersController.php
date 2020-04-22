@@ -55,16 +55,16 @@ class UsersController
         header('location: ' . URL);
     }
 
-    public function deleteUser($id)
+    public function delete($id)
     {
         if (isset($id)) {
             $User = new User();
-            $User->deleteUser($id);
+            $User->delete($id);
         }
         header('location: ' . URL . 'users/index');
     }
 
-    public function editUser($id)
+    public function edit($id)
     {
         if (isset($id)) {
             $User = new User();
@@ -103,7 +103,7 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function ajaxGetStats()
+    public function ajax()
     {
         $User = new User();
         $amount = $User->amount();
