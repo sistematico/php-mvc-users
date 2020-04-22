@@ -6,5 +6,5 @@
     </nav>
 
     <h1 class="mt-5">Home</h1>
-    <p class="lead"><a class="btn btn-primary" href="<?php echo URL; ?>songs" role="button">List Songs</a></p>
+    <p class="lead"><a class="btn btn-primary" href="<?php echo URL; ?>users" role="button">List Users</a></p>
 </main>

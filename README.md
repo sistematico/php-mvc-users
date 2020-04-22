@@ -13,7 +13,7 @@ Simple CRUD project (Create, Read, Update, Delete) made with [PHP](https://php.n
 ## Installation
 - Unzip or clone this repository on your web server's webroot: `cd /var/www/html && git clone https://github.com/sistematico/php-mvc-lite`
 - Run command `composer install` in the same directory where the file `composer.json` is located.
-- Got to https://site.com/songs/install
+- Got to https://site.com/users/install
 - Pray.
 
 ## Nginx
@@ -42,8 +42,13 @@ server {
 }
 ```
 
+## Docker
+
+- https://gist.github.com/sistematico/8798adbc6b55e8e34b0bd093588b7a5f
+
 ## Demo
-- [https://mvc-lite.lucasbrum.net](https://mvc-lite.lucasbrum.net)
+
+- [https://mvc-users.lucasbrum.net](https://mvc-users.lucasbrum.net)
 
 ## Credits
 - [Arch Linux](https://archlinux.org)
