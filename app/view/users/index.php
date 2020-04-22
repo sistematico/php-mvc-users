@@ -8,20 +8,7 @@
     </nav>
 
     <h1>Users</h1>
-    <h3>Add a user</h3>
-    <form class="form-inline" action="<?php echo URL; ?>users/adduser" method="post">
-        <div class="form-group mb-2 mr-2">
-            <label for="email" class="sr-only">E-mail</label>
-            <input name="email" type="text" class="form-control" id="email" placeholder="E-mail">
-        </div>
-        <div class="form-group mb-2 mr-2">
-            <label for="password" class="sr-only">Password</label>
-            <input name="password" type="text" class="form-control" id="password" placeholder="Password">
-        </div>
-        <button name="submit_add_user" type="submit" class="btn btn-primary mb-2">Add</button>
-    </form>
-
-    <h3>Amount of users: <?php echo $amount_of_users; ?></h3>
+    <h3>Users: <?php echo $amount; ?></h3>
     <h3>Amount of users (via AJAX)</h3>
     <div id="javascript-ajax-result-box" class="mb-3"></div>
     <div>

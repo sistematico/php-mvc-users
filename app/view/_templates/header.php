@@ -33,10 +33,27 @@
                         <a class="nav-link" href="<?php echo URL; ?>users">Users</a>
                     </li>
                 </ul>
+
                 <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-2 my-lg-0">
                     <input name="term" class="form-control mr-sm-2" type="text" placeholder="Search a user" aria-label="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                 </form>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <?php if (!isset($_SESSION['logged'])) { ?>
+                                <a class="dropdown-item" href="<?php echo URL; ?>users/login">Login</a>
+                                <a class="dropdown-item" href="<?php echo URL; ?>users/signup">Signup</a>
+                            <?php } else { ?>
+                                <a class="dropdown-item" href="<?php echo URL; ?>users/logout">Logout</a>
+                            <?php } ?>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>

@@ -12,31 +12,47 @@ class UsersController
         if ($User->tableExists() !== true) {
             $User->install();
         }
-        $users = $User->getAllUsers();
-        $amount_of_users = $User->getAmountOfUsers();
+        $users = $User->list();
+        $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
-    public function list()
+    public function login()
     {
-        $User = new User();
-        $users = $User->getAllUsers();
-        $tables = $User->getTableList();
-        $amount_of_users = $User->getAmountOfUsers();
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/index.php';
-        require APP . 'view/_templates/footer.php';
-    }
-
-    public function addUser()
-    {
-        if (isset($_POST["submit_add_user"])) {
-            $User = new User();
-            $User->addUser($_POST["email"], $_POST["password"]);
+        if (!isset($_SESSION['logged'])) {
+            if (isset($_POST["submit_login_user"])) {
+                $User = new User();
+                $result = $User->login($_POST["email"], $_POST["password"]);
+            }
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/login.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            header('location: ' . URL);
         }
-        header('location: ' . URL . 'users');
+    }
+
+    public function signup()
+    {
+        if (!isset($_SESSION['logged'])) {
+            if (isset($_POST["submit_signup_user"])) {
+                $User = new User();
+                $result = $User->signup($_POST["email"], $_POST["password"]);
+            }
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/signup.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            header('location: ' . URL);
+        }
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['role']);
+        header('location: ' . URL);
     }
 
     public function deleteUser($id)
@@ -90,14 +106,7 @@ class UsersController
     public function ajaxGetStats()
     {
         $User = new User();
-        $amount_of_users = $User->getAmountOfUsers();
-        echo $amount_of_users;
+        $amount = $User->amount();
+        echo $amount;
     }
-
-    public function install()
-    {
-        $User = new User();
-        
-    }
-
 }

@@ -6,7 +6,35 @@ use App\Core\Model;
 
 class User extends Model
 {
-    public function getAllUsers()
+    public function login($email,$password)
+    {
+        $sql = "SELECT id, email, password FROM user WHERE email LIKE :email LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $query->execute([':email' => $email]);
+        $result = $query->fetch();
+
+        if ($result === false) {
+            return "User not found.";
+        } else {
+            if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
+                $_SESSION['logged'] = true;
+                $_SESSION['id'] = $result->id;
+                return "User logged in.";
+            } else {
+                return "User not found.";
+            }            
+        }
+    }
+
+    public function signup($email, $password)
+    {
+        $sql = "INSERT INTO user (email, password) VALUES (:email, :password)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT));
+        $query->execute($parameters);
+    }
+
+    public function logout()
     {
         $sql = "SELECT id, email, password FROM user";
         $query = $this->db->prepare($sql);
@@ -14,12 +42,12 @@ class User extends Model
         return $query->fetchAll();
     }
 
-    public function addUser($email, $password)
+    public function list()
     {
-        $sql = "INSERT INTO user (email, password) VALUES (:email, :password)";
+        $sql = "SELECT id, email, password FROM user";
         $query = $this->db->prepare($sql);
-        $parameters = array(':email' => $email, ':password' => $password);
-        $query->execute($parameters);
+        $query->execute();
+        return $query->fetchAll();
     }
 
     public function deleteUser($id)
@@ -39,20 +67,34 @@ class User extends Model
         return $query->fetch();
     }
 
+    public function getUserId($email)
+    {
+        try {
+            $sql = "SELECT id, email, password FROM user WHERE email = :email LIMIT 1";
+            $query = $this->db->prepare($sql);
+            $parameters = array(':email' => $email);
+            $query->execute($parameters);
+            return $query->fetch();
+        } catch (\PDOException $e) {
+            unset($e);
+            return false;
+        }
+    }
+
     public function updateUser($email, $password, $id)
     {
         $sql = "UPDATE user SET email = :email, password = :password WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $parameters = array(':email' => $email, ':password' => $password, ':id' => $id);
+        $parameters = array(':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':id' => $id);
         $query->execute($parameters);
     }
 
-    public function getAmountOfUsers()
+    public function amount()
     {
-        $sql = "SELECT COUNT(id) AS amount_of_users FROM user";
+        $sql = "SELECT COUNT(id) AS amount FROM user";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return $query->fetch()->amount_of_users;
+        return $query->fetch()->amount;
     }
 
     public function searchUsers($term)
