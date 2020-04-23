@@ -8,6 +8,12 @@
     </nav>
 
     <h1>Users</h1>
+
+    <?php if (isset($result)) { ?>
+        <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
+    <?php } ?>
+
+    <?php if (isset($users) && count($users) > 0) { ?>
     <table class="table table-striped table-dark">
         <thead>
             <tr>
@@ -31,10 +37,12 @@
         </tbody>
     </table>
     <p><small>Users: <?php echo $amount; ?></small></p>
-    <h3>Amount of users (via AJAX)</h3>
+    <!-- <h3>Amount of users (via AJAX)</h3>
     <div id="javascript-ajax-result-box" class="mb-3"></div>
     <div>
         <button id="javascript-ajax-button" class="btn btn-danger mb-2">Get Amount</button>
-    </div>
-
+    </div> -->
+    <?php } else { ?>
+        <p>Nenhum resultado.</p>
+    <?php } ?>
 </main>

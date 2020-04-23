@@ -6,6 +6,8 @@ use App\Core\Model;
 
 class User extends Model
 {
+    private $result = [];
+
     public function login($email,$password)
     {
         $sql = "SELECT id, email, password FROM user WHERE email LIKE :email LIMIT 1";
@@ -81,7 +83,7 @@ class User extends Model
         }
     }
 
-    public function updateUser($email, $password, $id)
+    public function update($email, $password, $id)
     {
         $sql = "UPDATE user SET email = :email, password = :password WHERE id = :id";
         $query = $this->db->prepare($sql);
@@ -97,25 +99,16 @@ class User extends Model
         return $query->fetch()->amount;
     }
 
-    public function searchUsers($term)
+    public function search($term)
     {
         $term = "%" . $term . "%";
         $sql = "SELECT id, email, password FROM user WHERE email LIKE :term";
         $query = $this->db->prepare($sql);
-        //$query->bindParam(':term', $term);
         $query->execute([':term' => $term]);
-        //$query->execute();
-
-        $tasks = [];
-
-        while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
-            $tasks[] = [
-                'id' => $row['id'],
-                'email' => $row['email'],
-                'password' => $row['password']
-            ];
+        while ($row = $query->fetch()) {
+            $this->result[] = ['id' => $row->id, 'email' => $row->email, 'password' => $row->password];
         }
-        return $tasks;
+        return $this->result;
     }
 
     public function install()
@@ -126,6 +119,37 @@ class User extends Model
         } catch(\PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+    }
+
+    public function prune($table = 'user')
+    {
+        $this->db->exec("DROP TABLE IF EXISTS $table");
+
+        try {
+            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, email TEXT, password TEXT)");
+            return "Tabela $table recriada com sucesso.<br />";
+        } catch (\PDOException $e) {
+            return "Erro ao criar tabela $table: " . $e->getMessage() . "<br />";
+        }
+    }
+
+    public function populate($file = ROOT . 'users.sql')
+    {
+        if (file_exists($file)) {
+            $sql = file_get_contents($file);
+        } else {
+            return "File $file not found.";
+        }
+
+        try {
+            $this->db->exec($sql);
+            return "Data imported";
+        } catch(\PDOException $e) {
+            //unset($e);
+            return "Error: " . $e->getMessage();
+        }
+
+        return "Error importing data";
     }
 
     public function getTableList()

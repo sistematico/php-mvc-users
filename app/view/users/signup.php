@@ -17,10 +17,10 @@
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/signup" method="post">
                     <label for="inputEmail" class="sr-only">Email address</label>
-                    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <input name="email" type="email" id="inputEmail" class="form-control m-3" placeholder="Email address" required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    <input name="submit_signup_user" type="submit" class="btn btn-lg btn-primary btn-block" value="Signup">
+                    <input name="password" type="password" id="inputPassword" class="form-control m-3" placeholder="Password" required>
+                    <input name="submit_signup_user" type="submit" class="btn btn-lg btn-primary" value="Signup">
                 </form>
             </div>
         </div>

@@ -9,11 +9,32 @@ class UsersController
     public function index()
     {
         $User = new User();
-        if ($User->tableExists() !== true) {
-            $User->install();
+        if ($User->tableExists() === true) {
+            $users = $User->list();
+            $amount = $User->amount();
+        } else {
+            $result = $User->install();
         }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    public function populate()
+    {
+        $User = new User();
+        $result = $User->populate();
         $users = $User->list();
         $amount = $User->amount();
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    public function prune()
+    {
+        $User = new User();
+        $result = $User->prune();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
@@ -83,20 +104,20 @@ class UsersController
         }
     }
 
-    public function updateUser()
+    public function update()
     {
         if (isset($_POST["submit_update_user"])) {
             $User = new User();
-            $User->updateUser($_POST["email"], $_POST["password"], $_POST['id']);
+            $User->update($_POST["email"], $_POST["password"], $_POST['id']);
         }
         header('location: ' . URL . 'users');
     }
 
     public function search()
     {
-        if (isset($_POST["term"])) {
+        if (isset($_POST["term"]) && strlen($_POST["term"]) > 1) {
             $User = new User();
-            $users = $User->searchUsers($_POST["term"]);
+            $users = $User->search($_POST["term"]);
         } 
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/search.php';
