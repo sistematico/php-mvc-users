@@ -45,7 +45,7 @@ class UsersController
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_login_user"])) {
                 $User = new User();
-                $result = $User->login($_POST["email"], $_POST["password"]);
+                $result = $User->login($_POST["email"], $_POST["password"], $_POST['remember']);
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/login.php';
@@ -60,7 +60,7 @@ class UsersController
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_signup_user"])) {
                 $User = new User();
-                $result = $User->signup($_POST["email"], $_POST["password"]);
+                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/signup.php';
@@ -73,6 +73,7 @@ class UsersController
     public function logout()
     {
         unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['role']);
+        setcookie("id", "", time() - 3600);
         header('location: ' . URL);
     }
 
@@ -81,6 +82,11 @@ class UsersController
         if (isset($id)) {
             $User = new User();
             $User->delete($id);
+
+            if (isset($_SESSION['id']) && $id == $_SESSION['id']) {
+                unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['role']);
+                setcookie("id", "", time() - 3600);
+            }    
         }
         header('location: ' . URL . 'users/index');
     }
@@ -108,7 +114,7 @@ class UsersController
     {
         if (isset($_POST["submit_update_user"])) {
             $User = new User();
-            $User->update($_POST["email"], $_POST["password"], $_POST['id']);
+            $User->update($_POST["login"], $_POST["email"], $_POST["password"], $_POST['id']);
         }
         header('location: ' . URL . 'users');
     }
