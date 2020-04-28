@@ -1,3 +1,9 @@
+<?php
+$time = microtime();
+$time = explode(' ', $time);
+$time = $time[1] + $time[0];
+$start = $time;
+?>
 <!doctype html>
 <html lang="pt-br">
 <head>
@@ -34,7 +40,6 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownUsers">
                             <a class="dropdown-item" href="<?php echo URL; ?>users">List</a>    
-                            <a class="dropdown-item" href="<?php echo URL; ?>users/prune">Prune</a>
                             <a class="dropdown-item" href="<?php echo URL; ?>users/populate">Populate</a>
                         </div>
                     </li>
@@ -44,7 +49,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> Account
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="<?php echo URL; ?>users/login">Login</a>
                             <a class="dropdown-item" href="<?php echo URL; ?>users/signup">Signup</a>
                         </div>
@@ -52,7 +57,7 @@
                     <?php } else { ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user-circle"></i> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
+                        <?php echo (isset($user->avatar)) ? '<img src=' . URL . $user->avatar . ' />' : '<i class="fas fa-user-circle"></i>'; ?> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="<?php echo URL; ?>users/logout">Logout</a>
@@ -60,7 +65,6 @@
                     </li>
                     <?php } ?>
                 </ul>
-
                 <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-2 my-lg-0">
                     <input name="term" class="form-control mr-sm-2" type="text" placeholder="Search a user" aria-label="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>

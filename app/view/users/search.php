@@ -14,9 +14,8 @@
                     <th scope="col">#</th>
                     <th scope="col">User</th>
                     <th scope="col">E-mail</th>
-                    <th scope="col">Password</th>
-                    <th scope="col">Delete</th>
-                    <th scope="col">Edit</th>
+                    <th scope="col">Role</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,9 +24,20 @@
                     <th scope="row"><?php if (isset($user['id'])) echo htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?></th>
                     <td><?php if (isset($user['user'])) echo htmlspecialchars($user['user'], ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php if (isset($user['email'])) echo htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><?php if (isset($user['password'])) echo htmlspecialchars($user['password'], ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td><a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a></td>
-                    <td><a href="<?php echo URL . 'users/edit/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-edit"></i></a></td>
+                    <td>                   
+                        <?php if ($user['role'] === 'admin') { ?>
+                            <span class="badge badge-danger"><?php echo htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8'); ?></span>
+                        <?php } else { ?>
+                            <span class="badge badge-success"><?php echo htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8'); ?></span>
+                        <?php } ?>
+                    </td>
+                    <td>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') { ?>
+                            <a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a>
+                            <a href="<?php echo URL . 'users/edit/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-edit"></i></a>
+                        <?php } ?>
+                        <a href="<?php echo URL . 'users/profile/' . htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-search"></i></a>
+                    </td>
                 </tr>
                 <?php } ?>
             </tbody>

@@ -11,10 +11,9 @@
     <h1>About</h1>
     <p class="lead">
         This is a simple demonstration project.<br /><br />
-        The user with administration powers is admin and the password is admin, for other users the password is password.<br /><br />
+        The user with admin role is <span class="font-weight-bold">admin</span> and the password is <span class="font-weight-bold">admin</span>, for other users the password is <span class="font-weight-bold">password</span>.<br /><br />
         1- Click on Users > Prune<br />
-        3- Click on Users > Populate<br />
-        3- Click on Account > Login<br /><br />
+        2- Click on Account > Login<br /><br />
         Thank you and enjoy.
     </p>
 </main>

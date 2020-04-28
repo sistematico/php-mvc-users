@@ -11,8 +11,9 @@ body > .container {
     padding: 60px 15px 0;
 }
 
-.fa-trash,
-.fa-edit {
+td .fa-trash,
+td .fa-edit,
+td .fa-search {
     color: white;
 }
 

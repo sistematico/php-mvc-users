@@ -13,21 +13,25 @@ class UsersController
             $users = $User->list();
             $amount = $User->amount();
         } else {
-            $result = $User->install();
+            $result = $User->prune();
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
-    public function populate()
+    public function profile($id)
     {
-        $User = new User();
-        $result = $User->populate();
-        $users = $User->list();
-        $amount = $User->amount();
+        if (isset($id) && isset($_SESSION['id'])) {
+            if ($id == $_SESSION['id'] || isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                $User = new User();
+                $user = $User->get($id);
+            } else {
+                $result = "Operação proibida";
+            }
+        } 
         require APP . 'view/_templates/header.php';
-        require APP . 'view/users/index.php';
+        require APP . 'view/users/profile.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -35,6 +39,8 @@ class UsersController
     {
         $User = new User();
         $result = $User->prune();
+        $users = $User->list();
+        $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
@@ -61,7 +67,7 @@ class UsersController
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_signup_user"])) {
                 $User = new User();
-                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
+                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"], $_POST["role"]);
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/signup.php';
@@ -73,7 +79,7 @@ class UsersController
 
     public function logout()
     {
-        unset($_COOKIE['id'], $_COOKIE['user'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
         setcookie("id", "", time() - 3600);
         setcookie("user", "", time() - 3600);
         header('location: ' . URL);
@@ -82,12 +88,12 @@ class UsersController
     public function delete($id)
     {
         if (isset($id)) {
-            $User = new User();
-            $User->delete($id);
-
-            if (isset($_SESSION['id']) && $id == $_SESSION['id']) {
-                unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['user'],$_SESSION['role']);
+            if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                $User = new User();
+                $User->delete($id);
+                unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
                 setcookie("id", "", time() - 3600);
+                setcookie("user", "", time() - 3600);
             }    
         }
         header('location: ' . URL . 'users/index');
@@ -96,16 +102,20 @@ class UsersController
     public function edit($id)
     {
         if (isset($id)) {
-            $User = new User();
-            $user = $User->getUser($id);
+            if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                $User = new User();
+                $user = $User->get($id);
 
-            if ($user === false) {
-                $page = new \App\Controller\PagesController();
-                $page->error();
+                if ($user === false) {
+                    $page = new \App\Controller\PagesController();
+                    $page->error();
+                } else {
+                    require APP . 'view/_templates/header.php';
+                    require APP . 'view/users/edit.php';
+                    require APP . 'view/_templates/footer.php';
+                } 
             } else {
-                require APP . 'view/_templates/header.php';
-                require APP . 'view/users/edit.php';
-                require APP . 'view/_templates/footer.php';
+                header('location: ' . URL);
             }
         } else {
             header('location: ' . URL . 'users/index');
@@ -116,7 +126,7 @@ class UsersController
     {
         if (isset($_POST["submit_update_user"])) {
             $User = new User();
-            $User->update($_POST["login"], $_POST["email"], $_POST["password"], $_POST['id']);
+            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST["password"] = null);
         }
         header('location: ' . URL . 'users');
     }
