@@ -9,5 +9,12 @@
     </nav>
 
     <h1>About</h1>
-    <p class="lead">Work In Progress</p>
-</main><!-- /.container -->
+    <p class="lead">
+        This is a simple demonstration project.<br /><br />
+        The user with administration powers is admin and the password is admin, for other users the password is password.<br /><br />
+        1- Click on Users > Prune<br />
+        3- Click on Users > Populate<br />
+        3- Click on Account > Login<br /><br />
+        Thank you and enjoy.
+    </p>
+</main>

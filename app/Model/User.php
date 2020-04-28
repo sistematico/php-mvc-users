@@ -90,9 +90,9 @@ class User extends Model
 
     public function update($login, $email, $password, $id)
     {
-        $sql = "UPDATE user SET login = :login, email = :email, password = :password WHERE id = :id";
+        $sql = "UPDATE user SET user = :user, email = :email, password = :password WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $query->execute([':login' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':id' => $id]);
+        $query->execute([':user' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':id' => $id]);
     }
 
     public function amount()
