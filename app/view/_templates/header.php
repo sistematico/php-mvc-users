@@ -21,22 +21,24 @@
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URL; ?>pages/about">About</a>
+                        <a class="nav-link" href="<?php echo URL; ?>pages/about"><i class="fas fa-address-card"></i> About</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URL; ?>pages/credits">Credits</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo URL; ?>users">Users</a>
-                    </li>
-                </ul>
 
-                <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-2 my-lg-0">
-                    <input name="term" class="form-control mr-sm-2" type="text" placeholder="Search a user" aria-label="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-                </form>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo URL; ?>pages/credits"><i class="fas fa-file"></i> Credits</a>
+                    </li>
 
-                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsers" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-tools"></i> Users
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownUsers">
+                            <a class="dropdown-item" href="<?php echo URL; ?>users">List</a>    
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/prune">Prune</a>
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/populate">Populate</a>
+                        </div>
+                    </li>
+
                     <?php if (!isset($_SESSION['logged'])) { ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,6 +60,11 @@
                     </li>
                     <?php } ?>
                 </ul>
+
+                <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-2 my-lg-0">
+                    <input name="term" class="form-control mr-sm-2" type="text" placeholder="Search a user" aria-label="Search">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+                </form>
             </div>
         </nav>
     </header>
