@@ -74,6 +74,6 @@
 <script>
     var url = "<?php echo URL; ?>";
 </script>
-<script src="<?php echo URL; ?>js/application.js"></script>
+<script src="<?php echo URL; ?>js/app.js"></script>
 </body>
 </html>
