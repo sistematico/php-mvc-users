@@ -1,7 +1,10 @@
-INSERT OR IGNORE INTO user (id, email, password) VALUES (1, 'user1@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (2, 'user2@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (3, 'user3@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (4, 'user4@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (5, 'user5@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (6, 'user6@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
-INSERT OR IGNORE INTO user (id, email, password) VALUES (7, 'user7@domain.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (1, 'Lucas', 'lucas@google.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (2, 'João', 'joao@facebook.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (3, 'José', 'jose@twitter.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (4, 'Maria', 'maria@reddit.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (5, 'Josefina', 'josefina@microsoft.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (6, 'Carlos', 'carlos@linux.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (7, 'Roberto', 'roberto@unix.com', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (8, 'Antonio', 'antonio@whitehouse.gov', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (9, 'Rodrigo', 'rodrigo@brasil.gov.br', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
+INSERT OR IGNORE INTO user (id, login, email, password) VALUES (10, 'Beto', 'beto@pf.gov.br', '$2y$10$k7Sarb2vHvkcP.lQ78BElO1t2PlgK1uCkI/BHLkmzxuxRpQ6r0mVC');
