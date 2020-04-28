@@ -8,9 +8,9 @@ class User extends Model
 {
     private $result = [];
 
-    public function login($email,$password)
+    public function login($email,$password, $remember)
     {
-        $sql = "SELECT id, email, password FROM user WHERE email LIKE :email LIMIT 1";
+        $sql = "SELECT id, email, password FROM user WHERE email LIKE :email OR login LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
         $result = $query->fetch();
@@ -21,6 +21,13 @@ class User extends Model
             if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
                 $_SESSION['logged'] = true;
                 $_SESSION['id'] = $result->id;
+
+                if (isset($remember)) {
+                    setcookie("id", $result->id, time() + (86400 * 30), "/");
+                } else {
+                    setcookie("id", "", time() - 3600);
+                }
+
                 return "User logged in.";
             } else {
                 return "User not found.";
@@ -28,25 +35,25 @@ class User extends Model
         }
     }
 
-    public function signup($email, $password)
+    public function signup($login, $email, $password)
     {
-        $sql = "INSERT INTO user (email, password) VALUES (:email, :password)";
+        $sql = "INSERT INTO user (login, email, password) VALUES (:login, :email, :password)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT));
+        $parameters = array(':login' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT));
         $query->execute($parameters);
     }
 
-    public function logout()
-    {
-        $sql = "SELECT id, email, password FROM user";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        return $query->fetchAll();
-    }
+    // public function logout()
+    // {
+    //     $sql = "SELECT id, email, password FROM user";
+    //     $query = $this->db->prepare($sql);
+    //     $query->execute();
+    //     return $query->fetchAll();
+    // }
 
     public function list()
     {
-        $sql = "SELECT id, email, password FROM user";
+        $sql = "SELECT id, login, email, password FROM user";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -62,10 +69,9 @@ class User extends Model
 
     public function getUser($id)
     {
-        $sql = "SELECT id, email, password FROM user WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, login, email, password FROM user WHERE id = :id LIMIT 1";
         $query = $this->db->prepare($sql);
-        $parameters = array(':id' => $id);
-        $query->execute($parameters);
+        $query->execute([':id' => $id]);
         return $query->fetch();
     }
 
@@ -83,12 +89,11 @@ class User extends Model
         }
     }
 
-    public function update($email, $password, $id)
+    public function update($login, $email, $password, $id)
     {
-        $sql = "UPDATE user SET email = :email, password = :password WHERE id = :id";
+        $sql = "UPDATE user SET login = :login, email = :email, password = :password WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $parameters = array(':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':id' => $id);
-        $query->execute($parameters);
+        $query->execute([':login' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':id' => $id]);
     }
 
     public function amount()
@@ -102,18 +107,18 @@ class User extends Model
     public function search($term)
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, email, password FROM user WHERE email LIKE :term";
+        $sql = "SELECT id, login, email, password FROM user WHERE email LIKE :term OR login LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
-            $this->result[] = ['id' => $row->id, 'email' => $row->email, 'password' => $row->password];
+            $this->result[] = ['id' => $row->id, 'login' => $row->login, 'email' => $row->email, 'password' => $row->password];
         }
         return $this->result;
     }
 
     public function install()
     {
-        $sql = "CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, email TEXT, password TEXT)";
+        $sql = "CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, login TEXT, email TEXT, password TEXT)";
         try {
             $this->db->exec($sql);
         } catch(\PDOException $e) {
@@ -126,10 +131,10 @@ class User extends Model
         $this->db->exec("DROP TABLE IF EXISTS $table");
 
         try {
-            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, email TEXT, password TEXT)");
-            return "Tabela $table recriada com sucesso.<br />";
+            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, login TEXT, email TEXT, password TEXT)");
+            return "Table $table recreated";
         } catch (\PDOException $e) {
-            return "Erro ao criar tabela $table: " . $e->getMessage() . "<br />";
+            return "Error: " . $e->getMessage();
         }
     }
 
@@ -145,7 +150,6 @@ class User extends Model
             $this->db->exec($sql);
             return "Data imported";
         } catch(\PDOException $e) {
-            //unset($e);
             return "Error: " . $e->getMessage();
         }
 
