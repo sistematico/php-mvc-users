@@ -16,6 +16,8 @@
                     <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/signup" method="post">
+                    <label for="inputLogin" class="sr-only">Login</label>
+                    <input name="login" type="text" id="inputLogin" class="form-control m-3" placeholder="Login" required autofocus>
                     <label for="inputEmail" class="sr-only">Email address</label>
                     <input name="email" type="email" id="inputEmail" class="form-control m-3" placeholder="Email address" required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>

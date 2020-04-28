@@ -13,8 +13,8 @@
         <?php } else { ?>
             <a class="btn btn-primary m-1" href="<?php echo URL; ?>users/logout" role="button">Logout</a>
         <?php } ?>
-        <a class="btn btn-primary m-1" href="<?php echo URL; ?>users" role="button">List Users</a>
+        <a class="btn btn-warning m-1" href="<?php echo URL; ?>users" role="button">List Users</a>
         <a class="btn btn-danger m-1" href="<?php echo URL; ?>users/prune" role="button">Prune Table</a>
-        <a class="btn btn-info m-1" href="<?php echo URL; ?>users/populate" role="button">Populate Songs</a>
+        <a class="btn btn-info m-1" href="<?php echo URL; ?>users/populate" role="button">Populate Users</a>
     </p>
 </main>

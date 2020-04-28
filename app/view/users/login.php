@@ -16,13 +16,13 @@
                     <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/login" method="post">
-                    <label for="inputEmail" class="sr-only">Email address</label>
-                    <input name="email" type="email" id="inputEmail" class="form-control m-3" placeholder="Email address" required autofocus>
+                    <label for="inputEmail" class="sr-only">Email or Login</label>
+                    <input name="email" type="text" id="inputEmail" class="form-control m-3" placeholder="Email or login" required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input name="password" type="password" id="inputPassword" class="form-control m-3" placeholder="Password" required>
                     <div class="checkbox m-3">
                         <label>
-                            <input type="checkbox" value="remember-me"> Remember me
+                            <input name="remember" type="checkbox" value="remember"> Remember me
                         </label>
                     </div>
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
