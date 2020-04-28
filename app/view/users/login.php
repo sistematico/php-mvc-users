@@ -17,10 +17,10 @@
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/login" method="post">
                     <label for="inputEmail" class="sr-only">Email or Login</label>
-                    <input name="email" type="text" id="inputEmail" class="form-control m-3" placeholder="Email or login" required autofocus>
+                    <input name="email" type="text" id="inputEmail" class="form-control mb-3" placeholder="Email or login" required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input name="password" type="password" id="inputPassword" class="form-control m-3" placeholder="Password" required>
-                    <div class="checkbox m-3">
+                    <input name="password" type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required>
+                    <div class="checkbox mb-3">
                         <label>
                             <input name="remember" type="checkbox" value="remember"> Remember me
                         </label>

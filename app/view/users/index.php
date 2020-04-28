@@ -29,7 +29,7 @@
             <?php foreach ($users as $user) { ?>
             <tr>
                 <th scope="row"><?php if (isset($user->id)) echo htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?></th>
-                <td><?php if (isset($user->login)) echo htmlspecialchars($user->login, ENT_QUOTES, 'UTF-8'); ?></td>
+                <td><?php if (isset($user->user)) echo htmlspecialchars($user->user, ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php if (isset($user->email)) echo htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><?php if (isset($user->password)) echo htmlspecialchars($user->password, ENT_QUOTES, 'UTF-8'); ?></td>
                 <td><a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a></td>

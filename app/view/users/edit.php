@@ -13,7 +13,7 @@
     <form class="form-inline" action="<?php echo URL; ?>users/update" method="post">
         <div class="form-group mb-2 mr-2">
             <label for="login" class="sr-only">Login</label>
-            <input name="login" type="text" class="form-control" id="login" placeholder="Login" value="<?php echo htmlspecialchars($user->login, ENT_QUOTES, 'UTF-8'); ?>" required />
+            <input name="login" type="text" class="form-control" id="login" placeholder="Login" value="<?php echo htmlspecialchars($user->user, ENT_QUOTES, 'UTF-8'); ?>" required />
         </div>
         <div class="form-group mb-2 mr-2">
             <label for="email" class="sr-only">E-mail</label>

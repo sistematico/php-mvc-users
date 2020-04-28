@@ -8,9 +8,9 @@ class User extends Model
 {
     private $result = [];
 
-    public function login($email,$password, $remember)
+    public function login($email, $password, $remember)
     {
-        $sql = "SELECT id, email, password FROM user WHERE email LIKE :email OR login LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, password FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
         $result = $query->fetch();
@@ -19,27 +19,26 @@ class User extends Model
             return "User not found.";
         } else {
             if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
+                if ($remember !== false) {
+                    setcookie("id", $result->id, time() + (86400 * 30), "/");
+                    setcookie("user", $result->user, time() + (86400 * 30), "/");
+                } 
+
                 $_SESSION['logged'] = true;
                 $_SESSION['id'] = $result->id;
-
-                if (isset($remember)) {
-                    setcookie("id", $result->id, time() + (86400 * 30), "/");
-                } else {
-                    setcookie("id", "", time() - 3600);
-                }
-
-                return "User logged in.";
+                $_SESSION['user'] = $result->user;
+                return "User {$result->user} logged in.";
             } else {
-                return "User not found.";
+                return "User / E-mail {$email} not found.";
             }            
         }
     }
 
     public function signup($login, $email, $password)
     {
-        $sql = "INSERT INTO user (login, email, password) VALUES (:login, :email, :password)";
+        $sql = "INSERT INTO user (user, email, password) VALUES (:user, :email, :password)";
         $query = $this->db->prepare($sql);
-        $parameters = array(':login' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT));
+        $parameters = array(':user' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT));
         $query->execute($parameters);
     }
 
@@ -53,7 +52,7 @@ class User extends Model
 
     public function list()
     {
-        $sql = "SELECT id, login, email, password FROM user";
+        $sql = "SELECT id, user, email, password FROM user";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -69,7 +68,7 @@ class User extends Model
 
     public function getUser($id)
     {
-        $sql = "SELECT id, login, email, password FROM user WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, user, email, password FROM user WHERE id = :id LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $id]);
         return $query->fetch();
@@ -107,18 +106,18 @@ class User extends Model
     public function search($term)
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, login, email, password FROM user WHERE email LIKE :term OR login LIKE :term";
+        $sql = "SELECT id, user, email, password FROM user WHERE email LIKE :term OR user LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
-            $this->result[] = ['id' => $row->id, 'login' => $row->login, 'email' => $row->email, 'password' => $row->password];
+            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'password' => $row->password];
         }
         return $this->result;
     }
 
     public function install()
     {
-        $sql = "CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, login TEXT, email TEXT, password TEXT)";
+        $sql = "CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, user TEXT, email TEXT, password TEXT)";
         try {
             $this->db->exec($sql);
         } catch(\PDOException $e) {
@@ -131,7 +130,7 @@ class User extends Model
         $this->db->exec("DROP TABLE IF EXISTS $table");
 
         try {
-            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, login TEXT, email TEXT, password TEXT)");
+            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, user TEXT, email TEXT, password TEXT)");
             return "Table $table recreated";
         } catch (\PDOException $e) {
             return "Error: " . $e->getMessage();

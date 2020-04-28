@@ -37,19 +37,26 @@
                 </form>
 
                 <ul class="navbar-nav">
+                    <?php if (!isset($_SESSION['logged'])) { ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> Account
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <?php if (!isset($_SESSION['logged'])) { ?>
-                                <a class="dropdown-item" href="<?php echo URL; ?>users/login">Login</a>
-                                <a class="dropdown-item" href="<?php echo URL; ?>users/signup">Signup</a>
-                            <?php } else { ?>
-                                <a class="dropdown-item" href="<?php echo URL; ?>users/logout">Logout</a>
-                            <?php } ?>
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/login">Login</a>
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/signup">Signup</a>
                         </div>
                     </li>
+                    <?php } else { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/logout">Logout</a>
+                        </div>
+                    </li>
+                    <?php } ?>
                 </ul>
             </div>
         </nav>

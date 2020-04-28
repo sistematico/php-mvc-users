@@ -44,8 +44,9 @@ class UsersController
     {
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_login_user"])) {
+                $remember = (isset($_POST['remember']) ? true : false);
                 $User = new User();
-                $result = $User->login($_POST["email"], $_POST["password"], $_POST['remember']);
+                $result = $User->login($_POST["email"], $_POST["password"], $remember);
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/login.php';
@@ -72,8 +73,9 @@ class UsersController
 
     public function logout()
     {
-        unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['role']);
+        unset($_COOKIE['id'], $_COOKIE['user'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
         setcookie("id", "", time() - 3600);
+        setcookie("user", "", time() - 3600);
         header('location: ' . URL);
     }
 
@@ -84,7 +86,7 @@ class UsersController
             $User->delete($id);
 
             if (isset($_SESSION['id']) && $id == $_SESSION['id']) {
-                unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['role']);
+                unset($_SESSION['logged'],$_SESSION['id'],$_SESSION['user'],$_SESSION['role']);
                 setcookie("id", "", time() - 3600);
             }    
         }

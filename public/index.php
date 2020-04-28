@@ -1,15 +1,20 @@
 <?php
 
-session_start();
-
-// Remova ou comente em produção
+// Remove this in production
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-if (isset($_COOKIE['id']) && !isset($_SESSION['id'])) {
-    $_SESSION['logged'] = true;
-    $_SESSION['id'] = $_COOKIE['id'];
-}
+session_start();
+
+if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
+    $time = $_SERVER['REQUEST_TIME'];
+    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 10) {
+        session_unset();
+        session_destroy();
+        session_start();
+    }
+    $_SESSION['LAST_ACTIVITY'] = $time;
+} 
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
