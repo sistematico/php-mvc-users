@@ -22,12 +22,16 @@ class UsersController
 
     public function profile($id)
     {
-        if (isset($id) && isset($_SESSION['id'])) {
-            if ($id == $_SESSION['id'] || isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                $User = new User();
-                $user = $User->get($id);
+        if (isset($id)) {
+            if (isset($_SESSION['logged']) && isset($_SESSION['id']) && $id == $_SESSION['id']) {
+                if ($id == $_SESSION['id']) {
+                    $User = new User();
+                    $user = $User->get($id);
+                } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                    $result = "Forbidden operation";
+                }
             } else {
-                $result = "Operação proibida";
+                $result = "User must be logged";
             }
         } 
         require APP . 'view/_templates/header.php';

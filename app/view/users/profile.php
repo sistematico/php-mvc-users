@@ -35,6 +35,6 @@
             </div>
         </div>
     <?php } else { ?>
-        <p>Nenhum resultado.</p>
+        <p>No results.</p>
     <?php } ?>
 </main>

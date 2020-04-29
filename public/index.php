@@ -8,13 +8,13 @@ session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
     $time = $_SERVER['REQUEST_TIME'];
-    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 10) {
+    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 7200) {
         session_unset();
         session_destroy();
         session_start();
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
-} 
+}
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);

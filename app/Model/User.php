@@ -35,7 +35,7 @@ class User extends Model
         }
     }
 
-    public function signup($login, $email, $password, $role)
+    public function signup($login, $email, $password, $role = 'user')
     {
         $sql = "INSERT INTO user (user, email, password, role) VALUES (:user, :email, :password, :role)";
         $query = $this->db->prepare($sql);
@@ -112,16 +112,6 @@ class User extends Model
         return $this->result;
     }
 
-    // public function install()
-    // {
-    //     $sql = "CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY, user TEXT, email TEXT, password TEXT, role TEXT)";
-    //     try {
-    //         $this->db->exec($sql);
-    //     } catch(\PDOException $e) {
-    //         echo "Error: " . $e->getMessage();
-    //     }
-    // }
-
     public function prune($table = 'user',$file = ROOT . 'users.sql')
     {
         try {
@@ -165,11 +155,4 @@ class User extends Model
 
         return false;
     }
-    
-    // public function getTableList()
-    // {
-    //     $sql = "SELECT name FROM sqlite_master WHERE type='table'";
-    //     $query = $this->db->query($sql);
-    //     return $query->fetch();
-    // }
 }

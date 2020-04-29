@@ -56,6 +56,6 @@
         <button id="javascript-ajax-button" class="btn btn-danger mb-2">Get Amount</button>
     </div> -->
     <?php } else { ?>
-        <p>Nenhum resultado.</p>
+        <p>No results.</p>
     <?php } ?>
 </main>
