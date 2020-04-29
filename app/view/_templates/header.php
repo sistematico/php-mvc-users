@@ -40,7 +40,7 @@ $start = $time;
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownUsers">
                             <a class="dropdown-item" href="<?php echo URL; ?>users">List</a>    
-                            <a class="dropdown-item" href="<?php echo URL; ?>users/populate">Populate</a>
+                            <a class="dropdown-item" href="<?php echo URL; ?>users/prune">Prune</a>
                         </div>
                     </li>
 
