@@ -65,14 +65,16 @@ class User extends Model
 
     public function verify($hash)
     {
-        $sql = "SELECT id, user, email, password, role FROM user WHERE temp = :hash LIMIT 1";
+        $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':hash' => $hash]);
         $user = $query->fetch();
 
-        if ($user === false) {
+        if ($user == false) {
             return "Invalid code";
-        } else if ($user->id && $hash === $user->hash) {
+        } else if ($user->valid == 1) {
+            return "{$user->email} already validated";
+        } else if ($user->id && $hash === $user->temp) {
             $this->validate($user->id);
             return "{$user->email} sucessful validated";
         } else {
@@ -135,9 +137,9 @@ class User extends Model
 
     public function validate($id)
     {
-        $sql = "UPDATE user SET valid = :valid WHERE id = :id";
+        $sql = "UPDATE user SET temp = :hash, valid = :valid WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $query->execute([':valid' => 1, ':id' => $id]);
+        $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);
     }
 
     public function amount()

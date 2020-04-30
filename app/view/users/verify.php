@@ -11,14 +11,17 @@
     <h1>Users</h1>
     <h3>Verify a user</h3>
 
-    <?php if (isset($result)) { ?>
-        <div class="alert alert-primary" role="alert"><?php var_dump($result); ?></div>
+    <?php 
+        if (isset($result)) { 
+            $code = explode(' ',trim($result));
+    ?>
+        <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
     <?php } ?>
 
     <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">
         <div class="form-group mb-2 mr-2">
             <label for="verify" class="sr-only">Verification Code</label>
-            <input name="verify" type="text" class="form-control" id="verify" placeholder="Verification Code" value="" required />
+            <input name="verify" type="text" class="form-control" id="verify" placeholder="Verification Code" value="" <?php echo ($code[1] == 'sucessful' ? 'required' : 'required'); ?> />
         </div>
         <button name="submit_verify_user" type="submit" class="btn btn-primary mb-2">Verify</button>
     </form>
