@@ -71,6 +71,30 @@ class User extends Model
         }
     }
 
+    public function reset($id)
+    {
+        $user = $this->get($id);
+        
+        if ($user) {
+            if (DEBUG === false) {
+                $Mail = new Mail();
+                $send = $Mail->sendHash($user->email, $user->hash);        
+
+                if ($send === false) {
+                    return "Error sending e-mail to {$user->email}";
+                }
+            }
+        
+            if (DEBUG === true) {
+                return "Success resetting user $this->user password verification e-mail NOT sent to $this->email, New Hash: $this->hash";
+            } else {
+                return "Success resetting user $this->user , verification e-mail sent to $this->email";
+            }
+        } else {
+            return "Error reseting password";
+        }
+    }
+
     public function verify($hash)
     {
         $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1";
@@ -85,9 +109,8 @@ class User extends Model
         } else if ($user->id && $hash === $user->temp) {
             $this->validate($user->id);
             return "{$user->email} sucessful validated";
-        } else {
-            return "Error";
-        }
+        } 
+        return "Error";        
     }
 
     public function list()
@@ -109,7 +132,7 @@ class User extends Model
 
     public function get($id)
     {
-        $sql = "SELECT id, user, email, password, role FROM user WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, user, email, password, role, temp FROM user WHERE id = :id LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $id]);
         return $query->fetch();
