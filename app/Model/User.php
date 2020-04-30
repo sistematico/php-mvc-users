@@ -42,6 +42,10 @@ class User extends Model
 
     public function signup($login, $email, $password)
     {
+        if ($this->check($login,$email) !== false) {
+            return $this->check($login,$email);
+        }
+
         $hash = md5(uniqid(rand(), TRUE));
         
         if (DEBUG === false) {
@@ -149,6 +153,24 @@ class User extends Model
             unset($e);
             return false;
         }
+    }
+
+    public function check($login, $email)
+    {
+
+        $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
+        $query->execute([':email' => $email]);
+        if ($query->fetch() != false) {
+            return "E-mail {$email} already exists";
+        }
+
+        $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
+        $query->execute([':user' => $login]);
+        if ($query->fetch() != false) {
+            return "Username {$login} already exists";
+        }
+
+        return false;
     }
 
     public function update($login, $email, $role, $valid, $id, $password = null)
