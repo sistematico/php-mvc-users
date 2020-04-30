@@ -29,12 +29,16 @@
                     <small id="passwordHelp" class="form-text text-muted mb-3">
                         Before login, please check your e-mail and/or <a href="<?php echo URL; ?>users/verify">verify</a> your account.
                     </small>
-
                     <div class="checkbox mb-3">
                         <label>
                             <input name="remember" type="checkbox" value="remember"> Remember me
                         </label>
                     </div>
+
+                    <div class="mb-3">
+                        <a href="<?php echo URL; ?>users/reset">Reset your password</a>
+                    </div>
+
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
                 </form>
             </div>

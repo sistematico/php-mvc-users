@@ -6,13 +6,13 @@ class Mail
 {
 
     private $name = 'PHP MVC Users';
-    private $from = 'contato@lucasbrum.net';
+    private $from = 'no-reply@lucasbrum.net';
 
     public function send($to, $subject, $message)
     {
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";
-        $headers .= "From: " . $this->from . "\r\n" . "Reply-To: " . $this->from . "\r\n" . "X-Mailer: PHP/" . phpversion();
+        $headers .= "From: " . $this->from . "\r\n" . "Reply-To: " . $to . "\r\n" . "X-Mailer: PHP/" . phpversion();
         
         $body = "Name: " . $this->name . "<br />";
         $body .= 'E-mail: ' . $this->from . "<br />";
@@ -32,7 +32,7 @@ class Mail
 
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";
-        $headers .= "From: " . $this->from . "\r\n" . "Reply-To: " . $this->from . "\r\n" . "X-Mailer: PHP/" . phpversion();
+        $headers .= "From: " . $this->from . "\r\n" . "Reply-To: " . $to . "\r\n" . "X-Mailer: PHP/" . phpversion();
         
         if (@mail($to, $subject, $body, $headers)) {
             return true;

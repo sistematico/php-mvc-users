@@ -103,12 +103,14 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function reset($id)
+    public function reset()
     {
-        $User = new User();
-        $result = $User->reset($id);
+        if (isset($_POST["submit_reset_user"])) {
+            $User = new User();
+            $result = $User->reset($_POST['email']);
+        }
         require APP . 'view/_templates/header.php';
-        require APP . 'view/users/verify.php';
+        require APP . 'view/users/reset.php';
         require APP . 'view/_templates/footer.php';
     }
 

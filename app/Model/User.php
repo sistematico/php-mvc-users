@@ -71,9 +71,9 @@ class User extends Model
         }
     }
 
-    public function reset($id)
+    public function reset($email)
     {
-        $user = $this->get($id);
+        $user = $this->getUserId($email);
         
         if ($user) {
             if (DEBUG === false) {
@@ -86,9 +86,9 @@ class User extends Model
             }
         
             if (DEBUG === true) {
-                return "Success resetting user $this->user password verification e-mail NOT sent to $this->email, New Hash: $this->hash";
+                return "Success resetting user $user->user password verification e-mail NOT sent to $user->email, New Hash: $user->hash";
             } else {
-                return "Success resetting user $this->user , verification e-mail sent to $this->email";
+                return "Success resetting user $user->user , verification e-mail sent to $user->email";
             }
         } else {
             return "Error reseting password";
@@ -141,7 +141,7 @@ class User extends Model
     public function getUserId($email)
     {
         try {
-            $sql = "SELECT id, user, email, role, valid FROM user WHERE email = :email OR user = :email LIMIT 1";
+            $sql = "SELECT id, user, email, role, temp, valid FROM user WHERE email = :email OR user = :email LIMIT 1";
             $query = $this->db->prepare($sql);
             $query->execute([':email' => $email]);
             return $query->fetch();
