@@ -161,13 +161,14 @@ class User extends Model
     public function search($term)
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, user, email, role, valid FROM user WHERE email LIKE :term OR user LIKE :term";
+        $sql = "SELECT id, user, email, role, temp, valid FROM user WHERE email LIKE :term OR user LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
-            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'valid' => $row->valid];
+            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'temp' => $row->temp, 'valid' => $row->valid];
         }
-        return $this->result;
+        return json_decode(json_encode($this->result), FALSE);
+        //return $this->result;
     }
 
     public function prune($table = 'user',$file = ROOT . 'users.sql')

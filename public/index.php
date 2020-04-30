@@ -1,14 +1,13 @@
 <?php
 
-// Remove this in production
-ini_set('display_errors', 'On');
-error_reporting(E_ALL);
-
 session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
+    // Default session time if 'Remember me' option is not enabled on login
+    $sessionlimit = 10;
+
     $time = $_SERVER['REQUEST_TIME'];
-    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > 7200) {
+    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $sessionlimit) {
         session_unset();
         session_destroy();
         session_start();
@@ -22,7 +21,8 @@ define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'banco.sqlite');
 
 require ROOT . 'vendor/autoload.php';
 
-if (file_exists(APP . 'config/config.php'))
+if (file_exists(APP . 'config/config.php')) {
     require APP . 'config/config.php';
+}
 
 $app = new App\Core\Application();
