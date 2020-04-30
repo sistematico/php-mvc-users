@@ -45,7 +45,7 @@ class User extends Model
         $hash = md5(uniqid(rand(), TRUE));
         
         $Mail = new Mail();
-        $send = $Mail->send($email, $login, 'system@lucasbrum.net', 'New registration', 'Welcome to our site!<br /><br />This is your hash: ' . $hash);
+        $send = $Mail->sendHash($email, $hash);
 
         if ($send === false) {
             return "Error sending e-mail to {$email}";
@@ -56,6 +56,7 @@ class User extends Model
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0]);
         } catch (\PDOException $e) {
             unset($e);
+            $Mail->send($email, 'Error inserting hash', 'Error sending hash! Re-send please.');
             return "Error adding user {$login}";
         }
 
@@ -71,8 +72,8 @@ class User extends Model
 
         if ($user === false) {
             return "Invalid code";
-        } else if ($user->id && $user->email && $user->valid) {
-            $this->update($user->user, $user->email, $user->role, 1, $user->id);
+        } else if ($user->id && $hash === $user->hash) {
+            $this->validate($user->id);
             return "{$user->email} sucessful validated";
         } else {
             return "Error";
@@ -130,6 +131,13 @@ class User extends Model
 
         $query = $this->db->prepare($sql);
         $query->execute($params);
+    }
+
+    public function validate($id)
+    {
+        $sql = "UPDATE user SET valid = :valid WHERE id = :id";
+        $query = $this->db->prepare($sql);
+        $query->execute([':valid' => 1, ':id' => $id]);
     }
 
     public function amount()
