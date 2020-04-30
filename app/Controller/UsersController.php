@@ -48,7 +48,7 @@ class UsersController
 
             if ($hash !== null) {
                 $User = new User();
-                $result = $User->verify($hash);
+                $result = $User->verify(trim($hash));
             }
         }
         require APP . 'view/_templates/header.php';

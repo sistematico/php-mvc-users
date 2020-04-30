@@ -42,12 +42,18 @@ class User extends Model
 
     public function signup($login, $email, $password)
     {
+        $hash = md5(uniqid(rand(), TRUE));
+        
+        $Mail = new Mail();
+        $send = $Mail->send($email, $login, 'system@lucasbrum.net', 'New registration', 'Welcome to our site!<br /><br />This is your hash: ' . $hash);
+
+        if ($send === false) {
+            return "Error sending e-mail to {$email}";
+        }
+        
         try {
-            $hash = md5(uniqid(rand(), TRUE));
             $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid) VALUES (:user, :email, :role, :password, :temp, :valid)");
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0]);
-            $Mail = new Mail();
-            return $Mail->send($email, $login, 'system@lucasbrum.net', 'New registration', 'Welcome to our site!<br /><br />This is your hash: ' . $hash);
         } catch (\PDOException $e) {
             unset($e);
             return "Error adding user {$login}";
@@ -75,10 +81,12 @@ class User extends Model
 
     public function list()
     {
-        $sql = "SELECT id, user, email, role, valid FROM user";
-        $query = $this->db->prepare($sql);
+        $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM user");
         $query->execute();
-        return $query->fetchAll();
+        while ($row = $query->fetch(\PDO::FETCH_OBJ)) {
+            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'valid' => $row->valid];
+        }
+        return json_decode(json_encode($this->result), FALSE);
     }
 
     public function delete($id)

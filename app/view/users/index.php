@@ -12,6 +12,7 @@
         <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
     <?php } ?>
 
+
     <?php if (isset($users) && count($users) > 0) { ?>
     <table class="table table-striped table-dark">
         <thead>
@@ -20,6 +21,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Role</th>
+                <th scope="col">Hash</th>
                 <th scope="col">Valid</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -37,6 +39,7 @@
                             <span class="badge badge-success">user</span>
                         <?php } ?>
                     </td>
+                    <td><?php echo (isset($user->temp) ? $user->temp : 'SEM HASH'); ?></td>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
                     <td>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
