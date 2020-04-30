@@ -39,23 +39,6 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function verify($hash = null)
-    {
-        if (!isset($_SESSION['logged'])) {
-            if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"])) {
-                $hash = $_POST["verify"];
-            }
-
-            if ($hash !== null) {
-                $User = new User();
-                $result = $User->verify(trim($hash));
-            }
-        }
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/verify.php';
-        require APP . 'view/_templates/footer.php';
-    }
-
     public function prune()
     {
         $User = new User();
@@ -96,6 +79,23 @@ class UsersController
         } else {
             header('location: ' . URL);
         }
+    }
+
+    public function verify($hash = null)
+    {
+        if (!isset($_SESSION['logged'])) {
+            if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"])) {
+                $hash = trim($_POST["verify"]);
+            }
+
+            if ($hash) {
+                $User = new User();
+                $result = $User->verify(trim($hash));
+            }
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/verify.php';
+        require APP . 'view/_templates/footer.php';
     }
 
     public function logout()
