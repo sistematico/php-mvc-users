@@ -46,7 +46,7 @@ class User extends Model
         
         if (DEBUG === false) {
             $Mail = new Mail();
-            $send = $Mail->sendHash($email, $hash);        
+            $send = $Mail->sendHash($email, $login, $hash);        
 
             if ($send === false) {
                 return "Error sending e-mail to {$email}";
@@ -59,7 +59,7 @@ class User extends Model
         } catch (\PDOException $e) {
             unset($e);
             if (DEBUG === false) {
-                $Mail->send($email, 'Error inserting hash', 'Error sending hash! Re-send please.');
+                $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
             return "Error adding user {$login}";
         }
@@ -78,7 +78,7 @@ class User extends Model
         if ($user) {
             if (DEBUG === false) {
                 $Mail = new Mail();
-                $send = $Mail->sendHash($user->email, $user->hash);        
+                $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
 
                 if ($send === false) {
                     return "Error sending e-mail to {$user->email}";
