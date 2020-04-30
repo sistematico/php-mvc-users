@@ -39,6 +39,23 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
+    public function verify($hash = null)
+    {
+        if (!isset($_SESSION['logged'])) {
+            if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"])) {
+                $hash = $_POST["verify"];
+            }
+
+            if ($hash !== null) {
+                $User = new User();
+                $result = $User->verify($hash);
+            }
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/verify.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function prune()
     {
         $User = new User();
@@ -71,7 +88,7 @@ class UsersController
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_signup_user"])) {
                 $User = new User();
-                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"], $_POST["role"]);
+                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/signup.php';
@@ -130,7 +147,7 @@ class UsersController
     {
         if (isset($_POST["submit_update_user"])) {
             $User = new User();
-            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST["password"] = null);
+            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST['valid'], $_POST["password"] = null);
         }
         header('location: ' . URL . 'users');
     }

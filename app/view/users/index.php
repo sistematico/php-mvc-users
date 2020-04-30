@@ -20,6 +20,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Role</th>
+                <th scope="col">Valid</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -29,15 +30,14 @@
                     <th scope="row"><?php if (isset($user->id)) echo htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?></th>
                     <td><?php if (isset($user->user)) echo htmlspecialchars($user->user, ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?php if (isset($user->email)) echo htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'); ?></td>
-                    <?php if (isset($user->role)) { ?>
                     <td>                   
-                        <?php if ($user->role === 'admin') { ?>
+                        <?php if (isset($user->role) && $user->role === 'admin') { ?>
                             <span class="badge badge-danger"><?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?></span>
                         <?php } else { ?>
-                            <span class="badge badge-success"><?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?></span>
+                            <span class="badge badge-success">user</span>
                         <?php } ?>
                     </td>
-                    <?php } ?>
+                    <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
                     <td>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                             <a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a>
@@ -50,11 +50,6 @@
         </tbody>
     </table>
     <p><small>Users: <?php echo $amount; ?></small></p>
-    <!-- <h3>Amount of users (via AJAX)</h3>
-    <div id="javascript-ajax-result-box" class="mb-3"></div>
-    <div>
-        <button id="javascript-ajax-button" class="btn btn-danger mb-2">Get Amount</button>
-    </div> -->
     <?php } else { ?>
         <p>No results.</p>
     <?php } ?>

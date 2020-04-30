@@ -10,41 +10,72 @@ class User extends Model
 
     public function login($email, $password, $remember)
     {
-        $sql = "SELECT id, user, email, password, role FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
         $result = $query->fetch();
 
         if ($result === false) {
             return "User not found.";
-        } else {
-            if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
-                if ($remember !== false) {
-                    setcookie("id", $result->id, time() + (86400 * 30), "/");
-                    setcookie("user", $result->user, time() + (86400 * 30), "/");
-                } 
-
-                $_SESSION['logged'] = true;
-                $_SESSION['id'] = $result->id;
-                $_SESSION['user'] = $result->user;
-                $_SESSION['role'] = $result->role;
-                return "User {$result->user} logged in.";
-            } else {
-                return "User / E-mail {$email} not found.";
-            }            
         }
+
+        if (isset($result->valid) && $result->valid == 0) {
+            return "Validate first";
+        }
+
+        if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
+            if ($remember !== false) {
+                setcookie("id", $result->id, time() + (86400 * 30), "/");
+                setcookie("user", $result->user, time() + (86400 * 30), "/");
+            } 
+
+            $_SESSION['logged'] = true;
+            $_SESSION['id'] = $result->id;
+            $_SESSION['user'] = $result->user;
+            $_SESSION['role'] = $result->role;
+            return "User {$result->user} logged in.";
+        } else {
+            return "User / E-mail {$email} not found.";
+        }            
+        
     }
 
-    public function signup($login, $email, $password, $role = 'user')
+    public function signup($login, $email, $password)
     {
-        $sql = "INSERT INTO user (user, email, password, role) VALUES (:user, :email, :password, :role)";
+        try {
+            $hash = md5(uniqid(rand(), TRUE));
+            $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid) VALUES (:user, :email, :role, :password, :temp, :valid)");
+            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0]);
+            $Mail = new Mail();
+            return $Mail->send($email, $login, 'system@lucasbrum.net', 'New registration', 'Welcome to our site!<br /><br />This is your hash: ' . $hash);
+        } catch (\PDOException $e) {
+            unset($e);
+            return "Error adding user {$login}";
+        }
+
+        return "Success adding user ${login}, verification e-mail sent to {$email}";
+    }
+
+    public function verify($hash)
+    {
+        $sql = "SELECT id, user, email, password, role FROM user WHERE temp = :hash LIMIT 1";
         $query = $this->db->prepare($sql);
-        $query->execute([':user' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':role' => $role]);
+        $query->execute([':hash' => $hash]);
+        $user = $query->fetch();
+
+        if ($user === false) {
+            return "Invalid code";
+        } else if ($user->id && $user->email && $user->valid) {
+            $this->update($user->user, $user->email, $user->role, 1, $user->id);
+            return "{$user->email} sucessful validated";
+        } else {
+            return "Error";
+        }
     }
 
     public function list()
     {
-        $sql = "SELECT id, user, email, role FROM user";
+        $sql = "SELECT id, user, email, role, valid FROM user";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -68,7 +99,7 @@ class User extends Model
     public function getUserId($email)
     {
         try {
-            $sql = "SELECT id, user, email, role FROM user WHERE email = :email OR user = :email LIMIT 1";
+            $sql = "SELECT id, user, email, role, valid FROM user WHERE email = :email OR user = :email LIMIT 1";
             $query = $this->db->prepare($sql);
             $query->execute([':email' => $email]);
             return $query->fetch();
@@ -78,14 +109,15 @@ class User extends Model
         }
     }
 
-    public function update($login, $email, $role, $id, $password)
+    public function update($login, $email, $role, $valid, $id, $password = null)
     {
-        $sql = "UPDATE user SET user = :user, email = :email, role = :role WHERE id = :id";
-        $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':id' => $id);
+        $sql = "UPDATE user SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
+        $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id);
         
         if ($password !== null && strlen($password) > 0) {
-            $sql = "UPDATE user SET user = :user, email = :email, password = :password, role = :role WHERE id = :id";
-            $params = array(':user' => $login, ':email' => $email, ':password' => password_hash($password, PASSWORD_DEFAULT), ':role' => $role, ':id' => $id);
+            $temp = md5(uniqid(rand(), TRUE));
+            $sql = "UPDATE user SET user = :user, email = :email, role = :role, password = :password, valid = :valid  WHERE id = :id";
+            $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id);
         }
 
         $query = $this->db->prepare($sql);
@@ -103,11 +135,11 @@ class User extends Model
     public function search($term)
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, user, email, role FROM user WHERE email LIKE :term OR user LIKE :term";
+        $sql = "SELECT id, user, email, role, valid FROM user WHERE email LIKE :term OR user LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
-            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role];
+            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'valid' => $row->valid];
         }
         return $this->result;
     }
@@ -121,25 +153,28 @@ class User extends Model
         }        
 
         try {
-            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, user TEXT, email TEXT, password TEXT, role TEXT)");
+            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, user TEXT, email TEXT, role TEXT, password TEXT, temp TEXT, valid INTEGER)");
         } catch (\PDOException $e) {
             return "Error creating table {$table}: " . $e->getMessage();
         }
 
         if (file_exists($file)) {
             $sql = file_get_contents($file);
-        
-            try {
-                $this->db->exec($sql);
-                return "Database pruned";
-            } catch(\PDOException $e) {
-                return "Error importing data from {$file}: " . $e->getMessage();
-            }
+            $sql = explode("\n", $sql);            
+
+            foreach ($sql as $value) {
+                try {
+                    $value = str_replace("{{TEMPID}}", md5(uniqid(rand(), TRUE)), $value);
+                    $this->db->exec($value);
+                } catch (\PDOException $e) {
+                    return "Exception: " . $e->getMessage();
+                }
+            }  
         } else {
             return "Database pruned, but file $file not found.";
         }
 
-        return "Error deleting database";
+        return "Database created";
     }
 
     public function tableExists($table = 'user')
