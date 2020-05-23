@@ -12,7 +12,6 @@ $start = $time;
     <title>PHP MVC Users</title>
     <link rel="stylesheet" href="<?php echo URL; ?>css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo URL; ?>css/fontawesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="<?php echo URL; ?>css/main.css">
     <link rel="shortcut icon" href="<?php echo URL; ?>img/favicon.ico">
 </head>
