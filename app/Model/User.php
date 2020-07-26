@@ -224,7 +224,31 @@ class User extends Model
         //return $this->result;
     }
 
-    public function prune($table = 'user',$file = ROOT . 'users.sql')
+    public function prune()
+    {
+        $file = ROOT . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'users.sql'
+
+        try {
+            $this->db->exec('DROP TABLE IF EXISTS user');
+        } catch (\PDOException $e) {
+            return "Error droping table: " . $e->getMessage();
+        }        
+
+        if (file_exists($file)) {
+            $sql = file_get_contents($file);
+            try {
+                $this->db->exec($sql);
+            } catch (\PDOException $e) {
+                return "Exception: " . $e->getMessage();
+            }
+        } else {
+            return "Database pruned, but file $file not found.";
+        }
+
+        return "Database created";
+    }
+
+    public function prune2($table = 'user',$file = ROOT . 'users.sql')
     {
         try {
             $this->db->exec("DROP TABLE IF EXISTS $table");
