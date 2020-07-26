@@ -226,7 +226,7 @@ class User extends Model
 
     public function prune()
     {
-        $file = ROOT . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'users.sql'
+        $file = ROOT . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'users.sql';
 
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
