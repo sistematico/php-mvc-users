@@ -21,7 +21,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Role</th>
-                <?php if (DEBUG === true) { ?>
+                <?php if (defined('DEBUG') && DEBUG === true) { ?>
                 <th scope="col">Hash</th>
                 <?php } ?>
                 <th scope="col">Valid</th>
@@ -41,7 +41,7 @@
                             <span class="badge badge-success">user</span>
                         <?php } ?>
                     </td>
-                    <?php if (DEBUG === true) { ?>
+                    <?php if (defined('DEBUG') && DEBUG === true) { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : 'SEM HASH'); ?></td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
