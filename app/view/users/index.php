@@ -44,7 +44,7 @@
                     </td>
                     <?php if (defined('DEBUG') && DEBUG === true) { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : 'SEM HASH'); ?></td>
-                    <td><?php echo (isset($user->temp) ? $user->temp : 'SEM HASH'); ?></td>
+                    <td><?php echo (isset($user->password) ? $user->password : ''); ?></td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
                     <td>
