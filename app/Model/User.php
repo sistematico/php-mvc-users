@@ -124,7 +124,7 @@ class User extends Model
         while ($row = $query->fetch()) {
             $this->results[] = $row;
         }
-        return $this->result;
+        return (object) $this->result;
     }
 
     public function delete($id)
