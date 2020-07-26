@@ -4,7 +4,7 @@ session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
     // Default session time if 'Remember me' option is not enabled on login
-    $sessionlimit = 10;
+    $sessionlimit = 3600; // 3600 secs = 1 hour
 
     $time = $_SERVER['REQUEST_TIME'];
     if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $sessionlimit) {
