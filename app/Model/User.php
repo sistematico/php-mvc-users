@@ -6,7 +6,7 @@ use App\Core\Model;
 
 class User extends Model
 {
-    private $result = [];
+    private $results = [];
 
     public function login($email, $password, $remember)
     {
@@ -210,10 +210,9 @@ class User extends Model
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
-            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'temp' => $row->temp, 'valid' => $row->valid];
+            $this->results[] = $row;
         }
-        return json_decode(json_encode($this->result), FALSE);
-        //return $this->result;
+        return (object) $this->results;
     }
 
     public function prune()
