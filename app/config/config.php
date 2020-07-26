@@ -1,7 +1,7 @@
 <?php
 
 // Change to false in production, this disable e-mail function
-define('DEBUG', true);
+define('DEBUG', false);
 
 if (defined('DEBUG') && DEBUG === true) {
     ini_set('display_errors', 'On');
