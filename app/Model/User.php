@@ -132,7 +132,7 @@ class User extends Model
                 'valid' => $row->valid
             ];
         }
-        return json_encode($this->result, TRUE);
+        return $this->result;
     }
 
     public function delete($id)
