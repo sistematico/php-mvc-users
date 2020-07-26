@@ -116,9 +116,9 @@ class UsersController
 
     public function logout()
     {
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
         setcookie("id", "", time() - 3600);
         setcookie("user", "", time() - 3600);
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
         header('location: ' . URL);
     }
 
