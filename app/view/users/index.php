@@ -12,7 +12,7 @@
         <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
     <?php } ?>
 
-    <?php if (isset($users) && count($users) > 0) { var_dump($users); ?>
+    <?php if (isset($users) && count($users) > 0) { ?>
     <table class="table table-striped table-dark">
         <thead>
             <tr>
