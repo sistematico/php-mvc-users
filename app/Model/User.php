@@ -119,7 +119,7 @@ class User extends Model
 
     public function list()
     {
-        $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM user");
+        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid FROM user");
         $query->execute();
         while ($row = $query->fetch(\PDO::FETCH_OBJ)) {
             $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'temp' => $row->temp, 'valid' => $row->valid];
