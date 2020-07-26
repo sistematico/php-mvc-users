@@ -122,9 +122,17 @@ class User extends Model
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid FROM user");
         $query->execute();
         while ($row = $query->fetch(\PDO::FETCH_OBJ)) {
-            $this->result[] = ['id' => $row->id, 'user' => $row->user, 'email' => $row->email, 'role' => $row->role, 'temp' => $row->temp, 'valid' => $row->valid];
+            $this->result[] = [
+                'id' => $row->id, 
+                'user' => $row->user, 
+                'email' => $row->email, 
+                'role' => $row->role, 
+                'password' => $row->password, 
+                'temp' => $row->temp, 
+                'valid' => $row->valid
+            ];
         }
-        return json_decode(json_encode($this->result), FALSE);
+        return (object) $this->result;
     }
 
     public function delete($id)
