@@ -132,7 +132,7 @@ class User extends Model
                 'valid' => $row->valid
             ];
         }
-        return (object) $this->result;
+        return $this->result;
     }
 
     public function delete($id)
