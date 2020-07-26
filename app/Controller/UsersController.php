@@ -10,7 +10,7 @@ class UsersController
     {
         $User = new User();
         if ($User->tableExists() === true) {
-            $users = (object) $User->list();
+            $users = $User->list();
             $amount = $User->amount();
         } else {
             $result = $User->prune();
