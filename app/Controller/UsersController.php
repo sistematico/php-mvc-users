@@ -128,9 +128,12 @@ class UsersController
             if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 $User = new User();
                 $User->delete($id);
-                unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
-                setcookie("id", "", time() - 3600);
-                setcookie("user", "", time() - 3600);
+
+                if ($_SESSION['id'] == $id) {
+                    unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+                    setcookie("id", "", time() - 3600);
+                    setcookie("user", "", time() - 3600);
+                }
             }    
         }
         header('location: ' . URL . 'users/index');
