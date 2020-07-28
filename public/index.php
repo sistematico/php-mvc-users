@@ -20,9 +20,6 @@ define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'banco.sqlite');
 
 require ROOT . 'vendor/autoload.php';
-
-if (file_exists(APP . 'config/config.php')) {
-    require APP . 'config/config.php';
-}
+require APP . 'config/config.php';
 
 $app = new App\Core\Application();
