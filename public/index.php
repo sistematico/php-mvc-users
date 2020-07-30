@@ -3,9 +3,7 @@
 session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
-    // Default session time if 'Remember me' option is not enabled on login
     $sessionlimit = 3600; // 3600 secs = 1 hour
-
     $time = $_SERVER['REQUEST_TIME'];
     if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $sessionlimit) {
         session_unset();
@@ -18,8 +16,9 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'banco.sqlite');
+define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 
-require ROOT . 'vendor/autoload.php';
-require APP . 'config/config.php';
+require APP . 'config' . DIRECTORY_SEPARATOR . 'autoload.php';
+require APP . 'config' . DIRECTORY_SEPARATOR . 'config.php';
 
 $app = new App\Core\Application();
