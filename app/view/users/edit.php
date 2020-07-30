@@ -19,7 +19,7 @@
                     <option value="user" <?php if ($user->role == 'user') echo 'selected' ; ?>>user</option>
                 </select>
             <?php } else { ?>
-                <input class="form-control" type="text" placeholder="<?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?>" readonly>
+                <input name="role" class="form-control" type="text" placeholder="<?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?>" readonly>
             <?php } ?>
         </div>
         <div class="form-group mb-2 mr-2">

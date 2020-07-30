@@ -18,7 +18,10 @@ $start = $time;
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="<?php echo URL; ?>">PHP MVC Users</a>
+            <a class="navbar-brand" href="<?php echo URL; ?>">
+                <img src="<?php echo URL; ?>img/user.svg" width="30" height="30" alt="PHP MVC Users" style="margin-top: -5px;">
+                PHP MVC Users
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,21 +31,12 @@ $start = $time;
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo URL; ?>pages/about"><i class="fas fa-address-card"></i> About</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo URL; ?>pages/credits"><i class="fas fa-file"></i> Credits</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsers" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-tools"></i> Users
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownUsers">
-                            <a class="dropdown-item" href="<?php echo URL; ?>users">List</a>    
-                            <a class="dropdown-item" href="<?php echo URL; ?>users/prune">Prune</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo URL; ?>users"><i class="fas fa-users"></i> Users</a>
                     </li>
-
                     <?php if (!isset($_SESSION['logged'])) { ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

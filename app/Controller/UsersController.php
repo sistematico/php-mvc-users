@@ -166,7 +166,8 @@ class UsersController
     {
         if (isset($_POST["submit_update_user"])) {
             $User = new User();
-            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST['valid'], $_POST["password"] = null);
+            $password = (isset($_POST["password"]) ? $_POST["password"] : null);
+            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST['valid'], $password);
         }
         header('location: ' . URL . 'users');
     }

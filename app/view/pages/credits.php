@@ -13,9 +13,9 @@
         <ul>
             <li><a href="https://www.archlinux.org" target="_blank">Arch Linux</a></li>
             <li><a href="https://php.net" target="_blank">PHP</a></li>
+            <li><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md" target="_blank">PSR-4</a></li>
             <li><a href="https://github.com/panique/mini3" target="_blank">Mini 3</a></li>
             <li><a href="https://getbootstrap.com" target="_blank">Twitter Boostrap 4</a></li>
-            <li><a href="https://getcomposer.org" target="_blank">Composer</a></li>
             <li><a href="https://en.wikipedia.org/wiki/Faith" target="_blank">Faith</a></li>
         </ul>
     </p>

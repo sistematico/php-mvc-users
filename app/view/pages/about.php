@@ -12,8 +12,8 @@
     <p class="lead">
         This is a simple demonstration project.<br /><br />
         The user with admin role is <span class="font-weight-bold">admin</span> and the password is <span class="font-weight-bold">admin</span>, for other users the password is <span class="font-weight-bold">password</span>.<br /><br />
-        1- Click on Users > Prune<br />
-        2- Click on Account > Login<br /><br />
+        1- Go to: <a href="<?php echo URL; ?>users/prune"><?php echo URL; ?>users/prune</a><br />
+        2- Go to: <a href="<?php echo URL; ?>users/login"><?php echo URL; ?>users/login</a><br /><br />
         Thank you and enjoy.
     </p>
 </main>

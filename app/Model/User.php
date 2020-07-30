@@ -173,15 +173,17 @@ class User extends Model
         return false;
     }
 
-    public function update($login, $email, $role, $valid, $id, $password = null)
+    public function update($login, $email, $role, $id, $valid, $password)
     {
+        $_SESSION['user'] = $login;
+        
         $sql = "UPDATE user SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
         $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id);
         
-        if ($password !== null && strlen($password) > 0) {
+        if ($password != null && strlen($password) > 0) {
             $temp = md5(uniqid(rand(), TRUE));
-            $sql = "UPDATE user SET user = :user, email = :email, role = :role, password = :password, valid = :valid  WHERE id = :id";
-            $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id);
+            $sql = "UPDATE user SET user = :user, email = :email, role = :role, password = :password, temp = :temp, valid = :valid WHERE id = :id";
+            $params = [':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id];
         }
 
         $query = $this->db->prepare($sql);
@@ -217,23 +219,21 @@ class User extends Model
 
     public function prune()
     {
-        $file = ROOT . DIRECTORY_SEPARATOR . 'sql' . DIRECTORY_SEPARATOR . 'users.sql';
-
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
         } catch (\PDOException $e) {
             return "Error droping table: " . $e->getMessage();
         }        
 
-        if (file_exists($file)) {
-            $sql = file_get_contents($file);
+        if (file_exists(SQL_FILE)) {
+            $sql = file_get_contents(SQL_FILE);
             try {
                 $this->db->exec($sql);
             } catch (\PDOException $e) {
                 return "Exception: " . $e->getMessage();
             }
         } else {
-            return "Database pruned, but file $file not found.";
+            return "Database pruned, but file " . SQL_FILE . " not found.";
         }
 
         return "Database created";
