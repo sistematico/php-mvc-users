@@ -1,5 +1,4 @@
-<main role="main" class="container">
-
+<main role="main" class="container pb-4">
     <nav aria-label="breadcrumb" class="mt-2">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
@@ -13,6 +12,7 @@
     <?php } ?>
 
     <?php if (isset($users)) { ?>
+    <div class="table-responsive">
     <table class="table table-striped table-dark">
         <thead>
             <tr>
@@ -58,6 +58,7 @@
             <?php } ?>
         </tbody>
     </table>
+    </div>
     <p><small>Users: <?php echo $amount; ?></small></p>
     <?php } else { ?>
         <p>No results.</p>

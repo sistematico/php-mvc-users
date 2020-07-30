@@ -58,8 +58,8 @@ $start = $time;
                     </li>
                     <?php } ?>
                 </ul>
-                <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-2 my-lg-0">
-                    <input name="term" class="form-control mr-sm-2" type="text" placeholder="Search a user" aria-label="Search">
+                <form action="<?php echo URL; ?>users/search" method="post" class="form-inline my-lg-0">
+                    <input name="term" class="form-control mr-2" type="text" placeholder="Search a user" aria-label="Search">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </div>

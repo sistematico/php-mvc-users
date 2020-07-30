@@ -8,22 +8,24 @@
         </ol>
     </nav>
 
-    <h1>Users</h1>
-    <h3>Reset password</h3>
-
-    <?php 
-        if (isset($result)) { 
-            $code = explode(' ',trim($result));
-    ?>
-        <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
-    <?php } ?>
-
-    <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">
-        <div class="form-group mb-2 mr-2">
-            <label for="verify" class="sr-only">E-mail</label>
-            <input name="verify" type="text" class="form-control" id="verify" placeholder="E-mail" value="" <?php echo (isset($code) && $code[1] == 'sucessful' ? 'disabled' : 'required'); ?> />
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <h1>Reset password</h1>
+                <?php if (isset($result)) { $code = explode(' ',trim($result)); ?>
+                    <div class="alert alert-primary" role="alert">
+                        <?php echo $result; ?>
+                    </div>
+                <?php } ?>
+                <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">
+                    <div class="form-group mb-2 mr-2">
+                        <label for="verify" class="sr-only">E-mail</label>
+                        <input name="verify" type="text" class="form-control" id="verify" placeholder="E-mail" value="" <?php echo (isset($code) && $code[1] == 'sucessful' ? 'disabled' : 'required'); ?> />
+                    </div>
+                    <button name="submit_reset_user" type="submit" class="btn btn-primary mb-2" <?php echo (isset($code) && $code[1] == 'sucessful' ? 'disabled' : ''); ?>>Reset</button>
+                </form>
+            </div>
         </div>
-        <button name="submit_reset_user" type="submit" class="btn btn-primary mb-2" <?php echo (isset($code) && $code[1] == 'sucessful' ? 'disabled' : ''); ?>>Reset</button>
-    </form>
+    </div>
 </main>
 
