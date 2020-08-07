@@ -48,7 +48,7 @@ class User extends Model
 
         $hash = md5(uniqid(rand(), TRUE));
         
-        if (DEBUG === false) {
+        if (defined('DEBUG') && DEBUG === true) {
             $Mail = new Mail();
             $send = $Mail->sendHash($email, $login, $hash);        
 
@@ -62,13 +62,13 @@ class User extends Model
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0]);
         } catch (\PDOException $e) {
             unset($e);
-            if (DEBUG === false) {
+            if (defined('DEBUG') && DEBUG === true) {
                 $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
             return "Error adding user {$login}";
         }
 
-        if (DEBUG === true) {
+        if (defined('DEBUG') && DEBUG === true) {
             return "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}";
         } else {
             return "Success adding user ${login}, verification e-mail sent to {$email}";
@@ -80,7 +80,7 @@ class User extends Model
         $user = $this->getUserId($email);
         
         if ($user) {
-            if (DEBUG === false) {
+            if (defined('DEBUG') && DEBUG === true) {
                 $Mail = new Mail();
                 $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
 
