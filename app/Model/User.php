@@ -122,7 +122,7 @@ class User extends Model
 
     public function list()
     {
-        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid FROM user");
+        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM user");
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
@@ -217,7 +217,7 @@ class User extends Model
     public function search($term)
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, user, email, role, temp, valid FROM user WHERE email LIKE :term OR user LIKE :term";
+        $sql = "SELECT id, user, email, role, temp, valid, access, created FROM user WHERE email LIKE :term OR user LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
