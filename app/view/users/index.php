@@ -25,6 +25,8 @@
                 <th scope="col">Hash</th>
                 <?php } ?>
                 <th scope="col">Valid</th>
+                <th scope="col">Created</th>
+                <th scope="col">Access</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -46,6 +48,8 @@
                     <td><?php echo (isset($user->password) ? $user->password : ''); ?></td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
+                    <td class="access"><?php echo (isset($user->created) ? $user->created : 'n/a'); ?></td>
+                    <td class="access"><?php echo (isset($user->access) ? $user->access : 'n/a'); ?></td>
                     <td>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                             <a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a>
