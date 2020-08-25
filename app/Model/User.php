@@ -24,6 +24,8 @@ class User extends Model
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
+            $this->access($result->id);
+
             if ($remember !== false) {
                 setcookie("id", $result->id, time() + (86400 * 30), "/");
                 setcookie("user", $result->user, time() + (86400 * 30), "/");
@@ -46,6 +48,7 @@ class User extends Model
             return $this->check($login,$email);
         }
 
+        $ts = time();
         $hash = md5(uniqid(rand(), TRUE));
         
         if (defined('DEBUG') && DEBUG === true) {
@@ -58,8 +61,8 @@ class User extends Model
         }
         
         try {
-            $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid) VALUES (:user, :email, :role, :password, :temp, :valid)");
-            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0]);
+            $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
+            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
         } catch (\PDOException $e) {
             unset($e);
             if (defined('DEBUG') && DEBUG === true) {
@@ -188,6 +191,12 @@ class User extends Model
 
         $query = $this->db->prepare($sql);
         $query->execute($params);
+    }
+
+    public function access($id)
+    {
+        $query = $this->db->prepare("UPDATE user SET access = :access WHERE id = :id");
+        $query->execute([':id' => $id, ':access' => time()]);
     }
 
     public function validate($id)
