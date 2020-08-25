@@ -3,8 +3,8 @@
         let timestamp = parseInt(item.innerHTML);
         var date = new Date(timestamp * 1000);
         var years = date.getFullYear();
-        var months = "0" + date.getMonth()+1;
-        var days = "0" + date.getDay();
+        var months = "0" + (date.getMonth()+1);
+        var days = "0" + (date.getDate()+1);
         var hours = "0" + date.getHours();
         var minutes = "0" + date.getMinutes();
         var seconds = "0" + date.getSeconds();
