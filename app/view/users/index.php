@@ -48,8 +48,8 @@
                     <td><?php echo (isset($user->password) ? $user->password : ''); ?></td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
-                    <td onload="unixTimestamp(this);"><?php echo (isset($user->created) ? $user->created : 'n/a'); ?></td>
-                    <td onload="unixTimestamp(this);"><?php echo (isset($user->access) ? $user->access : 'n/a'); ?></td>
+                    <td class="ts"><?php echo (isset($user->created) ? $user->created : 'n/a'); ?></td>
+                    <td class="ts"><?php echo (isset($user->access) ? $user->access : 'n/a'); ?></td>
                     <td>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
                             <a onClick="javascript: return confirm('Are you sure you want to delete?');" href="<?php echo URL . 'users/delete/' . htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>"><i class="fas fa-trash"></i></a>
