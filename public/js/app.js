@@ -1,17 +1,21 @@
 (function() {
     var timestamps = document.getElementsByClassName("ts");
     for (var i = 0; i < timestamps.length; i++) {
-        timestamps[i].innerHTML = 'Olá';
+        unixTimestamp(timestamps[i]);
     }
 
-    const unixTimestamp = (obj) => {
-        let timestamp = parseInt(obj.innerHTML);
+    const unixTimestamp = (item) => {
+        let timestamp = parseInt(item.innerHTML);
         var date = new Date(timestamp * 1000);
-        var hours = date.getHours();
+        var years = date.getFullYear();
+        var months = "0" + date.getMonth();
+        var days = "0" + date.getDay();
+        var hours = "0" + date.getHours();
         var minutes = "0" + date.getMinutes();
         var seconds = "0" + date.getSeconds();
-        var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-        obj.innerHTML = formattedTime;
-        console.log(formattedTime);
+        //var formattedTime = hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+        var formattedTime = days.substr(-2) + '/' + months.substr(-2) + '/' + years.substr(-2) + ' ' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+        item.innerHTML = formattedTime;
+        //console.log(formattedTime);
     }
 })();
