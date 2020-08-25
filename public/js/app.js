@@ -1,4 +1,9 @@
 (function() {
+    var timestamps = document.getElementsByClassName("ts");
+    for (var i = 0; i < timestamps.length; i++) {
+        timestamps[i].innerHTML = 'Olá';
+    }
+
     const unixTimestamp = (obj) => {
         let timestamp = parseInt(obj.innerHTML);
         var date = new Date(timestamp * 1000);
