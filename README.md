@@ -1,4 +1,7 @@
 # PHP MVC SQLite CRUD (Users Version)
+
+![CD](https://github.com/sistematico/php-mvc-users/workflows/Deploy%20PHP%20App/badge.svg?event=push)
+
 PHP MVC CRUD using SQLite to create user log-in &amp; signup system
 
 Simple CRUD project (Create, Read, Update, Delete) made with [PHP](https://php.net), [Mini3](https://github.com/panique/mini3) and [Twitter Boostrap 4](https://getbootstrap.com) with [SQLite3](https://www.sqlite.org) as database.
