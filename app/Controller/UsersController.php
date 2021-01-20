@@ -164,10 +164,15 @@ class UsersController
 
     public function update()
     {
-        if (isset($_POST["submit_update_user"])) {
+        if (isset($_POST["submit_update_user"]) &&
+            isset($_POST["id"])        
+        ) {
             $User = new User();
             $password = (isset($_POST["password"]) ? $_POST["password"] : null);
-            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $_POST['valid'], $password);
+            $valid = isset($_POST['valid']) && $_POST['valid'] == 'sim' ? 1 : 0; 
+
+            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
+            //var_dump($_POST['valid']);
         }
         header('location: ' . URL . 'users');
     }

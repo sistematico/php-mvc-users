@@ -34,6 +34,13 @@
             <label for="password" class="sr-only">Password</label>
             <input name="password" type="text" class="form-control" id="password" placeholder="Password" />
         </div>
+
+        <div class="form-group mb-2 mr-2">
+            <label>
+                <input name="valid" type="checkbox" value="sim" <?php echo (isset($user->valid) && $user->valid == 1) ? 'checked' : ''; ?>> Validado                
+            </label>
+        </div>
+        
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($user->id, ENT_QUOTES, 'UTF-8'); ?>" />
         <button name="submit_update_user" type="submit" class="btn btn-primary mb-2">Update</button>
     </form>

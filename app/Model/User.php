@@ -139,7 +139,7 @@ class User extends Model
 
     public function get($id)
     {
-        $sql = "SELECT id, user, email, password, role, temp FROM user WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $id]);
         return $query->fetch();

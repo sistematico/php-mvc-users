@@ -23,15 +23,15 @@
 
                 <form class="form-signin" action="<?php echo URL; ?>users/login" method="post">
                     <label for="inputEmail" class="sr-only">Email or Login</label>
-                    <input name="email" type="text" id="email" class="form-control mb-3" placeholder="Email or login" <?php echo (isset($code) && $code[2] == 'logged' ? 'disabled' : 'required autofocus'); ?>>
+                    <input name="email" type="text" id="email" class="form-control mb-3" placeholder="Email or login" value="<?php if (isset($_POST['email'])) { echo $_POST['email']; } ?>">
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input name="password" type="password" id="password" class="form-control" placeholder="Password" aria-describedby="passwordHelp" <?php echo (isset($code) && $code[2] == 'logged' ? 'disabled' : 'required'); ?>>
+                    <input name="password" type="password" id="password" class="form-control" placeholder="Password" aria-describedby="passwordHelp" value="<?php if (isset($_POST['password'])) { echo $_POST['password']; } ?>">
                     <small id="passwordHelp" class="form-text text-muted mb-3">
                         Before login, please check your e-mail and/or <a href="<?php echo URL; ?>users/verify">verify</a> your account.
                     </small>
                     <div class="checkbox mb-3">
                         <label>
-                            <input name="remember" type="checkbox" value="remember"> Remember me
+                            <input name="remember" type="checkbox" value="remember" <?php if (isset($_POST['remember'])) { echo 'checked'; } ?>> Remember me
                         </label>
                     </div>
 
