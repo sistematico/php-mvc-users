@@ -27,6 +27,7 @@ body > .container {
     padding: 60px 15px 0;
 }
 
+td .fa-check,
 td .fa-undo,
 td .fa-trash,
 td .fa-edit,
