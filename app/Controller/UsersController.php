@@ -10,7 +10,7 @@ class UsersController
     {
         $User = new User();
         if ($User->tableExists() !== true) {
-            $result = $User->prune();
+            $User->prune();
         }
         $users = $User->list();
         $amount = $User->amount();
@@ -41,12 +41,7 @@ class UsersController
     public function prune()
     {
         $User = new User();
-        $result = $User->prune();
-        $users = $User->list();
-        $amount = $User->amount();
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/index.php';
-        require APP . 'view/_templates/footer.php';
+        $User->prune();
     }
 
     public function login()
