@@ -9,12 +9,11 @@ class UsersController
     public function index()
     {
         $User = new User();
-        if ($User->tableExists() === true) {
-            $users = $User->list();
-            $amount = $User->amount();
-        } else {
+        if ($User->tableExists() !== true) {
             $result = $User->prune();
         }
+        $users = $User->list();
+        $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
