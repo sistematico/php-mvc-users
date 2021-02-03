@@ -7,7 +7,7 @@
         </ol>
     </nav>
     <h1>Search</h1>
-    <?php if (isset($users) && count($users) > 0) { ?>
+    <?php if (isset($users)) { ?>
         <table class="table table-striped table-dark">
             <thead>
                 <tr>
