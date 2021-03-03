@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Core\Model;
+use PDOException;
 
 class User extends Model
 {
@@ -63,7 +64,7 @@ class User extends Model
         try {
             $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             unset($e);
             if (defined('DEBUG') && DEBUG === true) {
                 $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
@@ -145,20 +146,20 @@ class User extends Model
         return $query->fetch();
     }
 
-    public function getUserId($email)
+    public function getUserId($email): bool
     {
         try {
             $sql = "SELECT id, user, email, role, temp, valid FROM user WHERE email = :email OR user = :email LIMIT 1";
             $query = $this->db->prepare($sql);
             $query->execute([':email' => $email]);
             return $query->fetch();
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             unset($e);
             return false;
         }
     }
 
-    public function check($login, $email)
+    public function check($login, $email): bool|string
     {
 
         $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
@@ -230,7 +231,7 @@ class User extends Model
     {
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return "Error droping table: " . $e->getMessage();
         }        
 
@@ -238,7 +239,7 @@ class User extends Model
             $sql = file_get_contents(SQL_FILE);
             try {
                 $this->db->exec($sql);
-            } catch (\PDOException $e) {
+            } catch (PDOException $e) {
                 return "Exception: " . $e->getMessage();
             }
         } else {
@@ -252,13 +253,13 @@ class User extends Model
     {
         try {
             $this->db->exec("DROP TABLE IF EXISTS $table");
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return "Error droping table {$table}: " . $e->getMessage();
         }        
 
         try {
             $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, user TEXT, email TEXT, role TEXT, password TEXT, temp TEXT, valid INTEGER)");
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return "Error creating table {$table}: " . $e->getMessage();
         }
 
@@ -270,7 +271,7 @@ class User extends Model
                 try {
                     $value = str_replace("{{TEMPID}}", md5(uniqid(rand(), TRUE)), $value);
                     $this->db->exec($value);
-                } catch (\PDOException $e) {
+                } catch (PDOException $e) {
                     return "Exception: " . $e->getMessage();
                 }
             }  
@@ -287,7 +288,7 @@ class User extends Model
         try {
             $this->db->exec($sql);
             return true;
-        } catch(\PDOException $e) {
+        } catch(PDOException $e) {
             unset($e);
             return false;
         }

@@ -5,10 +5,10 @@ namespace App\Model;
 class Mail
 {
 
-    private $name = 'PHP MVC Users';
-    private $from = 'no-reply@lucasbrum.net';
+    private string $name = 'PHP MVC Users';
+    private string $from = 'no-reply@lucasbrum.net';
 
-    public function send($to, $name, $subject, $message)
+    public function send($to, $name, $subject, $message): string
     {
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";
