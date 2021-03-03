@@ -43,7 +43,7 @@ class User extends Model
 
     public function signup($login, $email, $password): bool|string
     {
-        if ($this->check($login,$email) !== false) {
+        if ($this->check($login,$email)['status'] !== 'success') {
             return $this->check($login,$email);
         }
 
@@ -67,13 +67,16 @@ class User extends Model
             if (defined('DEBUG') && DEBUG === true) {
                 $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
-            return "Error adding user {$login}";
+            return json_encode(['status' => 'error', 'message' => 'Error adding user {$login}']);
         }
 
         if (defined('DEBUG') && DEBUG === true) {
-            return "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}";
+            return json_encode(['status' => 'success', 'message' => 'Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}']);
         } else {
-            return "Success adding user ${login}, verification e-mail sent to {$email}";
+            return json_encode([
+                'status' => 'success',
+                'message' => 'Success adding user ${login}, verification e-mail sent to {$email}'
+            ]);
         }
     }
 
@@ -87,14 +90,20 @@ class User extends Model
                 $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
 
                 if ($send === false) {
-                    return "Error sending e-mail to {$user->email}";
+                    return json_encode(['status' => 'error', 'message' => 'Error sending e-mail to {$user->email}']);
                 }
             }
         
             if (DEBUG === true) {
-                return "Success resetting user $user->user password verification e-mail NOT sent to $user->email, New Hash: $user->hash";
+                return json_encode([
+                    'status' => 'success',
+                    'message' => 'Success resetting user $user->user password verification e-mail NOT sent to $user->email, New Hash: $user->hash'
+                ]);
             } else {
-                return "Success resetting user $user->user , verification e-mail sent to $user->email";
+                return json_encode([
+                    'status' => 'success',
+                    'message' => 'Success resetting user $user->user , verification e-mail sent to $user->email'
+                ]);
             }
         } else {
             return "Error reseting password";
@@ -169,10 +178,10 @@ class User extends Model
         $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
-            return "Username {$login} already exists";
+            return json_encode(['status' => 'error', 'message' => 'Username {$login} already exists']);
         }
 
-        return false;
+        return json_encode(['status' => 'success']);
     }
 
     public function update($login, $email, $role, $id, $valid, $password)
