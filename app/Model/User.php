@@ -44,8 +44,9 @@ class User extends Model
 
     public function signup($login, $email, $password): bool|string
     {
-        if (json_decode($this->check($login,$email))->status !== 'success') {
-            return $this->check($login,$email);
+        $check = json_decode($this->check($login,$email));
+        if ($check->status !== 'success') {
+            return $check;
         }
 
         $ts = time();
