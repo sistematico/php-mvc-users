@@ -63,7 +63,7 @@ class User extends Model
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
         } catch (PDOException $e) {
             unset($e);
-            if (defined('DEBUG') && DEBUG === true) {
+            if (defined('DEBUG') && DEBUG !== true) {
                 Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);

@@ -10,7 +10,7 @@ class Mail
     private static string $name = 'PHP MVC Users';
     private static string $from = 'no-reply@lucasbrum.net';
 
-    public static function send($to, $name, $subject, $message): string
+    public static function send($to, $name, $subject, $message): bool
     {
         $body = "Name: " . self::$name . "<br />";
         $body .= 'E-mail: ' . self::$from . "<br />";
@@ -18,10 +18,10 @@ class Mail
         $headers = self::makeHeader($to, $name);
         
         if (@mail($to, $subject, $body, $headers)) {
-            return "Successful mail sent to {$to}";
-        } else {
-            return "Error sending mail to {$to}";
+            return true;
         }
+
+        return false;
     }
 
     public static function sendHash($to, $name, $hash): bool
