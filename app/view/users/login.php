@@ -36,7 +36,7 @@
                     </div>
 
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
-                    <input name="submit_login_user" type="submit" class="btn btn-lg btn-warning" value="Confirm account">
+                    <a href="<?php echo URL; ?>users/confirm" class="btn btn-lg btn-warning">Confirm account</a>
                 </form>
             </div>
         </div>
