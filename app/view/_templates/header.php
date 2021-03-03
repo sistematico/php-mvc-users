@@ -15,7 +15,7 @@ $start = $time;
     <link rel="stylesheet" href="<?php echo URL; ?>css/main.css">
     <link rel="shortcut icon" href="<?php echo URL; ?>img/favicon.ico">
 </head>
-<body>
+<body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="navbar-brand" href="<?php echo URL; ?>">

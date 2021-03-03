@@ -24,17 +24,9 @@ class UsersController
     public function profile($id)
     {
         if (isset($id)) {
-            if (isset($_SESSION['logged']) && isset($_SESSION['id']) && $id == $_SESSION['id']) {
-                if ($id == $_SESSION['id']) {
-                    $User = new User();
-                    $user = $User->get($id);
-                } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                    $result = "Forbidden operation";
-                }
-            } else {
-                $result = "User must be logged";
-            }
-        } 
+           $User = new User();
+           $user = $User->get($id);
+        }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/profile.php';
         require APP . 'view/_templates/footer.php';
@@ -112,6 +104,17 @@ class UsersController
         if (isset($_POST["submit_reset_user"])) {
             $User = new User();
             $result = $User->reset($_POST['email']);
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/reset.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    public function confirm()
+    {
+        if (isset($_POST["submit_confirm_user"])) {
+            $User = new User();
+            $result = $User->confirm($_POST['email']);
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';
