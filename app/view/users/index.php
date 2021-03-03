@@ -8,8 +8,8 @@
     </nav>
 
     <h1>Users</h1>
-    <?php if (isset($result)) { ?>
-        <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
+    <?php if (isset($result->message)) { ?>
+        <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
     <?php } ?>
 
     <?php if (isset($users)) { ?>
