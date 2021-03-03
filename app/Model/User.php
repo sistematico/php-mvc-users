@@ -232,7 +232,7 @@ class User extends Model
         return (object) $this->results;
     }
 
-    public function prune()
+    public function prune(): bool|string
     {
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
