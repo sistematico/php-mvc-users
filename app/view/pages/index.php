@@ -3,7 +3,7 @@
     <!-- - `.toast-container` for spacing between toasts -->
     <!-- - `.position-absolute`, `top-0` & `end-0` to position the toasts in the upper right corner -->
     <!-- - `.p-3` to prevent the toasts from sticking to the edge of the container  -->
-    <div class="toast-container position-absolute top-0 end-0 p-10">
+    <div class="toast-container position-absolute">
 
         <!-- Then put toasts within -->
         <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="indexToast">
