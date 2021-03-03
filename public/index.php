@@ -1,5 +1,7 @@
 <?php
 
+use App\Core\Application;
+
 session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
@@ -21,4 +23,4 @@ define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 require APP . 'config' . DIRECTORY_SEPARATOR . 'autoload.php';
 require APP . 'config' . DIRECTORY_SEPARATOR . 'config.php';
 
-$app = new App\Core\Application();
+$app = new Application();
