@@ -22,9 +22,7 @@
         return new bootstrap.Toast(toastEl, toastOptions)
     })
 
-    let result = '<?php echo isset($result) ? $result : ""; ?>';
-
-    if (result !== '') {
+    if (result) {
         toastList.forEach(toast => toast.show())
     }
 })();
