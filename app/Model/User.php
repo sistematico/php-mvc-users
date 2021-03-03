@@ -97,16 +97,16 @@ class User extends Model
             if (DEBUG === true) {
                 return json_encode([
                     'status' => 'success',
-                    'message' => 'Success resetting user $user->user password verification e-mail NOT sent to $user->email, New Hash: $user->hash'
+                    'message' => 'Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}'
                 ]);
             } else {
                 return json_encode([
                     'status' => 'success',
-                    'message' => 'Success resetting user $user->user , verification e-mail sent to $user->email'
+                    'message' => 'Success resetting user $user->user , verification e-mail sent to {$user->email}.'
                 ]);
             }
         } else {
-            return "Error reseting password";
+            return json_encode(['status' => 'error', 'message' => 'Error resetting password.']);
         }
     }
 
