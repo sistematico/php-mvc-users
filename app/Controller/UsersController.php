@@ -6,7 +6,7 @@ use App\Model\User;
 
 class UsersController
 {
-    public $status = '';
+    public string|bool $response = false;
 
     public function index()
     {
