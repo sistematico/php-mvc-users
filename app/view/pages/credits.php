@@ -1,5 +1,6 @@
 <main role="main" class="container">
-    <nav aria-label="breadcrumb" class="mt-2">
+
+    <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
             <li class="breadcrumb-item">Pages</li>
