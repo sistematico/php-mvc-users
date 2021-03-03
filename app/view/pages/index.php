@@ -14,12 +14,12 @@
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
         <div class="toast">
             <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
+                <img src="" class="rounded me-2" alt="...">
                 <strong class="me-auto">Bootstrap</strong>
                 <small>11 mins ago</small>
             </div>
             <div class="toast-body">
-                <?php echo isset($result) ? $result : ''; ?>
+                <?php echo isset($result->message) ? $result->message : ''; ?>
             </div>
         </div>
     </div>
