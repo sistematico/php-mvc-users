@@ -14,14 +14,13 @@ class User extends Model
         $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
-        $result = $query->fetch();
 
-        if ($result === false) {
-            return "User not found.";
+        if (!$result = $query->fetch()) {
+            return json_encode(['status' => 'error', 'message' => 'User not found.']);
         }
 
         if (isset($result->valid) && $result->valid == 0) {
-            return "Validate first";
+            return json_encode(['status' => 'error', 'message' => 'Validate first']);
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
@@ -36,10 +35,10 @@ class User extends Model
             $_SESSION['id'] = $result->id;
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
-            return "User {$result->user} logged in.";
+            return json_encode(['status' => 'success', 'message' => 'User {$result->user} logged in.']);
         } else {
-            return "User / E-mail {$email} not found.";
-        }            
+            return json_encode(['status' => 'error', 'message' => 'User / E-mail {$email} not found.']);
+        }
         
     }
 
