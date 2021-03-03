@@ -10,7 +10,7 @@ class User extends Model
 {
     private array $results = [];
 
-    public function login($email, $password, $remember): object
+    public function login($email, $password, $remember): string
     {
         $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);

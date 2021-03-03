@@ -55,7 +55,9 @@ class UsersController
             if (isset($_POST["submit_login_user"])) {
                 $remember = isset($_POST['remember']);
                 $User = new User();
-                if ($User->login($_POST["email"], $_POST["password"], $remember)->status === 'success') {
+                $result = json_decode($User->login($_POST["email"], $_POST["password"], $remember));
+
+                if ($result->status === 'success') {
                     require APP . 'view/_templates/header.php';
                     require APP . 'view/users/index.php';
                     require APP . 'view/_templates/footer.php';
