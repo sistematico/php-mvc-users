@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-auto">
+            <div class="col-12 col-md-4">
                 <h1>Reset password</h1>
                 <?php if (isset($result)) { $code = explode(' ',trim($result)); ?>
                     <div class="alert alert-primary" role="alert">
