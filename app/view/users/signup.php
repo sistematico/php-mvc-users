@@ -12,17 +12,17 @@
         <div class="row justify-content-md-center">
             <div class="col-5">
                 <h1>Signup</h1>
-                <?php if (isset($result)) { ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
+                <?php if (isset($result->status)) { ?>
+                    <div class="alert alert-primary" role="alert"><?php echo $result->status; ?></div>
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/signup" method="post">
                     <label for="inputLogin" class="sr-only">User</label>
-                    <input name="login" type="text" id="inputLogin" class="form-control mb-3" placeholder="User" <?php echo (isset($result) && strtok($result, ' ') == 'Success' ? 'disabled' : 'required'); ?>>
+                    <input name="login" type="text" id="inputLogin" class="form-control mb-3" placeholder="User" required>
                     <label for="inputEmail" class="sr-only">Email address</label>
-                    <input name="email" type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" <?php echo (isset($result) && strtok($result, ' ') == 'Success' ? 'disabled' : 'required'); ?>>
+                    <input name="email" type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input name="password" type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" <?php echo (isset($result) && strtok($result, ' ') == 'Success' ? 'disabled' : 'required'); ?>>
-                    <input name="submit_signup_user" type="submit" class="btn btn-lg btn-primary" value="Signup" <?php echo (isset($result) && strtok($result, ' ') == 'Success' ? 'disabled' : ''); ?>>
+                    <input name="password" type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required>
+                    <input name="submit_signup_user" type="submit" class="btn btn-lg btn-primary" value="Signup">
                 </form>
             </div>
         </div>

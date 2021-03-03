@@ -13,9 +13,9 @@
             <div class="col-5">
                 <h1>Login</h1>
 
-                <?php if (isset($result->message)): ?>
+                <?php if (isset($result->message)) { ?>
                     <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
-                <?php endif; ?>
+                <?php } ?>
 
                 <form class="form-signin" action="<?php echo URL; ?>users/login" method="post">
                     <label for="email" class="sr-only">Email or Login</label>
