@@ -8,12 +8,16 @@
         let hours = "0" + date.getHours();
         let minutes = "0" + date.getMinutes();
         let seconds = "0" + date.getSeconds();
-        let formattedTime = days.substr(-2) + '/' + months.substr(-2) + '/' + years + ' ' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-        item.innerHTML = formattedTime;
+        item.innerHTML = days.substr(-2) + '/' + months.substr(-2) + '/' + years + ' ' + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     }
 
     let timestamps = document.getElementsByClassName("ts");
     for (let i = 0; i < timestamps.length; i++) {
         unixTimestamp(timestamps[i]);
     }
+
+    let toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    let toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl, option)
+    })
 })();
