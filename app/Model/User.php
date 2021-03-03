@@ -45,14 +45,14 @@ class User extends Model
     public function signup($login, $email, $password): string
     {
         $check = json_decode($this->check($login,$email));
-        if ($check->status !== 'success') {
+        if ($check->status === 'success') {
             return $check;
         }
 
         $ts = time();
         $hash = md5(uniqid(rand(), TRUE));
         
-        if (defined('DEBUG') && DEBUG === true) {
+        if (defined('DEBUG') && DEBUG !== true) {
             $Mail = new Mail();
             $send = $Mail->sendHash($email, $login, $hash);        
 
@@ -165,22 +165,22 @@ class User extends Model
         }
     }
 
-    public function check($login, $email): bool|string
+    public function check($login, $email): string
     {
         $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
         $query->execute([':email' => $email]);
 
         if ($query->fetch() !== false) {
-            return json_encode(['status' => 'error', 'message' => 'E-mail {$email} already exists']);
+            return json_encode(['status' => 'error', 'message' => 'E-mail {$email} already exists'], JSON_FORCE_OBJECT);
         }
 
         $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
-            return json_encode(['status' => 'error', 'message' => 'Username {$login} already exists']);
+            return json_encode(['status' => 'error', 'message' => 'Username {$login} already exists'], JSON_FORCE_OBJECT);
         }
 
-        return json_encode(['status' => 'success']);
+        return json_encode(['status' => 'success'], JSON_FORCE_OBJECT);
     }
 
     public function update($login, $email, $role, $id, $valid, $password)
