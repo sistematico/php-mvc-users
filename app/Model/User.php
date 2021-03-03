@@ -36,9 +36,9 @@ class User extends Model
             $_SESSION['id'] = $result->id;
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
-            return json_encode(['status' => 'success', 'message' => 'User {$result->user} logged in.'], JSON_FORCE_OBJECT);
+            return json_encode(['status' => 'success', 'message' => "User {$result->user} logged in."], JSON_FORCE_OBJECT);
         } else {
-            return json_encode(['status' => 'error', 'message' => 'User / E-mail {$email} not found.'], JSON_FORCE_OBJECT);
+            return json_encode(['status' => 'error', 'message' => "User / E-mail {$email} not found."], JSON_FORCE_OBJECT);
         }
     }
 
