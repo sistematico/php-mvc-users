@@ -46,8 +46,8 @@ class User extends Model
     {
         $check = $this->check($login,$email);
         if (json_decode($check)->status === 'success') {
-            //return $check;
-            var_dump($check);
+            return $check;
+            //var_dump($check);
         }
 
         $ts = time();
