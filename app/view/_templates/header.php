@@ -5,7 +5,7 @@ $time = $time[1] + $time[0];
 $start = $time;
 ?>
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-br" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,7 +27,7 @@ $start = $time;
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo URL; ?>pages/about"><i class="fas fa-address-card"></i> About</a>
                     </li>
