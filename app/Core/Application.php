@@ -16,7 +16,7 @@ class Application
         $this->splitUrl();
 
         if (!$this->url_controller) {
-            $page = new UsersController();
+            $page = new PagesController();
             $page->index();
         } else if (file_exists(APP . 'Controller/' . ucfirst($this->url_controller) . 'Controller.php')) {
             $controller = "\\App\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
