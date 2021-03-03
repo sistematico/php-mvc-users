@@ -18,7 +18,7 @@
     <div class="toast-container position-absolute top-0 end-0 p-3">
 
         <!-- Then put toasts within -->
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="indexToast">
             <div class="toast-header">
                 <img src="..." class="rounded me-2" alt="...">
                 <strong class="me-auto">Bootstrap</strong>
@@ -32,7 +32,3 @@
 
     </div>
 </div>
-
-<script>
-    toast
-</script>
