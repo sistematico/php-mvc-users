@@ -1,23 +1,9 @@
-<div aria-live="polite" aria-atomic="true" class="position-relative" style="z-index: 9999;">
-    <!-- Position it: -->
-    <!-- - `.toast-container` for spacing between toasts -->
-    <!-- - `.position-absolute`, `top-0` & `end-0` to position the toasts in the upper right corner -->
-    <!-- - `.p-3` to prevent the toasts from sticking to the edge of the container  -->
-    <div class="toast-container position-absolute">
-
-        <!-- Then put toasts within -->
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="indexToast">
-            <div class="toast-header">
-                <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
-                <small class="text-muted">just now</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                <?php echo isset($result) ? $result : ""; ?>
-            </div>
+<div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 9999">
+    <div class="d-flex">
+        <div class="toast-body">
+            Hello, world! This is a toast message.
         </div>
-
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
 </div>
 
