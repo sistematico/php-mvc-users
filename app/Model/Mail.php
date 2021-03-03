@@ -5,8 +5,8 @@ namespace App\Model;
 class Mail
 {
 
-    private string $name = 'PHP MVC Users';
-    private string $from = 'no-reply@lucasbrum.net';
+    private static string $name = 'PHP MVC Users';
+    private static string $from = 'no-reply@lucasbrum.net';
 
     public function send($to, $name, $subject, $message): string
     {
@@ -29,16 +29,16 @@ class Mail
         }
     }
 
-    public function sendHash($to, $name, $hash)
+    public static function sendHash($to, $name, $hash)
     {
         $body = 'Welcome to our site!<br /><br />This is your hash: <a href="' . URL . 'users/verify/' . $hash . '">' . $hash . '</a>';
         $subject = 'New registration'; 
 
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";
-        $headers .= "From: Site <" . $this->from . ">\r\n";
+        $headers .= "From: Site <" . self::$from . ">\r\n";
         $headers .= "Reply-To: " . $name . " <" . $to . ">\r\n";
-        $headers .= "Return-Path: Site <" . $this->from . ">\r\n";
+        $headers .= "Return-Path: Site <" . self::$from . ">\r\n";
         $headers .= "X-Priority: 3\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion();
         
