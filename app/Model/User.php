@@ -35,9 +35,9 @@ class User extends Model
             $_SESSION['id'] = $result->id;
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
-            return json_encode(['status' => 'success', 'message' => 'User {$result->user} logged in.']);
+            return json_encode(['status' => 'success', 'message' => 'User {$result->user} logged in.'], JSON_FORCE_OBJECT);
         } else {
-            return json_encode(['status' => 'error', 'message' => 'User / E-mail {$email} not found.']);
+            return json_encode(['status' => 'error', 'message' => 'User / E-mail {$email} not found.'], JSON_FORCE_OBJECT);
         }
     }
 
@@ -67,15 +67,15 @@ class User extends Model
             if (defined('DEBUG') && DEBUG === true) {
                 $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
-            return json_encode(['status' => 'error', 'message' => 'Error adding user {$login}']);
+            return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
 
         if (defined('DEBUG') && DEBUG === true) {
-            return json_encode(['status' => 'success', 'message' => 'Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}']);
+            return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"]);
         } else {
             return json_encode([
                 'status' => 'success',
-                'message' => 'Success adding user ${login}, verification e-mail sent to {$email}'
+                'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
             ]);
         }
     }
@@ -90,14 +90,14 @@ class User extends Model
                 $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
 
                 if ($send === false) {
-                    return json_encode(['status' => 'error', 'message' => 'Error sending e-mail to {$user->email}']);
+                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"]);
                 }
             }
         
             if (DEBUG === true) {
                 return json_encode([
                     'status' => 'success',
-                    'message' => 'Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}'
+                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
                 ]);
             } else {
                 return json_encode([
