@@ -9,8 +9,8 @@
     </nav>
 
     <div class="container text-center">
-        <div class="row justify-content-md-center">
-            <div class="col-5">
+        <div class="row justify-content-md-center text-left">
+            <div class="col-5 text-left">
                 <h1>Login</h1>
 
                 <?php if (isset($result->message)) { ?>
@@ -35,6 +35,7 @@
                         <a href="<?php echo URL; ?>users/reset">Reset your password</a>
                     </div>
 
+                    <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
                 </form>
             </div>
