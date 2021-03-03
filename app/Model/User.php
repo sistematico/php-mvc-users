@@ -53,11 +53,8 @@ class User extends Model
         $hash = md5(uniqid(rand(), TRUE));
         
         if (defined('DEBUG') && DEBUG !== true) {
-            $Mail = new Mail();
-            $send = $Mail->sendHash($email, $login, $hash);        
-
-            if ($send === false) {
-                return "Error sending e-mail to {$email}";
+            if (!Mail::sendHash($email, $login, $hash)) {
+                return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$email}"], JSON_FORCE_OBJECT);
             }
         }
         
