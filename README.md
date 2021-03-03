@@ -35,12 +35,9 @@ server {
     }
 
     location ~ \.php$ {
-        try_files $uri =404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass php:9000;
-        fastcgi_index index.php;
-        include fastcgi_params;
-    }
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    }    
 }
 ```
 
