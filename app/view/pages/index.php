@@ -1,16 +1,4 @@
-<main role="main" class="container">
-
-    <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active">Home</li>
-        </ol>
-    </nav>
-
-    <h1>Index</h1>
-    <p class="lead">Welcome...</p>
-</main>
-
-<div aria-live="polite" aria-atomic="true" class="position-relative">
+<div aria-live="polite" aria-atomic="true" style="z-index: 9999;">
     <!-- Position it: -->
     <!-- - `.toast-container` for spacing between toasts -->
     <!-- - `.position-absolute`, `top-0` & `end-0` to position the toasts in the upper right corner -->
@@ -32,3 +20,14 @@
 
     </div>
 </div>
+
+<main role="main" class="container">
+    <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Home</li>
+        </ol>
+    </nav>
+
+    <h1>Index</h1>
+    <p class="lead">Welcome...</p>
+</main>
