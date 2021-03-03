@@ -32,9 +32,9 @@ class Mail
         
         if (@mail($to, $subject, $body, $headers)) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     #[Pure] public static function makeHeader($to, $name): string

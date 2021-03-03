@@ -66,7 +66,7 @@ class User extends Model
         } catch (PDOException $e) {
             unset($e);
             if (defined('DEBUG') && DEBUG === true) {
-                $Mail->send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
+                Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
             }
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
@@ -220,7 +220,7 @@ class User extends Model
         return $query->fetch()->amount;
     }
 
-    public function search($term)
+    public function search($term): object
     {
         $term = "%" . $term . "%";
         $sql = "SELECT id, user, email, role, temp, valid, access, created FROM user WHERE email LIKE :term OR user LIKE :term";
