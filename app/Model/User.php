@@ -115,7 +115,7 @@ class User extends Model
         $query = $this->db->prepare($sql);
         $query->execute([':hash' => $hash]);
 
-        if ($user = $query->fetch() !== false) {
+        if ($user = $query->fetch() === false) {
             return json_encode(["status" => "error", "message" => "Invalid code"]);
         } else if ($user->valid == 1) {
             return json_encode(['status' => 'error', 'message' => "{$user->email} already validated"], JSON_FORCE_OBJECT);
