@@ -39,7 +39,7 @@ $start = $time;
                     </li>
                     <?php if (!isset($_SESSION['logged'])) { ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> Account
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -49,7 +49,7 @@ $start = $time;
                     </li>
                     <?php } else { ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <?php echo (isset($user->avatar)) ? '<img src=' . URL . $user->avatar . ' />' : '<i class="fas fa-user-circle"></i>'; ?> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
