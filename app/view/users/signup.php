@@ -12,8 +12,8 @@
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-4">
                 <h1>Signup</h1>
-                <?php if (isset($result->status)) { ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result->status; ?></div>
+                <?php if (isset($result->message)) { ?>
+                    <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
                 <?php } ?>
                 <form class="form-signin" action="<?php echo URL; ?>users/signup" method="post">
                     <label for="inputLogin" class="sr-only">User</label>

@@ -72,8 +72,6 @@ class UsersController
             $User = new User();
             $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
 
-            var_dump($result);
-
             if (json_decode($result)->status === 'success') {
                 header('location: ' . URL);
             }
