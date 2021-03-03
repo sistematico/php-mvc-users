@@ -44,8 +44,8 @@ class User extends Model
 
     public function signup($login, $email, $password): string
     {
-        $check = json_decode($this->check($login,$email));
-        if ($check->status === 'success') {
+        $check = $this->check($login,$email);
+        if (json_decode($check)->status === 'success') {
             return $check;
         }
 
