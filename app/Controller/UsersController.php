@@ -83,21 +83,18 @@ class UsersController
 
     public function verify($hash = null)
     {
-        if (!isset($_SESSION['logged'])) {
-            $User = new User();
-
-            if (isset($_POST["submit_verify_user"]) 
-                && isset($_POST["verify"])
-                && !empty($_POST["verify"])) {
-                $hash = trim($_POST["verify"]);
-            } 
-
-            if ($hash) {
-                $result = $User->verify(trim($hash));
-            }
-        } else {
-            $result = "Logout first";
+        if (isset($_SESSION['logged'])) {
+            header('location: ' . URL);
         }
+
+        if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"]) && !empty($_POST["verify"])) {
+            $User = new User();
+            $result = json_decode($User->verify(trim($hash)));
+        } else if ($hash) {
+            $User = new User();
+            $result = json_decode($User->verify(trim($hash)));
+        }
+
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/verify.php';
         require APP . 'view/_templates/footer.php';
