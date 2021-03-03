@@ -64,7 +64,7 @@ class UsersController
 
     public function signup()
     {
-        if (!isset($_SESSION['logged'])) {
+        if (isset($_SESSION['logged'])) {
             header('location: ' . URL);
         }
 
