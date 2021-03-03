@@ -10,6 +10,13 @@ class Mail
     private static string $name = 'PHP MVC Users';
     private static string $from = 'no-reply@lucasbrum.net';
 
+    /**
+     * @param $to
+     * @param $name
+     * @param $subject
+     * @param $message
+     * @return bool
+     */
     public static function send($to, $name, $subject, $message): bool
     {
         $body = "Name: " . self::$name . "<br />";
@@ -24,6 +31,12 @@ class Mail
         return false;
     }
 
+    /**
+     * @param $to
+     * @param $name
+     * @param $hash
+     * @return bool
+     */
     public static function sendHash($to, $name, $hash): bool
     {
         $body = 'Welcome to our site!<br /><br />This is your hash: <a href="' . URL . 'users/verify/' . $hash . '">' . $hash . '</a>';
@@ -37,7 +50,12 @@ class Mail
         return false;
     }
 
-    #[Pure] public static function makeHeader($to, $name): string
+    /**
+     * @param $to
+     * @param $name
+     * @return string
+     */
+    #[Pure] private static function makeHeader($to, $name): string
     {
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";

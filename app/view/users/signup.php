@@ -8,9 +8,9 @@
         </ol>
     </nav>
 
-    <div class="container text-center">
+    <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-5">
+            <div class="col-12 col-md-4">
                 <h1>Signup</h1>
                 <?php if (isset($result->status)) { ?>
                     <div class="alert alert-primary" role="alert"><?php echo $result->status; ?></div>

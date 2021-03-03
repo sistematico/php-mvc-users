@@ -64,7 +64,9 @@ class User extends Model
         } catch (PDOException $e) {
             unset($e);
             if (defined('DEBUG') && DEBUG !== true) {
-                Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.');
+                if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
+                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail."], JSON_FORCE_OBJECT);
+                }
             }
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
@@ -98,7 +100,7 @@ class User extends Model
             } else {
                 return json_encode([
                     'status' => 'success',
-                    'message' => 'Success resetting user $user->user , verification e-mail sent to {$user->email}.'
+                    'message' => "Success resetting user $user->user , verification e-mail sent to {$user->email}."
                 ], JSON_FORCE_OBJECT);
             }
         } else {
