@@ -87,13 +87,13 @@ class User extends Model
         $user = $this->getUserId($email);
         
         if ($user) {
-            if (defined('DEBUG') && DEBUG === true) {
+            if (defined('DEBUG') && DEBUG !== true) {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
             }
-        
-            if (DEBUG === true) {
+
+            if (defined('DEBUG') && DEBUG === true) {
                 return json_encode([
                     'status' => 'success',
                     'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
