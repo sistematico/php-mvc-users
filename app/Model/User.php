@@ -39,7 +39,6 @@ class User extends Model
         } else {
             return json_encode(['status' => 'error', 'message' => 'User / E-mail {$email} not found.']);
         }
-        
     }
 
     public function signup($login, $email, $password): bool|string
@@ -160,11 +159,11 @@ class User extends Model
 
     public function check($login, $email): bool|string
     {
-
         $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
         $query->execute([':email' => $email]);
-        if ($query->fetch() != false) {
-            return "E-mail {$email} already exists";
+
+        if ($query->fetch() !== false) {
+            return json_encode(['status' => 'error', 'message' => 'E-mail {$email} already exists']);
         }
 
         $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
