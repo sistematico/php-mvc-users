@@ -6,14 +6,16 @@ use App\Model\User;
 
 class UsersController
 {
+    public $status = '';
+
     public function index()
     {
         $User = new User();
         if ($User->tableExists() !== true) {
             $User->prune();
         }
-        $users = $User->list();
-        $amount = $User->amount();
+        //$users = $User->list();
+        //$amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';
         require APP . 'view/_templates/footer.php';
@@ -25,7 +27,7 @@ class UsersController
             if (isset($_SESSION['logged']) && isset($_SESSION['id']) && $id == $_SESSION['id']) {
                 if ($id == $_SESSION['id']) {
                     $User = new User();
-                    $user = $User->get($id);
+                    //$user = $User->get($id);
                 } else if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                     $result = "Forbidden operation";
                 }
@@ -53,7 +55,15 @@ class UsersController
             if (isset($_POST["submit_login_user"])) {
                 $remember = isset($_POST['remember']);
                 $User = new User();
-                $result = $User->login($_POST["email"], $_POST["password"], $remember);
+                if ($User->login($_POST["email"], $_POST["password"], $remember)['status'] === 'success') {
+                    require APP . 'view/_templates/header.php';
+                    require APP . 'view/users/index.php';
+                    require APP . 'view/_templates/footer.php';
+                } else {
+                    require APP . 'view/_templates/header.php';
+                    require APP . 'view/users/login.php';
+                    require APP . 'view/_templates/footer.php';
+                }
             }
             require APP . 'view/_templates/header.php';
             require APP . 'view/users/login.php';
