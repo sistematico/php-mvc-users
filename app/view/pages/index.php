@@ -8,14 +8,8 @@
         </ol>
     </nav>
 
-    <h1>About</h1>
-    <p class="lead">
-        This is a simple demonstration project.<br /><br />
-        The user with admin role is <span class="font-weight-bold">admin</span> and the password is <span class="font-weight-bold">admin</span>, for other users the password is <span class="font-weight-bold">password</span>.<br /><br />
-        1- Go to: <a href="<?php echo FULL_URL; ?>users/prune"><?php echo FULL_URL; ?>users/prune</a><br />
-        2- Go to: <a href="<?php echo FULL_URL; ?>users/login"><?php echo FULL_URL; ?>users/login</a><br /><br />
-        Thank you and enjoy.
-    </p>
+    <h1>Index</h1>
+    <p class="lead">Welcome...</p>
 </main>
 
 <div aria-live="polite" aria-atomic="true" class="position-relative">
