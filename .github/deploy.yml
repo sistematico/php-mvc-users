@@ -1,4 +1,4 @@
-name: Deploy PHP App
+name: Deploy
 
 on: [push]
 
@@ -6,14 +6,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy PHP Site
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{secrets.SSH_HOST}}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          git clone git@github.com:sistematico/php-mvc-users.git /var/www/labs.lucasbrum.net/projetos/php-mvc-users
-          cd /var/www/labs.lucasbrum.net/projetos/php-mvc-users
-          git pull
+      - name: Deploy PHP App
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.SSH_HOST}}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            mkdir -p /var/www/users.lucasbrum.net
+            cd /var/www/users.lucasbrum.net
+            #git checkout HEAD^ package-lock.json
+            git pull

@@ -1,6 +1,6 @@
 # PHP MVC SQLite CRUD (Users Version)
 
-![CD](https://github.com/sistematico/php-mvc-users/workflows/Deploy%20PHP%20App/badge.svg?event=push)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sistematico/php-mvc-users/Deploy?label=Github%20Action&logo=github&logoColor=white&style=flat-square)](https://github.com/sistematico/php-mvc-users/actions?query=workflow%3ADeploy)
 
 PHP MVC CRUD using SQLite to create user log-in &amp; signup system
 
