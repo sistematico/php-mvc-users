@@ -19,8 +19,12 @@
                 <small>11 mins ago</small>
             </div>
             <div class="toast-body">
-                Hello, world! This is a toast message.
+                <?php echo isset($result) ? $result : ''; ?>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    let result = "<?php echo isset($result) ? $result : ''; ?>";
+</script>

@@ -22,7 +22,8 @@
         return new bootstrap.Toast(toastEl, toastOptions)
     })
 
-    if (result) {
+
+    if (result != null && result !== '') {
         toastList.forEach(toast => toast.show())
     }
 })();
