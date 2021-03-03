@@ -104,7 +104,7 @@ class UsersController
     {
         if (isset($_POST["submit_reset_user"])) {
             $User = new User();
-            $result = $User->reset($_POST['email']);
+            $result = json_encode($User->reset($_POST['email']));
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';

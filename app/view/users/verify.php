@@ -20,7 +20,7 @@
 
                 <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">
                     <label for="verify" class="sr-only">Verification Code</label>
-                    <input name="verify" type="text" class="form-control mb-3 mr-1" id="verify" placeholder="Verification Code" value="" required />
+                    <input name="verify" type="text" class="form-control mb-3 mr-1" id="verify" placeholder="Verification Code" value="<?php if (isset($hash)) { echo trim($hash); } ?>" required />
                     <button name="submit_verify_user" type="submit" class="btn btn-primary mb-2">Verify</button>
                     <a href="<?php echo URL; ?>users/reset" class="btn btn-danger mb-2">Re-send</a>
                     <a href="<?php echo URL; ?>users/login" class="btn btn-success mb-2">Login</a>
