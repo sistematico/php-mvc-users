@@ -42,7 +42,7 @@ class User extends Model
         }
     }
 
-    public function signup($login, $email, $password): bool|string
+    public function signup($login, $email, $password): string
     {
         $check = json_decode($this->check($login,$email));
         if ($check->status !== 'success') {

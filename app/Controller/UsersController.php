@@ -65,16 +65,20 @@ class UsersController
     public function signup()
     {
         if (!isset($_SESSION['logged'])) {
-            if (isset($_POST["submit_signup_user"])) {
-                $User = new User();
-                $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
-            }
-            require APP . 'view/_templates/header.php';
-            require APP . 'view/users/signup.php';
-            require APP . 'view/_templates/footer.php';
-        } else {
             header('location: ' . URL);
         }
+
+        if (isset($_POST["submit_signup_user"])) {
+            $User = new User();
+            $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
+
+            if ($result->status === 'success') {
+                header('location: ' . URL);
+            }
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/signup.php';
+        require APP . 'view/_templates/footer.php';
     }
 
     public function verify($hash = null)
