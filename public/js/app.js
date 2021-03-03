@@ -16,8 +16,9 @@
         unixTimestamp(timestamps[i]);
     }
 
+    const toastOptions = { animation: true, autohide: true, delay: 5000 }
     let toastElList = [].slice.call(document.querySelectorAll('.toast'))
     let toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toastEl, option)
+        return new bootstrap.Toast(toastEl, toastOptions)
     })
 })();
