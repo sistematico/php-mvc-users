@@ -10,18 +10,18 @@ class User extends Model
 {
     private array $results = [];
 
-    public function login($email, $password, $remember): string
+    public function login($email, $password, $remember): object
     {
         $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
         if (!$result = $query->fetch()) {
-            return json_encode(['status' => 'error', 'message' => 'User not found.']);
+            return json_encode(['status' => 'error', 'message' => 'User not found.'], JSON_FORCE_OBJECT);
         }
 
         if (isset($result->valid) && $result->valid == 0) {
-            return json_encode(['status' => 'error', 'message' => 'Validate first']);
+            return json_encode(['status' => 'error', 'message' => 'Validate first'], JSON_FORCE_OBJECT);
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
