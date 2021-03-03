@@ -239,57 +239,24 @@ class User extends Model
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
         } catch (PDOException $e) {
-            return "Error droping table: " . $e->getMessage();
-        }        
+            return json_encode(["status" => "error", "message" => "Error droping table: " . $e->getMessage()]);
+        }
 
         if (file_exists(SQL_FILE)) {
             $sql = file_get_contents(SQL_FILE);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
-                return "Exception: " . $e->getMessage();
+                return json_encode(["status" => "error", "message" => "Exception: " . $e->getMessage()]);
             }
         } else {
-            return "Database pruned, but file " . SQL_FILE . " not found.";
+            return json_encode(["status" => "error", "message" => "Database pruned, but file " . SQL_FILE . " not found."]);
         }
 
-        return "Database created";
+        return json_encode(["status" => "success", "message" => "Database created"]);
     }
 
-    public function prune2($table = 'user',$file = ROOT . 'users.sql')
-    {
-        try {
-            $this->db->exec("DROP TABLE IF EXISTS $table");
-        } catch (PDOException $e) {
-            return "Error droping table {$table}: " . $e->getMessage();
-        }        
-
-        try {
-            $this->db->exec("CREATE TABLE IF NOT EXISTS $table (id INTEGER PRIMARY KEY, user TEXT, email TEXT, role TEXT, password TEXT, temp TEXT, valid INTEGER)");
-        } catch (PDOException $e) {
-            return "Error creating table {$table}: " . $e->getMessage();
-        }
-
-        if (file_exists($file)) {
-            $sql = file_get_contents($file);
-            $sql = explode("\n", $sql);            
-
-            foreach ($sql as $value) {
-                try {
-                    $value = str_replace("{{TEMPID}}", md5(uniqid(rand(), TRUE)), $value);
-                    $this->db->exec($value);
-                } catch (PDOException $e) {
-                    return "Exception: " . $e->getMessage();
-                }
-            }  
-        } else {
-            return "Database pruned, but file $file not found.";
-        }
-
-        return "Database created";
-    }
-
-    public function tableExists($table = 'user')
+    public function tableExists($table = 'user'): bool
     {
         $sql = "select 1 from $table";
         try {
@@ -299,7 +266,5 @@ class User extends Model
             unset($e);
             return false;
         }
-
-        return false;
     }
 }
