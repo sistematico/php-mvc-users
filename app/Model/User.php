@@ -87,10 +87,7 @@ class User extends Model
         
         if ($user) {
             if (defined('DEBUG') && DEBUG === true) {
-                $Mail = new Mail();
-                $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
-
-                if ($send === false) {
+                if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
             }
