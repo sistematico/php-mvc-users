@@ -26,5 +26,5 @@
 </div>
 
 <script>
-    let result = "<?php echo isset($result) ? $result : ''; ?>";
+    let result = "<?php echo isset($result->status) ? $result->status : ''; ?>";
 </script>
