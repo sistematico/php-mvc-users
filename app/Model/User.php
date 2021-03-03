@@ -6,9 +6,9 @@ use App\Core\Model;
 
 class User extends Model
 {
-    private $results = [];
+    private array $results = [];
 
-    public function login($email, $password, $remember)
+    public function login($email, $password, $remember): string
     {
         $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
@@ -42,7 +42,7 @@ class User extends Model
         
     }
 
-    public function signup($login, $email, $password)
+    public function signup($login, $email, $password): bool|string
     {
         if ($this->check($login,$email) !== false) {
             return $this->check($login,$email);
@@ -78,7 +78,7 @@ class User extends Model
         }
     }
 
-    public function reset($email)
+    public function reset($email): string
     {
         $user = $this->getUserId($email);
         
@@ -102,7 +102,7 @@ class User extends Model
         }
     }
 
-    public function verify($hash)
+    public function verify($hash): string
     {
         $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1";
         $query = $this->db->prepare($sql);
@@ -120,7 +120,7 @@ class User extends Model
         return "Error";        
     }
 
-    public function list()
+    public function list(): object
     {
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM user");
         $query->execute();
