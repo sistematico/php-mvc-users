@@ -51,7 +51,7 @@ class UsersController
     {
         if (!isset($_SESSION['logged'])) {
             if (isset($_POST["submit_login_user"])) {
-                $remember = (isset($_POST['remember']) ? true : false);
+                $remember = isset($_POST['remember']);
                 $User = new User();
                 $result = $User->login($_POST["email"], $_POST["password"], $remember);
             }
