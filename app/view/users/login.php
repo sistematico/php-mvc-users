@@ -8,9 +8,9 @@
         </ol>
     </nav>
 
-    <div class="container text-center">
-        <div class="row justify-content-md-center text-left">
-            <div class="col-5 text-left">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-4">
                 <h1>Login</h1>
 
                 <?php if (isset($result->message)) { ?>
@@ -36,7 +36,7 @@
                     </div>
 
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
-                    <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
+                    <input name="submit_login_user" type="submit" class="btn btn-lg btn-warning" value="Confirm account">
                 </form>
             </div>
         </div>
