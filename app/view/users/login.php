@@ -13,18 +13,14 @@
             <div class="col-5">
                 <h1>Login</h1>
 
-                <?php 
-                    if (isset($result)) { 
-                        $code = explode(' ',trim($result));
-                        //logged
-                ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result; ?></div>
-                <?php } ?>
+                <?php if (isset($result->message)): ?>
+                    <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
+                <?php endif; ?>
 
                 <form class="form-signin" action="<?php echo URL; ?>users/login" method="post">
-                    <label for="inputEmail" class="sr-only">Email or Login</label>
+                    <label for="email" class="sr-only">Email or Login</label>
                     <input name="email" type="text" id="email" class="form-control mb-3" placeholder="Email or login" value="<?php if (isset($_POST['email'])) { echo $_POST['email']; } ?>">
-                    <label for="inputPassword" class="sr-only">Password</label>
+                    <label for="password" class="sr-only">Password</label>
                     <input name="password" type="password" id="password" class="form-control" placeholder="Password" aria-describedby="passwordHelp" value="<?php if (isset($_POST['password'])) { echo $_POST['password']; } ?>">
                     <small id="passwordHelp" class="form-text text-muted mb-3">
                         Before login, please check your e-mail and/or <a href="<?php echo URL; ?>users/verify">verify</a> your account.
