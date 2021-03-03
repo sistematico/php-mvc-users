@@ -71,12 +71,12 @@ class User extends Model
         }
 
         if (defined('DEBUG') && DEBUG === true) {
-            return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"]);
+            return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"], JSON_FORCE_OBJECT);
         } else {
             return json_encode([
                 'status' => 'success',
                 'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
-            ]);
+            ], JSON_FORCE_OBJECT);
         }
     }
 
@@ -90,7 +90,7 @@ class User extends Model
                 $send = $Mail->sendHash($user->email, $user->user, $user->hash);        
 
                 if ($send === false) {
-                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"]);
+                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
             }
         
@@ -98,15 +98,15 @@ class User extends Model
                 return json_encode([
                     'status' => 'success',
                     'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
-                ]);
+                ], JSON_FORCE_OBJECT);
             } else {
                 return json_encode([
                     'status' => 'success',
                     'message' => 'Success resetting user $user->user , verification e-mail sent to {$user->email}.'
-                ]);
+                ], JSON_FORCE_OBJECT);
             }
         } else {
-            return json_encode(['status' => 'error', 'message' => 'Error resetting password.']);
+            return json_encode(['status' => 'error', 'message' => 'Error resetting password.'], JSON_FORCE_OBJECT);
         }
     }
 
@@ -118,14 +118,14 @@ class User extends Model
         $user = $query->fetch();
 
         if ($user == false) {
-            return "Invalid code";
+            return json_encode(["status" => "error", "message" => "Invalid code"]);
         } else if ($user->valid == 1) {
-            return "{$user->email} already validated";
+            return json_encode(['status' => 'error', 'message' => "{$user->email} already validated"], JSON_FORCE_OBJECT);
         } else if ($user->id && $hash === $user->temp) {
             $this->validate($user->id);
-            return "{$user->email} sucessful validated";
-        } 
-        return "Error";        
+            return json_encode(['status' => 'success', 'message' => "{$user->email} successful validated"], JSON_FORCE_OBJECT);
+        }
+        return json_encode(['status' => 'error', 'message' => 'Undefined error.'], JSON_FORCE_OBJECT);
     }
 
     public function list(): object
