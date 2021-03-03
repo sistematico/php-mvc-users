@@ -115,7 +115,7 @@ class UsersController
     {
         if (isset($_POST["submit_confirm_user"])) {
             $User = new User();
-            $result = $User->confirm($_POST['email']);
+            $result = json_decode($User->confirm($_POST['email']));
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';
