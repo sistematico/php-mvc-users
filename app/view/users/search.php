@@ -1,11 +1,13 @@
 <main role="main" class="container">
-    <nav aria-label="breadcrumb" class="mt-2">
+
+    <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
             <li class="breadcrumb-item"><a href="<?php echo URL; ?>users">Users</a></li>
             <li class="breadcrumb-item active" aria-current="page">Search</li>
         </ol>
     </nav>
+
     <h1>Search</h1>
     <?php if (isset($users)) { ?>
         <table class="table table-striped table-dark">
