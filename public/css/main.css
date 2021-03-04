@@ -36,12 +36,16 @@ td .fa-search {
 }
 
 .hamburger {
-    color: #fff;
     padding: 0;
 }
 
 .hamburger-box {
     color: #fff;
+    padding-top: 2rem;
+}
+
+.hamburger-inner {
+    /*background-color: #fff;*/
     padding: 0;
 }
 
