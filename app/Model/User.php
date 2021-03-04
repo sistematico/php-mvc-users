@@ -136,6 +136,10 @@ class User extends Model
 
     public function delete($id)
     {
+        if ($id === 1) {
+            return ['status' => 'error', 'class' => 'danger', 'message' => 'You cannot delete admin account!'];
+        }
+
         try {
             $sql = "DELETE FROM " . USERS_TABLE . " WHERE id = :id";
             $query = $this->db->prepare($sql);
