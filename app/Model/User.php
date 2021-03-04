@@ -232,7 +232,7 @@ class User extends Model
         return (object) $this->results;
     }
 
-    public function prune(): bool|string
+    public function prune(): string
     {
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
@@ -251,18 +251,6 @@ class User extends Model
             return json_encode(["status" => "error", "message" => "Database pruned, but file " . SQL_FILE . " not found."]);
         }
 
-        return json_encode(["status" => "success", "message" => "Database created"]);
-    }
-
-    public function tableExists($table = 'user'): bool
-    {
-        $sql = "select 1 from $table";
-        try {
-            $this->db->exec($sql);
-            return true;
-        } catch(PDOException $e) {
-            unset($e);
-            return false;
-        }
+        return json_encode(["status" => "success", "message" => "Database pruned & created."]);
     }
 }
