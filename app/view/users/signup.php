@@ -16,8 +16,8 @@
                     <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
                 <?php } ?>
 
-                <label for="inputLogin" class="sr-only">User</label>
-                <input name="login" type="text" id="inputLogin" class="form-control mb-3" placeholder="User" required>
+                    <label for="inputLogin" class="sr-only">User</label>
+                    <input name="login" type="text" id="inputLogin" class="form-control mb-3" placeholder="User" required>
                     <label for="inputEmail" class="sr-only">Email address</label>
                     <input name="email" type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required>
                     <label for="inputPassword" class="sr-only">Password</label>
@@ -27,8 +27,8 @@
 
                 <form action="<?php echo URL; ?>users/signup" method="post">
                     <div class="mb-3">
-                        <label for="email" class="form-label">E-mail address</label>
-                        <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email or login" value="<?php if (isset($_POST['email'])) { echo $_POST['email']; } ?>">
+                        <label for="login" class="form-label">Username</label>
+                        <input name="login" type="text" class="form-control" id="login" aria-describedby="loginHelp" placeholder="Username" value="<?php echo $_POST['email'] ?? $_POST['email']; ?>">
                         <div id="emailHelp" class="form-text">
                             We'll never share your email with anyone else.
                         </div>
