@@ -5,9 +5,9 @@ define('DEBUG', true);
 
 $teste = dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env';
 $config = parse_ini_file(__DIR__ . '.env');
-$name = $_GET['name'] ?? 'john doe';
+$mode = $config['MODE'] ?? 'development';
 
-if (defined('DEBUG') && DEBUG === true) {
+if ($mode === 'development') {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 }
