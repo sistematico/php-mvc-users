@@ -217,16 +217,16 @@ class User extends Model
         $query->execute([':email' => $email]);
 
         if ($query->fetch() !== false) {
-            return ['status' => 'error', 'message' => 'E-mail {$email} already exists'];
+            return ['status' => 'error', 'message' => "E-mail {$email} already exists"];
         }
 
         $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
-            return ['status' => 'error', 'message' => 'Username {$login} already exists'];
+            return ['status' => 'error', 'message' => "Username {$login} already exists"];
         }
 
-        return ['status' => 'success', 'message' => 'Username not exist.'];
+        return ['status' => 'success', 'message' => "Username and email not exist in our database."];
     }
 
     public function prune(): array
