@@ -206,6 +206,18 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
+    public function validate($id)
+    {
+        if (isset($id) && is_numeric($id)) {
+            $User = new User();
+            $toast = $User->validate((int) $id);
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function logged()
     {
         if (isset($_SESSION['logged'])) {
