@@ -3,7 +3,8 @@
 // Change to false in production, this disable e-mail function
 define('DEBUG', true);
 
-parse_ini_file()
+$config = parse_ini_file();
+$name = $_GET['name'] ?? 'john doe';
 
 if (defined('DEBUG') && DEBUG === true) {
     ini_set('display_errors', 'On');
