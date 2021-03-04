@@ -49,8 +49,8 @@ $start = $time;
                                 <i class="fas fa-user-circle"></i> Account
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?php echo URL; ?>users/login">Login</a>
-                                <a class="dropdown-item" href="<?php echo URL; ?>users/signup">Signup</a>
+                                <a class="dropdown-item" href="<?php echo URL; ?>users/login"><i class="fas fa-user"></i> Login</a>
+                                <a class="dropdown-item" href="<?php echo URL; ?>users/signup"><i class="fas fa-user-plus"></i> Signup</a>
                             </div>
                         </li>
                         <?php } else { ?>
