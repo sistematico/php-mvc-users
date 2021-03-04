@@ -37,7 +37,7 @@
                             <span class="badge badge-success">user</span>
                         <?php } ?>
                     </td>
-                    <?php if (DEBUG === true) { ?>
+                    <?php if (MODE === 'development') { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : 'SEM HASH'); ?></td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>

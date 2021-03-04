@@ -53,7 +53,7 @@ class User extends Model
         $ts = time();
         $hash = md5(uniqid(rand(), TRUE));
         
-        if (defined('DEBUG') && DEBUG !== true) {
+        if (MODE === 'development') {
             if (!Mail::sendHash($email, $login, $hash)) {
                 return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$email}"], JSON_FORCE_OBJECT);
             }

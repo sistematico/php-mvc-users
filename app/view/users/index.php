@@ -21,7 +21,7 @@
                 <th scope="col">Login</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Role</th>
-                <?php if (defined('DEBUG') && DEBUG === true) { ?>
+                <?php if (MODE === 'development') { ?>
                 <th scope="col">TMP Hash</th>
                 <th scope="col">Hash</th>
                 <?php } ?>
@@ -44,7 +44,7 @@
                             <span class="badge badge-success">user</span>
                         <?php } ?>
                     </td>
-                    <?php if (defined('DEBUG') && DEBUG === true) { ?>
+                    <?php if (MODE === 'development') { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : ''); ?></td>
                     <td>
                         <span class="d-inline-block text-truncate" style="max-width: 150px;">
