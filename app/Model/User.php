@@ -54,19 +54,14 @@ class User extends Model
 
         $ts = time();
         $hash = md5(uniqid(rand(), TRUE));
-        
-        if (MODE !== 'development') {
-            if (!Mail::sendHash($email, $login, $hash)) {
-                return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$email}"], JSON_FORCE_OBJECT);
-            }
-        }
-        
+        unset($_SESSION['last_message'], $_SESSION['last_class']);
+
         try {
             $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
         } catch (PDOException $e) {
             unset($e);
-            if (MODE === 'development') {
+            if (MODE !== 'development') {
                 if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail."], JSON_FORCE_OBJECT);
                 }
@@ -74,11 +69,12 @@ class User extends Model
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
 
-        unset($_SESSION['last_message'], $_SESSION['last_class']);
-
         if (MODE === 'development') {
             return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"], JSON_FORCE_OBJECT);
         } else {
+            if (!Mail::sendHash($email, $login, $hash)) {
+                return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$email}"], JSON_FORCE_OBJECT);
+            }
             return json_encode([
                 'status' => 'success',
                 'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
@@ -143,8 +139,7 @@ class User extends Model
 
     public function get($id)
     {
-        $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1";
-        $query = $this->db->prepare($sql);
+        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1");
         $query->execute([':id' => $id]);
         return $query->fetch();
     }
