@@ -43,7 +43,7 @@ class User extends Model
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
 
-            return ['status' => 'error', 'class' => 'success', 'message' => "User {$result->user} logged in."];
+            return ['status' => 'success', 'class' => 'success', 'message' => "User {$result->user} logged in."];
         } else {
             return ['status' => 'error', 'class' => 'danger', 'message' => "User / E-mail {$email} not found."];
         }
