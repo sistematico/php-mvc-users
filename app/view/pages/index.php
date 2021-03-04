@@ -10,6 +10,7 @@
     <p class="lead">Welcome...</p>
 </main>
 
+<?php if (isset($result->message)) { ?>
 <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
         <div class="toast">
@@ -19,12 +20,9 @@
                 <small>11 mins ago</small>
             </div>
             <div class="toast-body">
-                <?php echo isset($result->message) ? $result->message : ''; ?>
+                <?php echo $result->message; ?>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    let result = "<?php echo isset($result->status) ? $result->status : ''; ?>";
-</script>
+<?php } ?>
