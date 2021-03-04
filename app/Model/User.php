@@ -238,8 +238,10 @@ class User extends Model
         }
 
         if (file_exists(SQL_FILE)) {
+            $ts = time();
+            $hash = md5(uniqid(rand(), TRUE));
             $sql = file_get_contents(SQL_FILE);
-            $sql = str_replace('{{TEMPID}}',"\n",$string);
+            $sql = str_replace('{{TEMPID}}',"{$hash}", $sql);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
