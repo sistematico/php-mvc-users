@@ -234,7 +234,7 @@ class User extends Model
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
         } catch (PDOException $e) {
-            return ["status" => "error", "message" => "Error droping table: " . $e->getMessage()];
+            return ["status" => "error", "message" => "Error dropping table: " . $e->getMessage()];
         }
 
         if (file_exists(SQL_FILE)) {
