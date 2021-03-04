@@ -75,6 +75,8 @@ class User extends Model
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
 
+        unset($_SESSION['last_message'], $_SESSION['last_class']);
+
         if (MODE === 'development') {
             return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"], JSON_FORCE_OBJECT);
         } else {

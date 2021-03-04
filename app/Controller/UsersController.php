@@ -67,15 +67,14 @@ class UsersController
 
         setcookie('id', '', time() - 3600);
         setcookie('user', '', time() - 3600);
-        //setcookie('user', null, -1, '/');
-        //setcookie('user', null, -1);
-
 
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
             $result = (object) ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
         } else {
             $result = (object) ['status' => 'error', 'message' => "You not logged."];
         }
+
+        $toast = $result;
 
         require APP . 'view/_templates/header.php';
         require APP . 'view/pages/index.php';
