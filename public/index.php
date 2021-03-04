@@ -14,7 +14,7 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
         session_unset();
         session_destroy();
         session_start();
-        $toast = (object) ['status' => 'success', 'class' => 'text-white bg-danger border-0', 'message' => 'Automatically logged out due to downtime.'];
+        $toast = (object) ['status' => 'success', 'class' => 'text-white bg-danger border-0', 'message' => 'Automatically logged out due to afk.'];
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }
