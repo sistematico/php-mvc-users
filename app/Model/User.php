@@ -10,18 +10,18 @@ class User extends Model
 {
     private array $results = [];
 
-    public function login($email, $password, $remember): string
+    public function login($email, $password, $remember): array
     {
         $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
         if (!$result = $query->fetch()) {
-            return json_encode(['status' => 'error', 'message' => 'User not found.'], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => 'User not found.'];
         }
 
         if (isset($result->valid) && $result->valid == 0) {
-            return json_encode(['status' => 'error', 'message' => 'Validate first'], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => 'Validate first'];
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
@@ -39,9 +39,9 @@ class User extends Model
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
 
-            return json_encode(['status' => 'success', 'message' => "User {$result->user} logged in."], JSON_FORCE_OBJECT);
+            return ['status' => 'success', 'message' => "User {$result->user} logged in."];
         } else {
-            return json_encode(['status' => 'error', 'message' => "User / E-mail {$email} not found."], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => "User / E-mail {$email} not found."];
         }
     }
 
@@ -82,42 +82,42 @@ class User extends Model
         }
     }
 
-    public function reset($email): string
+    public function reset($email): array
     {
         if ($user = $this->getUserId($email)) {
             if (MODE !== 'development') {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
-                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
+                    return ['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"];
                 }
-                return json_encode([
+                return [
                     'status' => 'success',
                     'message' => "Success resetting user $user->user , verification e-mail sent to {$user->email}."
-                ], JSON_FORCE_OBJECT);
+                ];
             } else  {
-                return json_encode([
+                return [
                     'status' => 'success',
                     'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
-                ], JSON_FORCE_OBJECT);
+                ];
             }
         } else {
-            return json_encode(['status' => 'error', 'message' => 'Error resetting password.'], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => 'Error resetting password.'];
         }
     }
 
-    public function verify($hash): string
+    public function verify($hash): array
     {
         $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1");
         $query->execute([':hash' => $hash]);
 
         if (!$user = $query->fetch()) {
-            return json_encode(["status" => "error", "message" => "Invalid code"]);
+            return ["status" => "error", "message" => "Invalid code"];
         } else if ($user->valid == 1) {
-            return json_encode(['status' => 'error', 'message' => "{$user->email} already validated"], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => "{$user->email} already validated"];
         } else if ($user->id && $hash === $user->temp) {
             $this->validate($user->id);
-            return json_encode(['status' => 'success', 'message' => "{$user->email} successful validated"], JSON_FORCE_OBJECT);
+            return ['status' => 'success', 'message' => "{$user->email} successful validated"];
         }
-        return json_encode(['status' => 'error', 'message' => 'Undefined error.'], JSON_FORCE_OBJECT);
+        return ['status' => 'error', 'message' => 'Undefined error.'];
     }
 
     public function list(): object
@@ -161,22 +161,22 @@ class User extends Model
         }
     }
 
-    public function check($login, $email): string
+    public function check($login, $email): array
     {
         $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
         $query->execute([':email' => $email]);
 
         if ($query->fetch() !== false) {
-            return json_encode(['status' => 'error', 'message' => 'E-mail {$email} already exists'], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => 'E-mail {$email} already exists'];
         }
 
         $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
-            return json_encode(['status' => 'error', 'message' => 'Username {$login} already exists'], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => 'Username {$login} already exists'];
         }
 
-        return json_encode(['status' => 'success'], JSON_FORCE_OBJECT);
+        return ['status' => 'success'];
     }
 
     public function update($login, $email, $role, $id, $valid, $password)
@@ -229,12 +229,12 @@ class User extends Model
         return (object) $this->results;
     }
 
-    public function prune(): string
+    public function prune(): array
     {
         try {
             $this->db->exec('DROP TABLE IF EXISTS user');
         } catch (PDOException $e) {
-            return json_encode(["status" => "error", "message" => "Error droping table: " . $e->getMessage()]);
+            return ["status" => "error", "message" => "Error droping table: " . $e->getMessage()];
         }
 
         if (file_exists(SQL_FILE)) {
@@ -242,12 +242,12 @@ class User extends Model
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
-                return json_encode(["status" => "error", "message" => "Exception: " . $e->getMessage()]);
+                return ["status" => "error", "message" => "Exception: " . $e->getMessage()];
             }
         } else {
-            return json_encode(["status" => "error", "message" => "Database pruned, but file " . SQL_FILE . " not found."]);
+            return ["status" => "error", "message" => "Database pruned, but file " . SQL_FILE . " not found."];
         }
 
-        return json_encode(["status" => "success", "message" => "Database pruned & created."]);
+        return ["status" => "success", "message" => "Database pruned & created."];
     }
 }
