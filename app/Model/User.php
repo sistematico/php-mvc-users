@@ -21,7 +21,11 @@ class User extends Model
         }
 
         if (isset($result->valid) && $result->valid == 0) {
-            return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate first', 'hash_code' => $result->tmphash];
+            if (MODE === 'development') {
+                return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate your account first.', 'hash_code' => $result->temp];
+            } else {
+                return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate your account first.'];
+            }
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
@@ -70,7 +74,7 @@ class User extends Model
         }
 
         if (MODE === 'development') {
-            return ['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"];
+            return ['status' => 'success', 'message' => "Success adding user <strong>${login}</strong>.<br />Verification e-mail NOT sent to <strong>{$email}</strong>,<br /> Hash: <strong>{$hash}</strong>"];
         } else {
             if (!Mail::sendHash($email, $login, $hash)) {
                 return ['status' => 'error', 'message' => "Error sending e-mail to {$email}"];
