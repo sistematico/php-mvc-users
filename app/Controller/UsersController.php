@@ -153,10 +153,11 @@ class UsersController
 
     public function delete($id)
     {
+        $User = new User();
+
         if (isset($id)) {
             if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                $User = new User();
-                $toast = $User->delete($id);
+                $toast = $User->delete((int) $id);
 
                 if ($_SESSION['id'] == $id) {
                     unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
@@ -166,7 +167,6 @@ class UsersController
             }    
         }
 
-        $User = new User();
         $users = $User->list();
         $amount = $User->amount();
 
