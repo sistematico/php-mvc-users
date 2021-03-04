@@ -29,14 +29,13 @@ class User extends Model
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
+            $this->logout();
             $this->access($result->id);
 
             if ($remember !== false) {
                 setcookie("id", $result->id, time() + (86400 * 30), "/");
                 setcookie("user", $result->user, time() + (86400 * 30), "/");
             }
-
-            unset($_SESSION['last_message'], $_SESSION['last_class']);
 
             $_SESSION['logged'] = true;
             $_SESSION['id'] = $result->id;
@@ -61,7 +60,21 @@ class User extends Model
         setcookie('user', '', time() - 3600);
         setcookie('PHPSESSID', '', time() - 3600);
 
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+        unset(
+            $_COOKIE['id'],
+            $_COOKIE['user'],
+            $_COOKIE['role'],
+            $_SESSION['logged'],
+            $_SESSION['id'],
+            $_SESSION['user'],
+            $_SESSION['role'],
+            $_SESSION['last_message'],
+            $_SESSION['last_class']
+        );
+
+        session_unset();
+        session_destroy();
+        session_start();
 
         return $result;
     }
