@@ -35,6 +35,18 @@ td .fa-search {
     color: white;
 }
 
+.hamburger {
+    color: #fff;
+    padding: 0;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 .footer {
     position: absolute;
     bottom: 0;
