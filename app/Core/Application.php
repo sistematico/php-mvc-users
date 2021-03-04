@@ -9,10 +9,11 @@ class Application
     private $url_controller = null;
     private $url_action = '';
     private $url_params = array();
-    private object $toast = new stdClass();
+    public object $toast = new stdClass();
 
     public function __construct($toast = [])
     {
+        $this->toast = (object) $toast;
         $this->splitUrl();
 
         if (!$this->url_controller) {

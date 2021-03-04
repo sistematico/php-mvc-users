@@ -27,13 +27,13 @@
 </div>
 <?php } ?>
 
-<?php if (isset($toast->message)) { ?>
+<?php if (isset($this->toast->message)) { ?>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-absolute p-3 bottom-0 end-0">
-            <div class="toast align-items-center <?php echo $toast->class ?? 'text-white bg-primary'; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast align-items-center <?php echo $this->toast->class ?? 'text-white bg-primary'; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
-                        <?php echo $toast->message; ?>
+                        <?php echo $this->toast->message; ?>
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
