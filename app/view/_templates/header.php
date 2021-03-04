@@ -9,11 +9,7 @@ $start = $time;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta property="og:title" content="titulo" />
-    <meta property="og:description" content="descrição" />
-    <meta property="og:type" content="website" />",
-    <meta property="og:url" content="http://site.com" />
-    <meta property="og:image" content="img/logo.png" />
+
     <title>PHP MVC Users</title>
     <link rel="stylesheet" href="<?php echo URL; ?>css/bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo URL; ?>css/fontawesome.min.css">
