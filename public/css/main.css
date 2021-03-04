@@ -40,6 +40,11 @@ td .fa-search {
     padding: 0;
 }
 
+.hamburger-box {
+    color: #fff;
+    padding: 0;
+}
+
 .navbar-toggler:focus,
 .navbar-toggler:active,
 .navbar-toggler-icon:focus {
