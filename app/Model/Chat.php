@@ -14,7 +14,7 @@ class Chat extends Model
         $query->execute([':user_id' => 1, ':message' => $message, ':timestamp' => time()]);
     }
 
-    public function list(): object
+    public function list(): array
     {
         $query = $this->db->prepare("SELECT id, user_id, message, timestamp FROM " . CHAT_TABLE . "");
         $query->execute();
@@ -26,31 +26,8 @@ class Chat extends Model
 
     public function delete($id)
     {
-        if (isset($_SESSION['role']) && $_SESSION['role'] != 'admin') {
-            if (isset($_SESSION['id']) && $id != $_SESSION['id']) {
-                return ['status' => 'error', 'class' => 'danger', 'message' => '2 You don\'t have permissions to delete this account!'];
-            }
-        }
-
-        if ($id === 1) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => 'You cannot delete admin account!'];
-        }
-
-        try {
-            $sql = "DELETE FROM " . USERS_TABLE . " WHERE id = :id";
-            $query = $this->db->prepare($sql);
-            $query->execute([':id' => $id]);
-        } catch (PDOException $e) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "Error deleting user id: {$id}"];
-        }
-
-        if ($_SESSION['id'] == $id) {
-            unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
-            setcookie("id", "", time() - 3600);
-            setcookie("user", "", time() - 3600);
-        }
-
-        return ['status' => 'success', 'class' => 'success', 'message' => "User ID: {$id} deleted."];
+        $query = $this->db->prepare("DELETE FROM " . CHAT_TABLE . " WHERE id = :id");
+        $query->execute([':id' => $id]);
     }
 
     public function get($id)
@@ -65,122 +42,11 @@ class Chat extends Model
         }
     }
 
-    public function getUserId($email): bool
-    {
-        try {
-            $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM " . USERS_TABLE . " WHERE email = :email OR user = :email LIMIT 1");
-            $query->execute([':email' => $email]);
-            return $query->fetch();
-        } catch (PDOException $e) {
-            unset($e);
-            return false;
-        }
-    }
-
-    public function update($login, $email, $role, $id, $valid, $password)
-    {
-        $_SESSION['user'] = $login;
-        
-        $sql = "UPDATE " . USERS_TABLE . " SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
-        $params = [':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id];
-        
-        if ($password != null && strlen($password) > 0) {
-            $temp = md5(uniqid(rand(), TRUE));
-            $sql = "UPDATE " . USERS_TABLE . " SET user = :user, email = :email, role = :role, password = :password, temp = :temp, valid = :valid WHERE id = :id";
-            $params = [':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id];
-        }
-
-        try {
-            $query = $this->db->prepare($sql);
-            $query->execute($params);
-        } catch (PDOException $e) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "Error editing user {$login}: " . $e->getMessage()];
-        }
-
-        return ['status' => 'error', 'class' => 'success', 'message' => "User {$login} sucessfull updated."];
-    }
-
-    public function access($id)
-    {
-        $query = $this->db->prepare("UPDATE " . USERS_TABLE . " SET access = :access WHERE id = :id");
-        $query->execute([':id' => $id, ':access' => time()]);
-    }
-
-    public function validate($id)
-    {
-        $sql = "UPDATE " . USERS_TABLE . " SET temp = :hash, valid = :valid WHERE id = :id";
-        $query = $this->db->prepare($sql);
-
-        if ($this->get($id)->valid == 1) {
-            $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 0, ':id' => $id]);
-        } else {
-            $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);
-        }
-    }
-
     public function amount()
     {
-        $sql = "SELECT COUNT(id) AS amount FROM " . USERS_TABLE . ";";
+        $sql = "SELECT COUNT(id) AS amount FROM " . CHAT_TABLE . ";";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetch()->amount;
-    }
-
-    public function search($term): object
-    {
-        $term = "%" . $term . "%";
-        $sql = "SELECT id, user, email, role, temp, valid, access, created FROM " . USERS_TABLE . " WHERE email LIKE :term OR user LIKE :term";
-        $query = $this->db->prepare($sql);
-        $query->execute([':term' => $term]);
-        while ($row = $query->fetch()) {
-            $this->results[] = $row;
-        }
-        return (object) $this->results;
-    }
-
-    public function check($login, $email): array
-    {
-        $query = $this->db->prepare("SELECT id FROM " . USERS_TABLE . " WHERE email = :email LIMIT 1");
-        $query->execute([':email' => $email]);
-
-        if ($query->fetch() !== false) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "E-mail {$email} already exists"];
-        }
-
-        $query = $this->db->prepare("SELECT id FROM " . USERS_TABLE . " WHERE user = :user LIMIT 1");
-        $query->execute([':user' => $login]);
-        if ($query->fetch() != false) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "Username {$login} already exists"];
-        }
-
-        return ['status' => 'error', 'class' => 'success', 'message' => "Username and email not exist in our database."];
-    }
-
-    public function prune(): array
-    {
-        try {
-            $this->db->exec('DROP TABLE IF EXISTS user');
-        } catch (PDOException $e) {
-            return ["status" => "error", "message" => "Error dropping table: " . $e->getMessage()];
-        }
-
-        if (file_exists(SQL_FILE)) {
-            $ts = time();
-            $hash = md5(uniqid(rand(), TRUE));
-            $sql = file_get_contents(SQL_FILE);
-            $sql = str_replace('{{TEMPID}}',"{$hash}", $sql);
-            $sql = str_replace('{{CREATED}}',"{$ts}", $sql);
-            $sql = str_replace('{{USERS_TABLE}}',USERS_TABLE, $sql);
-            $sql = str_replace('{{CHAT_TABLE}}',CHAT_TABLE, $sql);
-            try {
-                $this->db->exec($sql);
-            } catch (PDOException $e) {
-                return ["status" => "error", "message" => "Exception: " . $e->getMessage()];
-            }
-        } else {
-            return ["status" => "error", "message" => "Database pruned, but file " . SQL_FILE . " not found."];
-        }
-
-        return ["status" => "success", "message" => "Database pruned & created."];
     }
 }
