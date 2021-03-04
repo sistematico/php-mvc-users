@@ -140,8 +140,6 @@ class User extends Model
             if (isset($_SESSION['id']) && $id != $_SESSION['id']) {
                 return ['status' => 'error', 'class' => 'danger', 'message' => '2 You don\'t have permissions to delete this account!'];
             }
-
-            return ['status' => 'error', 'class' => 'danger', 'message' => '1 You don\'t have permissions to delete this account!'];
         }
 
         if ($id === 1) {
