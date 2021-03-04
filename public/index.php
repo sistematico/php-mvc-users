@@ -2,7 +2,7 @@
 
 $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 define('MODE', $config['MODE'] ?? 'development');
-define('SESSIONLIMIT', $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
+define('SESSIONLIMIT', (int) $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
 
 use App\Core\Application;
 
@@ -30,4 +30,4 @@ define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 require APP . DIRECTORY_SEPARATOR . 'autoload.php';
 require APP . DIRECTORY_SEPARATOR . 'config.php';
 
-$app = new Application($toast = []);
+$app = new Application();
