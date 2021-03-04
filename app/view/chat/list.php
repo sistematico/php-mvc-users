@@ -9,7 +9,7 @@
 
     <h1>Chat</h1>
 
-    <?php     
+    <?php
         if (isset($messages)) {
             foreach ($messages as $message) {
                 echo $message['message'];
