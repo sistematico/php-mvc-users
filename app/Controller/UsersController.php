@@ -156,7 +156,7 @@ class UsersController
         if (isset($id)) {
             if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 $User = new User();
-                $User->delete($id);
+                $toast = $User->delete($id);
 
                 if ($_SESSION['id'] == $id) {
                     unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
@@ -165,7 +165,14 @@ class UsersController
                 }
             }    
         }
-        header('location: ' . URL . 'users/index');
+
+        $User = new User();
+        $users = $User->list();
+        $amount = $User->amount();
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/index.php';
+        require APP . 'view/_templates/footer.php';
     }
 
     public function edit($id)
