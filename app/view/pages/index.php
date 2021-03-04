@@ -26,3 +26,20 @@
     </div>
 </div>
 <?php } ?>
+
+<?php if (isset($toast->message)) { ?>
+    <div aria-live="polite" aria-atomic="true" class="position-relative <?php echo $toast->class ?? 'bg-dark'; ?>">
+        <div class="toast-container position-absolute p-3 bottom-0 end-0">
+            <div class="toast">
+                <div class="toast-header">
+                    <img src="<?php echo URL; ?>img/silhouette.png" class="rounded me-2" alt="PHP MVC Users" height="18">
+                    <strong class="me-auto">PHP MVC Users</strong>
+                    <small>now</small>
+                </div>
+                <div class="toast-body">
+                    <?php echo $toast->message; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
