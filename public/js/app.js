@@ -16,14 +16,10 @@
         unixTimestamp(timestamps[i]);
     }
 
-    const toastOptions = { animation: true, autohide: true, delay: 5000 }
     let toastElList = [].slice.call(document.querySelectorAll('.toast'))
     let toastList = toastElList.map(function (toastEl) {
-        return new bootstrap.Toast(toastEl, toastOptions)
+        return new bootstrap.Toast(toastEl, { animation: true, autohide: true, delay: 10000 })
     })
 
-
-    if (result != null && result !== '') {
-        toastList.forEach(toast => toast.show())
-    }
+    toastList.forEach(toast => toast.show())
 })();
