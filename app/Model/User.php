@@ -49,7 +49,7 @@ class User extends Model
     {
         $check = $this->check($login,$email);
 
-        if (json_decode($check)->status === 'success')
+        if ($check['status'] === 'success')
             return $check;
 
         $ts = time();
