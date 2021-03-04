@@ -30,12 +30,15 @@ class User extends Model
             if ($remember !== false) {
                 setcookie("id", $result->id, time() + (86400 * 30), "/");
                 setcookie("user", $result->user, time() + (86400 * 30), "/");
-            } 
+            }
+
+            unset($_SESSION['last_message'], $_SESSION['last_class']);
 
             $_SESSION['logged'] = true;
             $_SESSION['id'] = $result->id;
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
+
             return json_encode(['status' => 'success', 'message' => "User {$result->user} logged in."], JSON_FORCE_OBJECT);
         } else {
             return json_encode(['status' => 'error', 'message' => "User / E-mail {$email} not found."], JSON_FORCE_OBJECT);
@@ -87,7 +90,7 @@ class User extends Model
         $user = $this->getUserId($email);
         
         if ($user) {
-            if (MODE === 'development') {
+            if (MODE !== 'development') {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
@@ -111,8 +114,7 @@ class User extends Model
 
     public function verify($hash): string
     {
-        $sql = "SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1";
-        $query = $this->db->prepare($sql);
+        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1");
         $query->execute([':hash' => $hash]);
 
         if (!$user = $query->fetch()) {

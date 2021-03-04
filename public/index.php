@@ -14,8 +14,8 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
         session_unset();
         session_destroy();
         session_start();
-        $_SESSION['LAST_MESSAGE'] = 'Automatically logged out due to afk, the inactive time limit is ' . SESSIONLIMIT . 'secs.';
-        $_SESSION['LAST_CLASS'] = 'text-white bg-danger';
+        $_SESSION['last_message'] = 'Automatically logged out due to afk, the inactive time limit is ' . SESSIONLIMIT . 'secs.';
+        $_SESSION['last_class'] = 'text-white bg-danger';
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }

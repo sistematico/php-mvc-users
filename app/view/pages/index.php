@@ -25,13 +25,13 @@
 </div>
 <?php } ?>
 
-<?php if (isset($_SESSION['LAST_MESSAGE'])) { ?>
+<?php if (isset($_SESSION['last_message'])) { ?>
     <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-absolute p-3 bottom-0 end-0">
-            <div class="toast align-items-center <?php echo $_SESSION['LAST_CLASS'] ?? 'text-white bg-primary'; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast align-items-center <?php echo $_SESSION['last_class'] ?? 'text-white bg-primary'; ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
                     <div class="toast-body">
-                        <?php echo $_SESSION['LAST_MESSAGE']; ?>
+                        <?php echo $_SESSION['last_message']; ?>
                     </div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -39,6 +39,6 @@
         </div>
     </div>
 <?php
-unset($_SESSION['LAST_MESSAGE'], $_SESSION['LAST_CLASS']);
+unset($_SESSION['last_message'], $_SESSION['last_class']);
 }
 ?>

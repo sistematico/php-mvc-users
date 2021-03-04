@@ -42,7 +42,7 @@
                         <input id="remember" class="form-check-input" name="remember" type="checkbox" value="remember" <?php if (isset($_POST['remember'])) { echo 'checked'; } ?>>
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
-                    
+
                     <button name="submit_login_user" type="submit" class="btn btn-lg btn-primary">Sign in</button>
                 </form>
             </div>
