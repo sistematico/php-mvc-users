@@ -242,6 +242,7 @@ class User extends Model
             $hash = md5(uniqid(rand(), TRUE));
             $sql = file_get_contents(SQL_FILE);
             $sql = str_replace('{{TEMPID}}',"{$hash}", $sql);
+            $sql = str_replace('{{CREATED}}',"{$ts}", $sql);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
