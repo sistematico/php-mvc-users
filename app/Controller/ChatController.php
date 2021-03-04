@@ -19,6 +19,16 @@ class ChatController
     public function send(string $message)
     {
         $Chat = new Chat();
-        $Chat->send($message);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $Chat->send($_POST['message']);
+        }
+
+        $messages = $Chat->list();
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/chat/list.php';
+        require APP . 'view/_templates/footer.php';
     }
 }
