@@ -20,7 +20,7 @@ $start = $time;
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="<?php echo URL; ?>">
-                    <img src="<?php echo URL; ?>img/user.svg" width="30" height="30" alt="PHP MVC Users" style="margin-top: -5px;">
+                    <img src="<?php echo URL; ?>img/logo-32x32.png" width="30" height="30" alt="PHP MVC Users" style="margin-top: -5px;">
                     PHP MVC Users
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
