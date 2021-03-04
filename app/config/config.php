@@ -3,7 +3,8 @@
 // Change to false in production, this disable e-mail function
 define('DEBUG', true);
 
-$config = parse_ini_file();
+$teste = dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env';
+$config = parse_ini_file(__DIR__ . '.env');
 $name = $_GET['name'] ?? 'john doe';
 
 if (defined('DEBUG') && DEBUG === true) {
