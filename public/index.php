@@ -2,7 +2,7 @@
 
 $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 define('MODE', $config['MODE'] ?? 'development');
-define('SESSION', $config['SESSION'] ?? 3600); // 3600 secs = 1 hour
+define('SESSIONLIMIT', $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
 
 use App\Core\Application;
 
@@ -10,7 +10,7 @@ session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
     $time = $_SERVER['REQUEST_TIME'];
-    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > SESSION) {
+    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > SESSIONLIMIT) {
         session_unset();
         session_destroy();
         session_start();
@@ -18,6 +18,9 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }
+
+if (isset($toast))
+    var_dump($toast);
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
