@@ -147,8 +147,7 @@ class User extends Model
     public function getUserId($email): bool
     {
         try {
-            $sql = "SELECT id, user, email, role, temp, valid FROM user WHERE email = :email OR user = :email LIMIT 1";
-            $query = $this->db->prepare($sql);
+            $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM user WHERE email = :email OR user = :email LIMIT 1");
             $query->execute([':email' => $email]);
             return $query->fetch();
         } catch (PDOException $e) {
