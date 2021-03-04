@@ -9,7 +9,7 @@ class Model
 
     function __construct() {
         try {
-            self::open();
+            $this->open();
         } catch (\PDOException $e) {
             exit('Connection with database cannot be made.');
         }
