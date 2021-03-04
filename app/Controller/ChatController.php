@@ -16,12 +16,11 @@ class ChatController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function send(string $message)
+    public function send()
     {
         $Chat = new Chat();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['message']) && !empty($_POST['message'])) {
             $Chat->send($_POST['message']);
         }
 
