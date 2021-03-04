@@ -311,6 +311,7 @@ class User extends Model
             $sql = str_replace('{{TEMPID}}',"{$hash}", $sql);
             $sql = str_replace('{{CREATED}}',"{$ts}", $sql);
             $sql = str_replace('{{USERS_TABLE}}',USERS_TABLE, $sql);
+            $sql = str_replace('{{CHAT_TABLE}}',CHAT_TABLE, $sql);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
