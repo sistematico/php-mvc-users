@@ -9,7 +9,12 @@
     </nav>
 
     <h1>Search</h1>
-    <?php if (isset($users)) { ?>
+
+    <?php if (isset($result['message'])) { ?>
+        <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
+    <?php } ?>
+
+    <?php if (isset($users) && count((array) $users) > 0) { ?>
         <table class="table table-striped table-dark">
             <thead>
                 <tr>
