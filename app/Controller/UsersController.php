@@ -197,7 +197,18 @@ class UsersController
             $User = new User();
             $password = (isset($_POST["password"]) ? $_POST["password"] : null);
             $valid = isset($_POST['valid']) && $_POST['valid'] == 'sim' ? 1 : 0; 
-            $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
+            $result = $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
+        }
+
+        if (isset($result['status']) && $result['status'] === 'success') {
+            $toast = $result;
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/index.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/edit.php';
+            require APP . 'view/_templates/footer.php';
         }
     }
 
