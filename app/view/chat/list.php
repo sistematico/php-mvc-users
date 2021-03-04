@@ -9,16 +9,11 @@
 
     <h1>Chat</h1>
 
-    <?php if (isset($users)) { ?>
-    <div class="table-responsive">
-    <table class="table table-striped table-dark">
-
-        <tbody>
-            <?php foreach ($users as $user) { ?>
-
-            <?php } ?>
-        </tbody>
-    </table>
-    </div>
-    <?php } ?>
+    <?php     
+        if (isset($messages)) {
+            foreach ($messages as $message) {
+                echo $message['message'];
+            }
+        }
+    ?>
 </main>
