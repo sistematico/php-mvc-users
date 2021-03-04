@@ -9,7 +9,7 @@ class Application
     private $url_controller = null;
     private $url_action = '';
     private $url_params = array();
-    public object $toast = new stdClass();
+    public $toast = new stdClass();
 
     public function __construct($toast = [])
     {
@@ -18,7 +18,7 @@ class Application
 
         if (!$this->url_controller) {
             $page = new PagesController();
-            $page->index();
+            $page->index($this->toast);
         } else if (file_exists(APP . 'Controller/' . ucfirst($this->url_controller) . 'Controller.php')) {
             $controller = "\\App\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
             $this->url_controller = new $controller();
