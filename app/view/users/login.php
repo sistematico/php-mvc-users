@@ -32,11 +32,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <a href="<?php echo URL; ?>users/reset">Reset your password</a>
+                        <a href="<?php echo URL; ?>users/reset">Reset</a> your password or <a href="<?php echo URL; ?>users/verify">verify</a> your account.</a>
                     </div>
 
                     <input name="submit_login_user" type="submit" class="btn btn-lg btn-primary" value="Sign in">
-                    <a href="<?php echo URL; ?>users/confirm" class="btn btn-lg btn-warning">Confirm account</a>
                 </form>
             </div>
         </div>
