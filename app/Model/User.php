@@ -136,7 +136,7 @@ class User extends Model
 
     public function delete($id)
     {
-        if (!isset($_SESSION['id']) || $id != $_SESSION['id'] || isset($_SESSION['role']) && $_SESSION['role'] != 'admin') {
+        if (!isset(($_SESSION['id']) || $id != $_SESSION['id']) || (isset($_SESSION['role']) && $_SESSION['role'] != 'admin')) {
             return ['status' => 'error', 'class' => 'danger', 'message' => 'You don\'t have permissions to delete this account!'];
         }
 
