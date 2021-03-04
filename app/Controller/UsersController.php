@@ -165,6 +165,8 @@ class UsersController
         if (isset($id)) {
             $User = new User();
             $user = $User->get($id);
+        } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = $_POST;
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/edit.php';
