@@ -1,10 +1,10 @@
 <?php
 
+use App\Core\Application;
+
 $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 define('MODE', $config['MODE'] ?? 'development');
 define('SESSIONLIMIT', (int) $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
-
-use App\Core\Application;
 
 session_start();
 
@@ -14,7 +14,7 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
         session_unset();
         session_destroy();
         session_start();
-        $_SESSION['LAST_MESSAGE'] = 'Automatically logged out due to afk.';
+        $_SESSION['LAST_MESSAGE'] = 'Automatically logged out due to afk, the inactive time limit is ' . SESSIONLIMIT . 'secs.';
         $_SESSION['LAST_CLASS'] = 'text-white bg-danger';
     }
     $_SESSION['LAST_ACTIVITY'] = $time;

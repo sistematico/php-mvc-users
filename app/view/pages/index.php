@@ -10,17 +10,15 @@
     <p class="lead"><?php echo MODE; ?> Welcome...</p>
 </main>
 
-<?php if (isset($result->message)) { ?>
-<div aria-live="polite" aria-atomic="true" class="position-relative <?php echo $toast->class ?? 'bg-dark'; ?>">
+<?php if (isset($toast->message)) { ?>
+<div aria-live="polite" aria-atomic="true" class="position-relative">
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
-        <div class="toast">
-            <div class="toast-header">
-                <img src="<?php echo URL; ?>img/silhouette.png" class="rounded me-2" alt="PHP MVC Users" height="18">
-                <strong class="me-auto">PHP MVC Users</strong>
-                <small>now</small>
-            </div>
-            <div class="toast-body">
-                <?php echo $result->message; ?>
+        <div class="toast align-items-center border-0 <?php echo $toast->class ?? 'text-white bg-dark'; ?>" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <?php echo $toast->message; ?>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
