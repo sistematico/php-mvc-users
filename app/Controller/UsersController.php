@@ -69,9 +69,9 @@ class UsersController
         unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
 
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
-            $result = json_encode(['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."], JSON_FORCE_OBJECT);
+            $response = (object) ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
         } else {
-            $result = json_encode(['status' => 'error', 'message' => "You not logged."], JSON_FORCE_OBJECT);
+            $response = (object) ['status' => 'error', 'message' => "You not logged."];
         }
 
         require APP . 'view/_templates/header.php';
