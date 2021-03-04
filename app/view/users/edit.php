@@ -20,8 +20,8 @@
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') { ?>
                 <label for="role">Role</label>
                 <select name="role" class="form-control" id="role">
-                    <option value="admin" <?php echo (isset($_SESSION['role']) && $_SESSION['role'] == 'admin')) ? 'selected' : ''; ?>>admin</option>
-                    <option value="user" <?php echo (isset($_SESSION['role']) && $_SESSION['role'] == 'user') ?? 'selected' : ''; ?>>user</option>
+                    <option value="admin" <?php echo (isset($user['role']) && $user['role'] == 'admin') ? 'selected' : ''; ?>>admin</option>
+                    <option value="user" <?php echo (isset($user['role']) && $user['role'] == 'user') ? 'selected' : ''; ?>>user</option>
                 </select>
             <?php } else { ?>
                 <input name="role" class="form-control" type="text" value="<?php echo isset($user['role']) ? htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8') : ''; ?>" readonly>
