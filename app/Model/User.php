@@ -49,7 +49,7 @@ class User extends Model
     {
         $check = $this->check($login,$email);
 
-        if ($check['status'] === 'success')
+        if ($check['status'] === 'error')
             return $check;
 
         $ts = time();
@@ -58,7 +58,7 @@ class User extends Model
 
         try {
             $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
-            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
+            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => null, ':created' => $ts]);
         } catch (PDOException $e) {
             unset($e);
             if (MODE !== 'development') {
@@ -161,24 +161,6 @@ class User extends Model
         }
     }
 
-    public function check($login, $email): array
-    {
-        $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
-        $query->execute([':email' => $email]);
-
-        if ($query->fetch() !== false) {
-            return ['status' => 'error', 'message' => 'E-mail {$email} already exists'];
-        }
-
-        $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
-        $query->execute([':user' => $login]);
-        if ($query->fetch() != false) {
-            return ['status' => 'error', 'message' => 'Username {$login} already exists'];
-        }
-
-        return ['status' => 'success', 'message' => 'Username not exist.'];
-    }
-
     public function update($login, $email, $role, $id, $valid, $password)
     {
         $_SESSION['user'] = $login;
@@ -227,6 +209,24 @@ class User extends Model
             $this->results[] = $row;
         }
         return (object) $this->results;
+    }
+
+    public function check($login, $email): array
+    {
+        $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
+        $query->execute([':email' => $email]);
+
+        if ($query->fetch() !== false) {
+            return ['status' => 'error', 'message' => 'E-mail {$email} already exists'];
+        }
+
+        $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
+        $query->execute([':user' => $login]);
+        if ($query->fetch() != false) {
+            return ['status' => 'error', 'message' => 'Username {$login} already exists'];
+        }
+
+        return ['status' => 'success', 'message' => 'Username not exist.'];
     }
 
     public function prune(): array
