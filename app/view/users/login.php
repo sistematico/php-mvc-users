@@ -29,7 +29,7 @@
                         <label for="password" class="form-label">Password</label>
                         <input name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" value="<?php if (isset($_POST['password'])) { echo $_POST['password']; } ?>">
                         <small id="passwordHelp" class="form-text text-muted mb-3">
-                            Before login, please check your e-mail and/or <a href="<?php echo URL; ?>users/verify">verify</a> your account.
+                            <a href="<?php echo URL; ?>users/signup">Create</a> an account if you don't have one.
                         </small>
                     </div>
                     <div class="mb-3">

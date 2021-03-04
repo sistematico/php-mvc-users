@@ -16,14 +16,6 @@
                     <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
                 <?php } ?>
 
-
-
-                    <input name="email" type="email" id="inputEmail" class="form-control mb-3" placeholder="Email address" required>
-
-                    <input name="password" type="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required>
-
-
-
                 <form action="<?php echo URL; ?>users/signup" method="post">
                     <div class="mb-3">
                         <label for="login" class="form-label">Username</label>
@@ -32,18 +24,17 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Username" value="<?php echo $_POST['email'] ?? ''; ?>">
+                        <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Username" value="<?php echo $_POST['email'] ?? ''; ?>">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" value="<?php if (isset($_POST['password'])) { echo $_POST['password']; } ?>">
+                        <input name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" value="<?php echo $_POST['password'] ?? ''; ?>">
                         <small id="passwordHelp" class="form-text text-muted mb-3">
                             <a href="<?php echo URL; ?>users/login">Login</a> if you already have an account.
                         </small>
                     </div>
-
 
                     <button name="submit_signup_user" type="submit" class="btn btn-lg btn-primary">Signup</button>
                 </form>
