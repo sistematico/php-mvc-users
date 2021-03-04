@@ -25,6 +25,7 @@
                             We'll never share your email with anyone else.
                         </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input name="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" value="<?php if (isset($_POST['password'])) { echo $_POST['password']; } ?>">
@@ -32,13 +33,16 @@
                             <a href="<?php echo URL; ?>users/signup">Create</a> an account if you don't have one.
                         </small>
                     </div>
+
                     <div class="mb-3">
                         <a href="<?php echo URL; ?>users/reset">Reset</a> your password or <a href="<?php echo URL; ?>users/verify">verify</a> your account.</a>
                     </div>
+
                     <div class="mb-3 form-check">
                         <input id="remember" class="form-check-input" name="remember" type="checkbox" value="remember" <?php if (isset($_POST['remember'])) { echo 'checked'; } ?>>
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
+                    
                     <button name="submit_login_user" type="submit" class="btn btn-lg btn-primary">Sign in</button>
                 </form>
             </div>
