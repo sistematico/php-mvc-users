@@ -122,9 +122,15 @@ class UsersController
             $result = $User->verify(trim($hash));
         }
 
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/verify.php';
-        require APP . 'view/_templates/footer.php';
+        if (isset($result['status']) && $result['status'] === 'success') {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/login.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/verify.php';
+            require APP . 'view/_templates/footer.php';
+        }
     }
 
     public function reset()
