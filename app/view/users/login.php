@@ -14,7 +14,7 @@
                 <h1>Login</h1>
 
                 <?php if (isset($result['message'])) { ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result['message']; ?></div>
+                    <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
                 <?php } ?>
 
                 <form action="<?php echo URL; ?>users/login" method="post">

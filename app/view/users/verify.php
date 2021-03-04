@@ -15,7 +15,7 @@
                 <h1>Verify</h1>
 
                 <?php if (isset($result['message'])) { ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result['message']; ?></div>
+                    <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
                 <?php } ?>
 
                 <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">

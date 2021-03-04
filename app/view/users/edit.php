@@ -12,7 +12,7 @@
     <h3>Edit a user</h3>
 
     <?php if (isset($result['message'])) { ?>
-        <div class="alert alert-primary" role="alert"><?php echo $result['message']; ?></div>
+        <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
     <?php } ?>
 
     <form class="form-inline" action="<?php echo URL; ?>users/update" method="post">

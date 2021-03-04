@@ -17,14 +17,14 @@ class User extends Model
         $query->execute([':email' => $email]);
 
         if (!$result = $query->fetch()) {
-            return ['status' => 'error', 'message' => 'User not found.'];
+            return ['status' => 'error', 'class' => 'danger', 'message' => 'User not found.'];
         }
 
         if (isset($result->valid) && $result->valid == 0) {
             if (MODE === 'development') {
-                return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate your account first.', 'hash_code' => $result->temp];
+                return ['status' => 'error', 'class' => 'danger', 'error_code' => 'validate', 'message' => 'Validate your account first.', 'hash_code' => $result->temp];
             } else {
-                return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate your account first.'];
+                return ['status' => 'error', 'class' => 'danger', 'error_code' => 'validate', 'message' => 'Validate your account first.'];
             }
         }
 
@@ -43,9 +43,9 @@ class User extends Model
             $_SESSION['user'] = $result->user;
             $_SESSION['role'] = $result->role;
 
-            return ['status' => 'success', 'message' => "User {$result->user} logged in."];
+            return ['status' => 'error', 'class' => 'success', 'message' => "User {$result->user} logged in."];
         } else {
-            return ['status' => 'error', 'message' => "User / E-mail {$email} not found."];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "User / E-mail {$email} not found."];
         }
     }
 
@@ -67,20 +67,20 @@ class User extends Model
             unset($e);
             if (MODE !== 'development') {
                 if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
-                    return ['status' => 'error', 'message' => "Error sending e-mail."];
+                    return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail."];
                 }
             }
-            return ['status' => 'error', 'message' => "Error adding user {$login}"];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "Error adding user {$login}"];
         }
 
         if (MODE === 'development') {
-            return ['status' => 'success', 'message' => "Success adding user <strong>${login}</strong>.<br />Verification e-mail NOT sent to <strong>{$email}</strong>,<br /> Hash: <strong>{$hash}</strong>"];
+            return ['status' => 'error', 'class' => 'success', 'message' => "Success adding user <strong>${login}</strong>.<br />Verification e-mail NOT sent to <strong>{$email}</strong>,<br /> Hash: <strong>{$hash}</strong>"];
         } else {
             if (!Mail::sendHash($email, $login, $hash)) {
-                return ['status' => 'error', 'message' => "Error sending e-mail to {$email}"];
+                return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail to {$email}"];
             }
             return [
-                'status' => 'success',
+                'status' => 'error', 'class' => 'success',
                 'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
             ];
         }
@@ -91,20 +91,20 @@ class User extends Model
         if ($user = $this->getUserId($email)) {
             if (MODE !== 'development') {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
-                    return ['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"];
+                    return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail to {$user->email}"];
                 }
                 return [
-                    'status' => 'success',
+                    'status' => 'error', 'class' => 'success',
                     'message' => "Success resetting user $user->user , verification e-mail sent to {$user->email}."
                 ];
             } else  {
                 return [
-                    'status' => 'success',
+                    'status' => 'error', 'class' => 'success',
                     'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}.<br />New Hash: <strong>{$user->hash}</strong>"
                 ];
             }
         } else {
-            return ['status' => 'error', 'message' => 'Error resetting password.'];
+            return ['status' => 'error', 'class' => 'danger', 'message' => 'Error resetting password.'];
         }
     }
 
@@ -116,12 +116,12 @@ class User extends Model
         if (!$user = $query->fetch()) {
             return ["status" => "error", "message" => "Invalid code"];
         } else if ($user->valid == 1) {
-            return ['status' => 'error', 'message' => "{$user->email} already validated"];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "{$user->email} already validated"];
         } else if ($user->id && $hash === $user->temp) {
             $this->validate($user->id);
-            return ['status' => 'success', 'message' => "{$user->email} successful validated"];
+            return ['status' => 'error', 'class' => 'success', 'message' => "{$user->email} successful validated"];
         }
-        return ['status' => 'error', 'message' => 'Undefined error.'];
+        return ['status' => 'error', 'class' => 'danger', 'message' => 'Undefined error.'];
     }
 
     public function list(): object
@@ -145,10 +145,10 @@ class User extends Model
             $query = $this->db->prepare($sql);
             $query->execute([':id' => $id]);
         } catch (PDOException $e) {
-            return ['status' => 'error', 'message' => "Error deleting user id: {$id}"];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "Error deleting user id: {$id}"];
         }
 
-        return ['status' => 'success', 'message' => "User ID: {$id} deleted."];
+        return ['status' => 'success', 'class' => 'success', 'message' => "User ID: {$id} deleted."];
     }
 
     public function get($id)
@@ -192,10 +192,10 @@ class User extends Model
             $query = $this->db->prepare($sql);
             $query->execute($params);
         } catch (PDOException $e) {
-            return ['status' => 'error', 'message' => "Error editing user {$login}: " . $e->getMessage()];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "Error editing user {$login}: " . $e->getMessage()];
         }
 
-        return ['status' => 'success', 'message' => "User {$login} sucessfull updated."];
+        return ['status' => 'error', 'class' => 'success', 'message' => "User {$login} sucessfull updated."];
     }
 
     public function access($id)
@@ -237,16 +237,16 @@ class User extends Model
         $query->execute([':email' => $email]);
 
         if ($query->fetch() !== false) {
-            return ['status' => 'error', 'message' => "E-mail {$email} already exists"];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "E-mail {$email} already exists"];
         }
 
         $query = $this->db->prepare("SELECT id FROM " . USERS_TABLE . " WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
-            return ['status' => 'error', 'message' => "Username {$login} already exists"];
+            return ['status' => 'error', 'class' => 'danger', 'message' => "Username {$login} already exists"];
         }
 
-        return ['status' => 'success', 'message' => "Username and email not exist in our database."];
+        return ['status' => 'error', 'class' => 'success', 'message' => "Username and email not exist in our database."];
     }
 
     public function prune(): array
