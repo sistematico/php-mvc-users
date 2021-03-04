@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS {{USERS_TABLE}} (
 	"id"		INTEGER PRIMARY KEY AUTOINCREMENT,
 	"user"		TEXT UNIQUE,
+    "avatar"	TEXT,
 	"email"	    TEXT UNIQUE,
 	"role"		TEXT,
 	"password"	TEXT,
