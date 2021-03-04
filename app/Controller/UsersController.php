@@ -197,10 +197,15 @@ class UsersController
 
     public function search()
     {
+        $User = new User();
+
         if (isset($_POST["term"]) && strlen($_POST["term"]) > 1) {
             $User = new User();
             $users = $User->search($_POST["term"]);
-        } 
+        } else {
+            $users = $User->list();
+        }
+
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/list.php';
         require APP . 'view/_templates/footer.php';
