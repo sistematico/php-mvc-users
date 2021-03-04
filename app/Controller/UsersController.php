@@ -6,14 +6,9 @@ use App\Model\User;
 
 class UsersController
 {
-    public string|bool $response = false;
-
     public function index()
     {
         $User = new User();
-        if ($User->tableExists() !== true) {
-            $User->prune();
-        }
         $users = $User->list();
         $amount = $User->amount();
         require APP . 'view/_templates/header.php';
@@ -23,7 +18,7 @@ class UsersController
 
     public function profile($id)
     {
-        if (isset($id)) {
+        if (isset($id) && is_numeric($id)) {
            $User = new User();
            $user = $User->get($id);
         }
@@ -43,9 +38,7 @@ class UsersController
 
     public function login()
     {
-        if (isset($_SESSION['logged'])) {
-            header('location: ' . URL);
-        }
+        $this->logged();
 
         if (isset($_POST["submit_login_user"])) {
             $remember = isset($_POST['remember']);
@@ -64,9 +57,7 @@ class UsersController
 
     public function signup()
     {
-        if (isset($_SESSION['logged'])) {
-            header('location: ' . URL);
-        }
+        $this->logged();
 
         if (isset($_POST["submit_signup_user"])) {
             $User = new User();
@@ -172,17 +163,12 @@ class UsersController
 
     public function update()
     {
-        if (isset($_POST["submit_update_user"]) &&
-            isset($_POST["id"])        
-        ) {
+        if (isset($_POST["submit_update_user"]) && isset($_POST["id"])) {
             $User = new User();
             $password = (isset($_POST["password"]) ? $_POST["password"] : null);
             $valid = isset($_POST['valid']) && $_POST['valid'] == 'sim' ? 1 : 0; 
-
             $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
-            //var_dump($_POST['valid']);
         }
-        header('location: ' . URL . 'users');
     }
 
     public function search()
@@ -196,10 +182,10 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function ajax()
+    public function logged(): bool
     {
-        $User = new User();
-        $amount = $User->amount();
-        echo $amount;
+        if (isset($_SESSION['logged'])) {
+            header('location: ' . URL);
+        }
     }
 }
