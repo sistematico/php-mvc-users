@@ -156,7 +156,7 @@ class UsersController
         $amount = $User->amount();
 
         require APP . 'view/_templates/header.php';
-        require APP . 'view/users/index.php';
+        require APP . 'view/users/list.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -186,7 +186,7 @@ class UsersController
         if (isset($result['status']) && $result['status'] === 'success') {
             $toast = $result;
             require APP . 'view/_templates/header.php';
-            require APP . 'view/users/index.php';
+            require APP . 'view/users/list.php';
             require APP . 'view/_templates/footer.php';
         } else {
             require APP . 'view/_templates/header.php';
@@ -202,7 +202,7 @@ class UsersController
             $users = $User->search($_POST["term"]);
         } 
         require APP . 'view/_templates/header.php';
-        require APP . 'view/users/search.php';
+        require APP . 'view/users/list.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -222,7 +222,7 @@ class UsersController
         $amount = $User->amount();
 
         require APP . 'view/_templates/header.php';
-        require APP . 'view/users/index.php';
+        require APP . 'view/users/list.php';
         require APP . 'view/_templates/footer.php';
     }
 
