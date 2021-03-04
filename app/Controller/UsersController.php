@@ -179,7 +179,7 @@ class UsersController
             $User = new User();
             $password = (isset($_POST["password"]) ? $_POST["password"] : null);
             $valid = isset($_POST['valid']) && $_POST['valid'] == 'sim' ? 1 : 0; 
-            $result = $User->update($_POST["login"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
+            $result = $User->update($_POST["user"], $_POST["email"], $_POST["role"], $_POST['id'], $valid, $password);
         }
 
         if (isset($result['status']) && $result['status'] === 'success') {
