@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Controller\PagesController;
+use App\Controller\ChatController;
 
 class Application
 {
