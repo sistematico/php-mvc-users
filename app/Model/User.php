@@ -12,7 +12,7 @@ class User extends Model
 
     public function login($email, $password, $remember): array
     {
-        $sql = "SELECT id, user, email, role, tmphash, password, valid FROM " . USERS_TABLE . " WHERE email LIKE :email OR user LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, role, temp, password, valid FROM " . USERS_TABLE . " WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
@@ -193,7 +193,7 @@ class User extends Model
 
     public function amount()
     {
-        $sql = "SELECT COUNT(id) AS amount FROM user";
+        $sql = "SELECT COUNT(id) AS amount FROM " . USERS_TABLE . ";";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetch()->amount;
