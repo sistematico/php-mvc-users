@@ -62,6 +62,23 @@ class UsersController
         }
     }
 
+    public function logout()
+    {
+        setcookie("id", "", time() - 3600);
+        setcookie("user", "", time() - 3600);
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+
+        if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
+            $result = json_encode(['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."], JSON_FORCE_OBJECT);
+        } else {
+            $result = json_encode(['status' => 'error', 'message' => "You not logged."], JSON_FORCE_OBJECT);
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/pages/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function signup()
     {
         $this->logged();
@@ -125,14 +142,6 @@ class UsersController
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';
         require APP . 'view/_templates/footer.php';
-    }
-
-    public function logout()
-    {
-        setcookie("id", "", time() - 3600);
-        setcookie("user", "", time() - 3600);
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
-        header('location: ' . URL);
     }
 
     public function delete($id)
