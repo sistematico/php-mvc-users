@@ -16,6 +16,7 @@ $start = $time;
     <meta property="og:image" content="<?php echo URL; ?>img/logo.png" />
     <title>PHP MVC Users</title>
     <link rel="stylesheet" href="<?php echo URL; ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo URL; ?>css/hamburgers.min.css">
     <link rel="stylesheet" href="<?php echo URL; ?>css/fontawesome.min.css">
     <link rel="stylesheet" href="<?php echo URL; ?>css/main.css">
     <link rel="shortcut icon" href="<?php echo URL; ?>img/favicon.ico">
@@ -28,8 +29,11 @@ $start = $time;
                     <img src="<?php echo URL; ?>img/logo-32x32.png" width="30" height="30" alt="PHP MVC Users" style="margin-top: -5px;">
                     PHP MVC Users
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+
+                <button class="navbar-toggler hamburger" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarsExampleDefault">
