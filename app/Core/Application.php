@@ -3,12 +3,11 @@
 namespace App\Core;
 
 use App\Controller\PagesController;
-use App\Controller\UsersController;
 
 class Application
 {
     private $url_controller = null;
-    private $url_action = null;
+    private $url_action = '';
     private $url_params = array();
 
     public function __construct()
