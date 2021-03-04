@@ -40,13 +40,13 @@ td .fa-search {
 }
 
 .hamburger-box {
-    color: #fff;
     padding-top: 2rem;
 }
 
-.hamburger-inner {
-    /*background-color: #fff;*/
-    padding: 0;
+.hamburger-inner,
+.hamburger-inner::after,
+.hamburger-inner::before {
+    background-color: #fff;
 }
 
 .navbar-toggler:focus,
