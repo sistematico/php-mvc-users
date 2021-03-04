@@ -136,7 +136,7 @@ class User extends Model
 
     public function delete($id)
     {
-        $sql = "DELETE FROM user WHERE id = :id";
+        $sql = "DELETE FROM " . USERS_TABLE . " WHERE id = :id";
         $query = $this->db->prepare($sql);
         $query->execute([':id' => $id]);
     }
