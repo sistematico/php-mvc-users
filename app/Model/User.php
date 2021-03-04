@@ -139,9 +139,14 @@ class User extends Model
 
     public function get($id)
     {
-        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1");
-        $query->execute([':id' => $id]);
-        return $query->fetch();
+        try {
+            $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1");
+            $query->execute([':id' => $id]);
+            return $query->fetch();
+        } catch (PDOException $e) {
+            unset($e);
+            return false;
+        }
     }
 
     public function getUserId($email): bool

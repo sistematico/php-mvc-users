@@ -89,7 +89,7 @@ class UsersController
 
         if (isset($_POST["submit_signup_user"])) {
             $User = new User();
-            $result = json_decode($User->signup($_POST["login"], $_POST["email"], $_POST["password"]));
+            $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
 
             if ($result->status === 'success') {
                 $toast = $result;
