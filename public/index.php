@@ -25,6 +25,7 @@ define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('MODE', $config['MODE'] ?? 'development');
 define('USERS_TABLE', $config['USERS_TABLE'] ?? 'users');
+define('CHAT_TABLE', $config['USERS_TABLE'] ?? 'chat');
 define('DB_FILE', isset($config['DB_FILE']) ? ROOT . 'db' . DIRECTORY_SEPARATOR . $config['DB_FILE'] : ROOT . 'db' . DIRECTORY_SEPARATOR . 'database.sqlite');
 define('SQL_FILE', isset($config['SQL_FILE']) ? ROOT . 'sql' . DIRECTORY_SEPARATOR . $config['SQL_FILE'] : ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 

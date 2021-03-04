@@ -11,6 +11,19 @@ CREATE TABLE IF NOT EXISTS {{USERS_TABLE}} (
 	"created"   INTEGER
 );
 
+CREATE TABLE IF NOT EXISTS {{CHAT_TABLE}} (
+    "id"		INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user"		TEXT UNIQUE,
+    "avatar"	TEXT,
+    "email"	    TEXT UNIQUE,
+    "role"		TEXT,
+    "password"	TEXT,
+    "temp"      TEXT,
+    "valid"     INTEGER,
+    "access"    INTEGER,
+    "created"   INTEGER
+);
+
 INSERT OR IGNORE INTO {{USERS_TABLE}} (id, user, email, role, password, temp, valid, access, created) VALUES (1, 'admin', 'admin@google.com', 'admin', '$2y$10$uiPdSuBzk7v4Gf7xb6O9r.w9oVtyh1fKXXl2H/aH/0ulVd3o6YrIa', '{{TEMPID}}', 1, null, {{CREATED}});
 INSERT OR IGNORE INTO {{USERS_TABLE}} (id, user, email, role, password, temp, valid, access, created) VALUES (2, 'João', 'joao@facebook.com', 'user', '$2y$10$iT.LbKSuYuuUy/NZn.yRzuV9NVg02hV1FnBTedX4ekFnxcHPKrJTm', '{{TEMPID}}', 1, null, {{CREATED}});
 INSERT OR IGNORE INTO {{USERS_TABLE}} (id, user, email, role, password, temp, valid, access, created) VALUES (3, 'José', 'jose@twitter.com', 'user', '$2y$10$iT.LbKSuYuuUy/NZn.yRzuV9NVg02hV1FnBTedX4ekFnxcHPKrJTm', '{{TEMPID}}', 1, null, {{CREATED}});
