@@ -10,7 +10,7 @@
 
     <h1>Credits</h1>
     <p class="lead">
-        This project was only possible through the help of the following other projects:
+        This project was only possible through the help of these incredible tools:
         <ul>
             <li><a href="https://www.jetbrains.com" target="_blank">JetBrains</a> (<a href="https://www.jetbrains.com/phpstorm/" target="_blank">PhpStorm</a>, <a href="https://www.jetbrains.com/webstorm/" target="_blank">WebStorm</a> and <a href="https://www.jetbrains.com/datagrip/" target="_blank">DataGrip</a>)</li>
             <li><a href="https://www.archlinux.org" target="_blank">Arch Linux</a></li>
