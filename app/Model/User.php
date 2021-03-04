@@ -198,7 +198,7 @@ class User extends Model
         try {
             $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM " . USERS_TABLE . " WHERE id = :id LIMIT 1");
             $query->execute([':id' => $id]);
-            return (array) $query->fetch();
+            return $query->fetch();
         } catch (PDOException $e) {
             unset($e);
             return false;
@@ -248,6 +248,7 @@ class User extends Model
 
     public function validate($id)
     {
+        if ($this->get($id)->valid === 1) {}
         $sql = "UPDATE " . USERS_TABLE . " SET temp = :hash, valid = :valid WHERE id = :id";
         $query = $this->db->prepare($sql);
         $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);

@@ -166,7 +166,7 @@ class UsersController
             $user = $_POST;
         } else if (isset($id)) {
             $User = new User();
-            $user = $User->get($id);
+            $user = (array) $User->get($id);
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/edit.php';
