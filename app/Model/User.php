@@ -49,6 +49,23 @@ class User extends Model
         }
     }
 
+    public function logout()
+    {
+        if (isset($_SESSION['logged'])) {
+            $result = ['status' => 'success', 'class' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
+        } else {
+            $result = ['status' => 'error', 'class' => 'danger', 'message' => "You not logged."];
+        }
+
+        setcookie('id', '', time() - 3600);
+        setcookie('user', '', time() - 3600);
+        setcookie('PHPSESSID', '', time() - 3600);
+
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+
+        return $result;
+    }
+
     public function signup($login, $email, $password): array
     {
         $check = $this->check($login,$email);
