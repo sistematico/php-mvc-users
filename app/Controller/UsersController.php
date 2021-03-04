@@ -156,15 +156,7 @@ class UsersController
         $User = new User();
 
         if (isset($id)) {
-            if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                $toast = $User->delete((int) $id);
-
-                if ($_SESSION['id'] == $id) {
-                    unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
-                    setcookie("id", "", time() - 3600);
-                    setcookie("user", "", time() - 3600);
-                }
-            }    
+            $toast = $User->delete((int) $id);
         }
 
         $users = $User->list();
