@@ -89,7 +89,7 @@ class UsersController
 
         if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"]) && !empty($_POST["verify"])) {
             $User = new User();
-            $result = json_decode($User->verify(trim($hash)));
+            $result = json_decode($User->verify(trim($_POST["verify"])));
         } else if ($hash) {
             $User = new User();
             $result = json_decode($User->verify(trim($hash)));
