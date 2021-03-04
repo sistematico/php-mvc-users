@@ -4,7 +4,7 @@ use App\Core\Application;
 
 $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 define('MODE', $config['MODE'] ?? 'development');
-define('DATABASE', $config['DATABASE'] ?? 'database.sqlite');
+define('DB_FILE', $config['DB_FILE'] ?? 'database.sqlite');
 define('SESSIONLIMIT', (int) $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
 
 session_start();
@@ -24,7 +24,7 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'database.sqlite');
-define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . DATABASE);
+define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . DB_FILE);
 
 require APP . DIRECTORY_SEPARATOR . 'autoload.php';
 require APP . DIRECTORY_SEPARATOR . 'config.php';
