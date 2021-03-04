@@ -6,59 +6,22 @@ use PDOException;
 
 class Chat extends Model
 {
+    public array $results = [];
+
     public function send($message)
     {
-        $ts = time();
-        $query = $this->db->prepare("INSERT INTO " . CHAT_TABLE . " (user_id, message) VALUES (:user_id, :message)");
-        $query->execute([':user_id' => 0, ':message' => $message, ':created' => $ts]);
-    }
-
-    public function reset($email): array
-    {
-        if ($user = $this->getUserId($email)) {
-            if (MODE !== 'development') {
-                if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
-                    return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail to {$user->email}"];
-                }
-                return [
-                    'status' => 'error', 'class' => 'success',
-                    'message' => "Success resetting user $user->user , verification e-mail sent to {$user->email}."
-                ];
-            } else  {
-                return [
-                    'status' => 'error', 'class' => 'success',
-                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}.<br />New Hash: <strong>{$user->hash}</strong>"
-                ];
-            }
-        } else {
-            return ['status' => 'error', 'class' => 'danger', 'message' => 'Error resetting password.'];
-        }
-    }
-
-    public function verify($hash): array
-    {
-        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM " . USERS_TABLE . " WHERE temp = :hash LIMIT 1");
-        $query->execute([':hash' => $hash]);
-
-        if (!$user = $query->fetch()) {
-            return ["status" => "error", "message" => "Invalid code"];
-        } else if ($user->valid == 1) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "{$user->email} already validated"];
-        } else if ($user->id && $hash === $user->temp) {
-            $this->validate($user->id);
-            return ['status' => 'error', 'class' => 'success', 'message' => "{$user->email} successful validated"];
-        }
-        return ['status' => 'error', 'class' => 'danger', 'message' => 'Undefined error.'];
+        $query = $this->db->prepare("INSERT INTO " . CHAT_TABLE . " (user_id, message, timestamp) VALUES (:user_id, :message, :timestamp);");
+        $query->execute([':user_id' => 1, ':message' => $message, ':timestamp' => time()]);
     }
 
     public function list(): object
     {
-        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . "");
+        $query = $this->db->prepare("SELECT id, user_id, message, timestamp FROM " . CHAT_TABLE . "");
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
         }
-        return (object) $this->results;
+        return $this->results;
     }
 
     public function delete($id)
