@@ -12,8 +12,8 @@
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-4">
                 <h1>Signup</h1>
-                <?php if (isset($result->message)) { ?>
-                    <div class="alert alert-primary" role="alert"><?php echo $result->message; ?></div>
+                <?php if (isset($result['message'])) { ?>
+                    <div class="alert alert-primary" role="alert"><?php echo $result['message']; ?></div>
                 <?php } ?>
 
                 <form action="<?php echo URL; ?>users/signup" method="post">
