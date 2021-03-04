@@ -39,9 +39,9 @@
                     <td><?php if (isset($user->email)) echo htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'); ?></td>
                     <td>                   
                         <?php if (isset($user->role) && $user->role === 'admin') { ?>
-                            <span class="badge badge-danger"><?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?></span>
+                            <span class="badge bg-danger"><?php echo htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8'); ?></span>
                         <?php } else { ?>
-                            <span class="badge badge-success">user</span>
+                            <span class="badge bg-success">user</span>
                         <?php } ?>
                     </td>
                     <?php if (MODE === 'development') { ?>
