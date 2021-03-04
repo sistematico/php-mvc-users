@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS {{CHAT_TABLE}} (
     "id"		INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id"	INTEGER,
     "message"   TEXT,
+    "timestamp" INTEGER,
     FOREIGN KEY(user_id) REFERENCES {{USERS_TABLE}}(id)
 );
 

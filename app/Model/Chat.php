@@ -1,119 +1,16 @@
 <?php
 
 namespace App\Model;
-
 use App\Core\Model;
-
 use PDOException;
 
-class User extends Model
+class Chat extends Model
 {
-    private array $results = [];
-
-    public function login($email, $password, $remember): array
+    public function send($message)
     {
-        $sql = "SELECT id, user, email, role, temp, password, valid FROM " . USERS_TABLE . " WHERE email LIKE :email OR user LIKE :email LIMIT 1";
-        $query = $this->db->prepare($sql);
-        $query->execute([':email' => $email]);
-
-        if (!$result = $query->fetch()) {
-            return ['status' => 'error', 'class' => 'danger', 'message' => 'User not found.'];
-        }
-
-        if (isset($result->valid) && $result->valid == 0) {
-            if (MODE === 'development') {
-                return ['status' => 'error', 'class' => 'danger', 'error_code' => 'validate', 'message' => 'Validate your account first.', 'hash_code' => $result->temp];
-            } else {
-                return ['status' => 'error', 'class' => 'danger', 'error_code' => 'validate', 'message' => 'Validate your account first.'];
-            }
-        }
-
-        if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
-            $this->logout();
-            $this->access($result->id);
-
-            if ($remember !== false) {
-                setcookie("id", $result->id, time() + (86400 * 30), "/");
-                setcookie("user", $result->user, time() + (86400 * 30), "/");
-            }
-
-            $_SESSION['logged'] = true;
-            $_SESSION['id'] = $result->id;
-            $_SESSION['user'] = $result->user;
-            $_SESSION['role'] = $result->role;
-
-            return ['status' => 'success', 'class' => 'success', 'message' => "User {$result->user} logged in."];
-        } else {
-            return ['status' => 'error', 'class' => 'danger', 'message' => "User / E-mail {$email} not found."];
-        }
-    }
-
-    public function logout()
-    {
-        if (isset($_SESSION['logged'])) {
-            $result = ['status' => 'success', 'class' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
-        } else {
-            $result = ['status' => 'error', 'class' => 'danger', 'message' => "You not logged."];
-        }
-
-        setcookie('id', '', time() - 3600);
-        setcookie('user', '', time() - 3600);
-        setcookie('PHPSESSID', '', time() - 3600);
-
-        unset(
-            $_COOKIE['id'],
-            $_COOKIE['user'],
-            $_COOKIE['role'],
-            $_SESSION['logged'],
-            $_SESSION['id'],
-            $_SESSION['user'],
-            $_SESSION['role'],
-            $_SESSION['last_message'],
-            $_SESSION['last_class']
-        );
-
-        session_unset();
-        session_destroy();
-        session_start();
-
-        return $result;
-    }
-
-    public function signup($login, $email, $password): array
-    {
-        $check = $this->check($login,$email);
-
-        if ($check['status'] === 'error')
-            return $check;
-
         $ts = time();
-        $hash = md5(uniqid(rand(), TRUE));
-        unset($_SESSION['last_message'], $_SESSION['last_class']);
-
-        try {
-            $query = $this->db->prepare("INSERT INTO " . USERS_TABLE . " (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
-            $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => null, ':created' => $ts]);
-        } catch (PDOException $e) {
-            unset($e);
-            if (MODE !== 'development') {
-                if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
-                    return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail."];
-                }
-            }
-            return ['status' => 'error', 'class' => 'danger', 'message' => "Error adding user {$login}"];
-        }
-
-        if (MODE === 'development') {
-            return ['status' => 'error', 'class' => 'success', 'message' => "Success adding user <strong>${login}</strong>.<br />Verification e-mail NOT sent to <strong>{$email}</strong>,<br /> Hash: <strong>{$hash}</strong>"];
-        } else {
-            if (!Mail::sendHash($email, $login, $hash)) {
-                return ['status' => 'error', 'class' => 'danger', 'message' => "Error sending e-mail to {$email}"];
-            }
-            return [
-                'status' => 'error', 'class' => 'success',
-                'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
-            ];
-        }
+        $query = $this->db->prepare("INSERT INTO " . CHAT_TABLE . " (user_id, message) VALUES (:user_id, :message)");
+        $query->execute([':user_id' => 0, ':message' => $message, ':created' => $ts]);
     }
 
     public function reset($email): array
