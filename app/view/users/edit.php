@@ -24,7 +24,7 @@
                     <option value="user" <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'user') echo 'selected'; ?>>user</option>
                 </select>
             <?php } else { ?>
-                <input name="role" class="form-control" type="text" placeholder="<?php if (isset($_SESSION['role'])) { echo htmlspecialchars($_SESSION['role'], ENT_QUOTES, 'UTF-8'); } ?>" readonly>
+                <input name="role" class="form-control" type="text" placeholder="<?php echo isset($user->role) ? htmlspecialchars($user->role, ENT_QUOTES, 'UTF-8') : ''; ?>" readonly>
             <?php } ?>
         </div>
         <div class="form-group mb-2 mr-2">
