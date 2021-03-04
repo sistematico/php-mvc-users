@@ -171,7 +171,7 @@ class UsersController
     {
         if (isset($id)) {
             $User = new User();
-            $user = $User->getId($id);
+            $user = $User->get($id);
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/edit.php';
