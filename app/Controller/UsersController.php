@@ -209,8 +209,12 @@ class UsersController
     public function validate($id)
     {
         if (isset($id) && is_numeric($id)) {
-            $User = new User();
-            $toast = $User->validate((int) $id);
+            if ($this->isAdmin()) {
+                $User = new User();
+                $toast = $User->validate((int) $id);
+            } else {
+                $toast = ['status' => 'error', 'class' => 'danger', 'message' => 'You need admin role to validate users!'];
+            }
         }
 
         require APP . 'view/_templates/header.php';
@@ -234,5 +238,13 @@ class UsersController
             $_SESSION['last_class'] = 'text-white bg-warning';
             header('location: ' . URL);
         }
+    }
+
+    public function isAdmin()
+    {
+        if (isset($_SESSION['logged']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            return true;
+        }
+        return false;
     }
 }
