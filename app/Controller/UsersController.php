@@ -63,6 +63,8 @@ class UsersController
 
     public function logout()
     {
+        $this->notLogged();
+
         unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
 
         setcookie('id', '', time() - 3600);
@@ -200,6 +202,17 @@ class UsersController
     public function logged()
     {
         if (isset($_SESSION['logged'])) {
+            $_SESSION['last_message'] = 'You are already logged in.';
+            $_SESSION['last_class'] = 'text-white bg-warning';
+            header('location: ' . URL);
+        }
+    }
+
+    public function notLogged()
+    {
+        if (!isset($_SESSION['logged'])) {
+            $_SESSION['last_message'] = 'You are not logged in.';
+            $_SESSION['last_class'] = 'text-white bg-warning';
             header('location: ' . URL);
         }
     }
