@@ -64,11 +64,13 @@ class UsersController
 
     public function logout()
     {
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+
         setcookie('id', '', time() - 3600);
         setcookie('user', '', time() - 3600);
         //setcookie('user', null, -1, '/');
-        setcookie('user', null, -1);
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+        //setcookie('user', null, -1);
+
 
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
             $result = (object) ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
