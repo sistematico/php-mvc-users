@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Model\User;
-use App\Helper\Log;
 
 class UsersController
 {
@@ -131,17 +130,6 @@ class UsersController
         if (isset($_POST["submit_reset_user"])) {
             $User = new User();
             $result = json_encode($User->reset($_POST['email']));
-        }
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/reset.php';
-        require APP . 'view/_templates/footer.php';
-    }
-
-    public function confirm()
-    {
-        if (isset($_POST["submit_confirm_user"])) {
-            $User = new User();
-            $result = json_decode($User->confirm($_POST['email']));
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';
