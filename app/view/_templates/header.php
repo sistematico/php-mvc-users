@@ -60,7 +60,7 @@ $start = $time;
                         <?php } else { ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php echo (isset($_SESSION['avatar'])) ? '<img src=' . AVATAR_PATH . $_SESSION['avatar'] . ' />' : '<i class="fas fa-user-circle"></i>'; ?> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
+                            <?php echo (isset($_SESSION['avatar']) && isset($_SESSION['login'])) ? '<img src=' . AVATAR_URL . $_SESSION['avatar'] . ' />' : '<i class="fas fa-user-circle"></i>'; ?> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <?php if (isset($_SESSION['id'])) { ?>

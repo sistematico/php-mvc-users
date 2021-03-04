@@ -33,7 +33,7 @@
         </div>
         <div class="form-group mb-2 mr-2">
             <label for="email" class="sr-only">E-mail</label>
-            <input name="email" type="text" class="form-control" id="email" placeholder="E-mail" value="<?php echo isset($_SESSION['role']) htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'); ?>" required />
+            <input name="email" type="text" class="form-control" id="email" placeholder="E-mail" value="<?php echo isset($_SESSION['role']) ? htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8') : ''; ?>" required />
         </div>
         <div class="form-group mb-2 mr-2">
             <label for="password" class="sr-only">Password</label>
