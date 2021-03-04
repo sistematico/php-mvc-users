@@ -1,8 +1,5 @@
 <?php
 
-$config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
-define('MODE', $config['MODE'] ?? 'development');
-
 if (MODE === 'development') {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);

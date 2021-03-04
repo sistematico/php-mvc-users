@@ -1,16 +1,20 @@
 <?php
 
+$config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
+define('MODE', $config['MODE'] ?? 'development');
+define('SESSION', $config['SESSION'] ?? 3600); // 3600 secs = 1 hour
+
 use App\Core\Application;
 
 session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
-    $sessionlimit = 3600; // 3600 secs = 1 hour
     $time = $_SERVER['REQUEST_TIME'];
-    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > $sessionlimit) {
+    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > SESSION) {
         session_unset();
         session_destroy();
         session_start();
+        $toast = (object) ['status' => 'success', 'message' => 'Logoff'];
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }
