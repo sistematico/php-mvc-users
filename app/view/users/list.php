@@ -47,7 +47,11 @@
                     <?php if (MODE === 'development') { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : ''); ?></td>
                     <?php } ?>
-                    <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>"></i></td>
+                    <td>
+                        <span style="color: <?php echo ($user->valid == 1 ? 'blue' : 'red'); ?>;">
+                            <i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>"></i>
+                        </span>
+                    </td>
                     <td class="ts"><?php echo $user->created ?? 'n/a'; ?></td>
                     <td class="ts"><?php echo $user->access ?? 'never'; ?></td>
                     <td>
