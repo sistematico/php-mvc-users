@@ -1,6 +1,6 @@
 (function() {
     const unixTimestamp = (item) => {
-        if (typeof parseInt(item.innerHTML) === 'number') {
+        if (!isNaN(item.innerHTML)) {
             let timestamp = parseInt(item.innerHTML);
             let date = new Date(timestamp * 1000);
             let years = date.getFullYear();
