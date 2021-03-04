@@ -239,6 +239,7 @@ class User extends Model
 
         if (file_exists(SQL_FILE)) {
             $sql = file_get_contents(SQL_FILE);
+            $sql = str_replace('{{TEMPID}}',"\n",$string);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
