@@ -45,7 +45,7 @@ class User extends Model
         }
     }
 
-    public function signup($login, $email, $password): string
+    public function signup($login, $email, $password): array
     {
         $check = $this->check($login,$email);
 
@@ -63,22 +63,22 @@ class User extends Model
             unset($e);
             if (MODE !== 'development') {
                 if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
-                    return json_encode(['status' => 'error', 'message' => "Error sending e-mail."], JSON_FORCE_OBJECT);
+                    return ['status' => 'error', 'message' => "Error sending e-mail."];
                 }
             }
-            return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
+            return ['status' => 'error', 'message' => "Error adding user {$login}"];
         }
 
         if (MODE === 'development') {
-            return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"], JSON_FORCE_OBJECT);
+            return ['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"];
         } else {
             if (!Mail::sendHash($email, $login, $hash)) {
-                return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$email}"], JSON_FORCE_OBJECT);
+                return ['status' => 'error', 'message' => "Error sending e-mail to {$email}"];
             }
-            return json_encode([
+            return [
                 'status' => 'success',
                 'message' => "Success adding user ${login}, verification e-mail sent to {$email}"
-            ], JSON_FORCE_OBJECT);
+            ];
         }
     }
 
