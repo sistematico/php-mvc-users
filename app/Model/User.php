@@ -176,7 +176,7 @@ class User extends Model
             return ['status' => 'error', 'message' => 'Username {$login} already exists'];
         }
 
-        return ['status' => 'success'];
+        return ['status' => 'success', 'message' => 'Username not exist.'];
     }
 
     public function update($login, $email, $role, $id, $valid, $password)
