@@ -8,41 +8,25 @@
     </nav>
 
     <h1>Chat</h1>
-
-
     <div class="card">
-        <div class="card-body" style="position: relative; max-height: 100px; overflow-y: auto">
-            <div style="  width: 100%;
-  overflow-y: scroll;
-  background-color: red;
-  flex: 1 auto;
-  height: 100%;">
-
+        <div class="card-body" style=" width: 100%; height: 200px; max-height: 200px; display: -webkit-flex; display: flex; -webkit-flex-flow: column nowrap; flex-flow: column nowrap;">
+            <div style="width: 100%; overflow-y: scroll; flex: 1 auto; height: 100%;">
             <?php
-            if (isset($messages)) {
-                foreach ($messages as $message) {
-                    echo $message->message . '<br />';
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo $message->message . '<br />';
+                    }
                 }
-            }
-            ?>
+                ?>
             </div>
-
-
-
         </div>
-
-    <div class="card-footer">
-
-        <form action="<?php echo URL; ?>chat/send" method="post">
-            <div class="input-group m-0">
-                <input name="message" type="text" class="form-control" placeholder="Fale alguma coisa..." aria-label="Fale alguma coisa..." aria-describedby="button-addon">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon">Enviar</button>
-            </div>
-        </form>
+        <div class="card-footer">
+            <form action="<?php echo URL; ?>chat/send" method="post">
+                <div class="input-group m-0">
+                    <input name="message" type="text" class="form-control" placeholder="Fale alguma coisa..." aria-label="Fale alguma coisa..." aria-describedby="button-addon">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon">Enviar</button>
+                </div>
+            </form>
+        </div>
     </div>
-
-
-    </div>
-
-
 </main>
