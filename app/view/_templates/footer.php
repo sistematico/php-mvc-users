@@ -26,7 +26,7 @@ if (isset($_SESSION['last_message'])) {
 
 if (isset($toast)) {
     ?>
-    <div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div aria-live="polite" aria-atomic="true" class="position-relative bottom-0 end-0">
         <div class="toast-container position-absolute p-3 bottom-0 end-0">
             <div class="toast align-items-center border-0 <?php echo $toast['class'] ?? 'text-white bg-dark'; ?>" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
