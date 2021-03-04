@@ -14,7 +14,7 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
         session_unset();
         session_destroy();
         session_start();
-        $toast = (object) ['status' => 'success', 'class' => 'text-white bg-danger border-0', 'message' => 'Automatically logged out due to afk.'];
+        $toast = ['status' => 'success', 'class' => 'text-white bg-danger border-0', 'message' => 'Automatically logged out due to afk.'];
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }
@@ -27,4 +27,4 @@ define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 require APP . DIRECTORY_SEPARATOR . 'autoload.php';
 require APP . DIRECTORY_SEPARATOR . 'config.php';
 
-$app = new Application();
+$app = new Application($toast = []);

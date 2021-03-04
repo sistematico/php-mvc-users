@@ -10,7 +10,7 @@ class Application
     private $url_action = '';
     private $url_params = array();
 
-    public function __construct()
+    public function __construct($toast = '')
     {
         $this->splitUrl();
 
