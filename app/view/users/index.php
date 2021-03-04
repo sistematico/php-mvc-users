@@ -23,7 +23,7 @@
                 <th scope="col">Role</th>
                 <?php if (MODE === 'development') { ?>
                 <th scope="col">TMP Hash</th>
-                <th scope="col">Hash</th>
+                <!-- <th scope="col">Hash</th>-->
                 <?php } ?>
                 <th scope="col">Valid</th>
                 <th scope="col">Created</th>
@@ -53,8 +53,8 @@
                     </td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
-                    <td class="ts"><?php echo (isset($user->created) ? $user->created : 'n/a'); ?></td>
-                    <td class="ts"><?php echo (isset($user->access) ? $user->access : 'n/a'); ?></td>
+                    <td class="ts"><?php echo $user->created ?? 'n/a'; ?></td>
+                    <td class="ts"><?php echo $user->access ?? 'never'; ?></td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Action Buttons">
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') { ?>
