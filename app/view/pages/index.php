@@ -7,11 +7,11 @@
     </nav>
 
     <h1>Index</h1>
-    <p class="lead"><?php echo MODE; ?> Welcome...</p>
+    <p class="lead">Welcome...</p>
 </main>
 
 <?php if (isset($result->message)) { ?>
-<div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+<div aria-live="polite" aria-atomic="true" class="position-relative <?php echo $toast->class ?? 'bg-dark'; ?>">
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
         <div class="toast">
             <div class="toast-header">
