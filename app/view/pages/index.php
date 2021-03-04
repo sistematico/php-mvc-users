@@ -15,7 +15,7 @@
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
         <div class="toast">
             <div class="toast-header">
-                <img src="<?php echo URL; ?>img/silhouette.png" class="rounded me-2" alt="PHP MVC Users">
+                <img src="<?php echo URL; ?>img/silhouette.png" class="rounded me-2" alt="PHP MVC Users" height="18">
                 <strong class="me-auto">PHP MVC Users</strong>
                 <small>now</small>
             </div>
