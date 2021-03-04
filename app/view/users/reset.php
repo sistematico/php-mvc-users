@@ -13,9 +13,9 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-4">
                 <h1>Reset password</h1>
-                <?php if (isset($result->message)) { ?>
+                <?php if (isset($result['message'])) { ?>
                     <div class="alert alert-primary" role="alert">
-                        <?php echo $result->message; ?>
+                        <?php echo $result['message']; ?>
                     </div>
                 <?php } ?>
                 <form class="form-inline" action="<?php echo URL; ?>users/verify" method="post">
