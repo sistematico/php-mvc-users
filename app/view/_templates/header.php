@@ -63,7 +63,9 @@ $start = $time;
                             <?php echo (isset($user->avatar)) ? '<img src=' . URL . $user->avatar . ' />' : '<i class="fas fa-user-circle"></i>'; ?> <?php echo (isset($_SESSION['user'])) ? $_SESSION['user'] : 'Account'; ?>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="<?php echo $user->id ? URL . 'users/profile/' . $user->id : '#'; ?>"><i class="fas fa-user-circle"></i> Profile</a>
+                                <?php if (isset($_SESSION['id'])) { ?>
+                                <a class="dropdown-item" href="<?php echo URL . 'users/profile/' . $_SESSION['id']; ?>"><i class="fas fa-user-circle"></i> Profile</a>
+                                <?php } ?>
                                 <a class="dropdown-item" href="<?php echo URL; ?>users/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                             </div>
                         </li>
