@@ -28,7 +28,7 @@ $start = $time;
                     <img src="<?php echo URL; ?>img/logo-32x32.png" width="30" height="30" alt="PHP MVC Users" style="margin-top: -5px;">
                     PHP MVC Users
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
