@@ -66,6 +66,7 @@ class UsersController
     {
         setcookie("id", "", time() - 3600);
         setcookie("user", "", time() - 3600);
+        setcookie('user', null, -1, '/');
         unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
 
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
