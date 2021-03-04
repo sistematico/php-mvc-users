@@ -50,7 +50,7 @@ class UsersController
 
             if ($result->status === 'success') {
                 require APP . 'view/_templates/header.php';
-                require APP . 'view/users/index.php';
+                require APP . 'view/pages/index.php';
                 require APP . 'view/_templates/footer.php';
             } else {
                 require APP . 'view/_templates/header.php';
