@@ -170,24 +170,12 @@ class UsersController
     public function edit($id)
     {
         if (isset($id)) {
-            if (isset($_SESSION['id']) && $id == $_SESSION['id'] || isset($_SESSION['id']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
-                $User = new User();
-                $user = $User->get($id);
-
-                if ($user === false) {
-                    $page = new \App\Controller\PagesController();
-                    $page->error();
-                } else {
-                    require APP . 'view/_templates/header.php';
-                    require APP . 'view/users/edit.php';
-                    require APP . 'view/_templates/footer.php';
-                } 
-            } else {
-                header('location: ' . URL);
-            }
-        } else {
-            header('location: ' . URL . 'users/index');
+            $User = new User();
+            $user = $User->getId($id);
         }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/users/edit.php';
+        require APP . 'view/_templates/footer.php';
     }
 
     public function update()
