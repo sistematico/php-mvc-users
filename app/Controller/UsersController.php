@@ -91,8 +91,9 @@ class UsersController
             $result = json_decode($User->signup($_POST["login"], $_POST["email"], $_POST["password"]));
 
             if ($result->status === 'success') {
+                $toast = $result;
                 require APP . 'view/_templates/header.php';
-                require APP . 'view/users/index.php';
+                require APP . 'view/pages/index.php';
                 require APP . 'view/_templates/footer.php';
             } else {
                 require APP . 'view/_templates/header.php';
