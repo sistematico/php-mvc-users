@@ -6,6 +6,6 @@
         </ol>
     </nav>
 
-    <h1>Index</h1>
-    <p class="lead"><?php echo MODE; ?> Welcome...</p>
+    <h1>PHP MVC Users</h1>
+    <p class="lead">Welcome</p>
 </main>
