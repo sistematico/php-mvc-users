@@ -12,7 +12,7 @@ class User extends Model
 
     public function login($email, $password, $remember): array
     {
-        $sql = "SELECT id, user, email, role, tmphash, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, role, tmphash, password, valid FROM {USERS_TABLE} WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
@@ -57,7 +57,7 @@ class User extends Model
         unset($_SESSION['last_message'], $_SESSION['last_class']);
 
         try {
-            $query = $this->db->prepare("INSERT INTO user (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
+            $query = $this->db->prepare("INSERT INTO {USERS_TABLE} (user, email, role, password, temp, valid, access, created) VALUES (:user, :email, :role, :password, :temp, :valid, :access, :created)");
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => null, ':created' => $ts]);
         } catch (PDOException $e) {
             unset($e);
@@ -106,7 +106,7 @@ class User extends Model
 
     public function verify($hash): array
     {
-        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE temp = :hash LIMIT 1");
+        $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM {USERS_TABLE} WHERE temp = :hash LIMIT 1");
         $query->execute([':hash' => $hash]);
 
         if (!$user = $query->fetch()) {
@@ -122,7 +122,7 @@ class User extends Model
 
     public function list(): object
     {
-        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM user");
+        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM {USERS_TABLE}");
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
@@ -140,7 +140,7 @@ class User extends Model
     public function get($id)
     {
         try {
-            $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM user WHERE id = :id LIMIT 1");
+            $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM {USERS_TABLE} WHERE id = :id LIMIT 1");
             $query->execute([':id' => $id]);
             return $query->fetch();
         } catch (PDOException $e) {
@@ -152,7 +152,7 @@ class User extends Model
     public function getUserId($email): bool
     {
         try {
-            $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM user WHERE email = :email OR user = :email LIMIT 1");
+            $query = $this->db->prepare("SELECT id, user, email, role, temp, valid FROM {USERS_TABLE} WHERE email = :email OR user = :email LIMIT 1");
             $query->execute([':email' => $email]);
             return $query->fetch();
         } catch (PDOException $e) {
@@ -165,12 +165,12 @@ class User extends Model
     {
         $_SESSION['user'] = $login;
         
-        $sql = "UPDATE user SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
+        $sql = "UPDATE {USERS_TABLE} SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
         $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id);
         
         if ($password != null && strlen($password) > 0) {
             $temp = md5(uniqid(rand(), TRUE));
-            $sql = "UPDATE user SET user = :user, email = :email, role = :role, password = :password, temp = :temp, valid = :valid WHERE id = :id";
+            $sql = "UPDATE {USERS_TABLE} SET user = :user, email = :email, role = :role, password = :password, temp = :temp, valid = :valid WHERE id = :id";
             $params = [':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id];
         }
 
@@ -180,13 +180,13 @@ class User extends Model
 
     public function access($id)
     {
-        $query = $this->db->prepare("UPDATE user SET access = :access WHERE id = :id");
+        $query = $this->db->prepare("UPDATE {USERS_TABLE} SET access = :access WHERE id = :id");
         $query->execute([':id' => $id, ':access' => time()]);
     }
 
     public function validate($id)
     {
-        $sql = "UPDATE user SET temp = :hash, valid = :valid WHERE id = :id";
+        $sql = "UPDATE {USERS_TABLE} SET temp = :hash, valid = :valid WHERE id = :id";
         $query = $this->db->prepare($sql);
         $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);
     }
@@ -202,7 +202,7 @@ class User extends Model
     public function search($term): object
     {
         $term = "%" . $term . "%";
-        $sql = "SELECT id, user, email, role, temp, valid, access, created FROM user WHERE email LIKE :term OR user LIKE :term";
+        $sql = "SELECT id, user, email, role, temp, valid, access, created FROM {USERS_TABLE} WHERE email LIKE :term OR user LIKE :term";
         $query = $this->db->prepare($sql);
         $query->execute([':term' => $term]);
         while ($row = $query->fetch()) {
@@ -213,14 +213,14 @@ class User extends Model
 
     public function check($login, $email): array
     {
-        $query = $this->db->prepare("SELECT id FROM user WHERE email = :email LIMIT 1");
+        $query = $this->db->prepare("SELECT id FROM {USERS_TABLE} WHERE email = :email LIMIT 1");
         $query->execute([':email' => $email]);
 
         if ($query->fetch() !== false) {
             return ['status' => 'error', 'message' => "E-mail {$email} already exists"];
         }
 
-        $query = $this->db->prepare("SELECT id FROM user WHERE user = :user LIMIT 1");
+        $query = $this->db->prepare("SELECT id FROM {USERS_TABLE} WHERE user = :user LIMIT 1");
         $query->execute([':user' => $login]);
         if ($query->fetch() != false) {
             return ['status' => 'error', 'message' => "Username {$login} already exists"];
@@ -243,6 +243,7 @@ class User extends Model
             $sql = file_get_contents(SQL_FILE);
             $sql = str_replace('{{TEMPID}}',"{$hash}", $sql);
             $sql = str_replace('{{CREATED}}',"{$ts}", $sql);
+            $sql = str_replace('{{USERS_TABLE}}',USERS_TABLE, $sql);
             try {
                 $this->db->exec($sql);
             } catch (PDOException $e) {
