@@ -90,24 +90,19 @@ class User extends Model
 
     public function reset($email): string
     {
-        $user = $this->getUserId($email);
-        
-        if ($user) {
+        if ($user = $this->getUserId($email)) {
             if (MODE !== 'development') {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
-            }
-
-            if (MODE === 'development') {
-                return json_encode([
-                    'status' => 'success',
-                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
-                ], JSON_FORCE_OBJECT);
-            } else {
                 return json_encode([
                     'status' => 'success',
                     'message' => "Success resetting user $user->user , verification e-mail sent to {$user->email}."
+                ], JSON_FORCE_OBJECT);
+            } else  {
+                return json_encode([
+                    'status' => 'success',
+                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
                 ], JSON_FORCE_OBJECT);
             }
         } else {
