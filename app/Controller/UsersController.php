@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Model\User;
+use App\Helper\Log;
 
 class UsersController
 {
@@ -44,6 +45,8 @@ class UsersController
             $remember = isset($_POST['remember']);
             $User = new User();
             $result = json_decode($User->login($_POST["email"], $_POST["password"], $remember));
+
+            Log::consoleRaw($result);
 
             if ($result->status === 'success') {
                 require APP . 'view/_templates/header.php';
