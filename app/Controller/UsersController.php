@@ -208,14 +208,18 @@ class UsersController
 
     public function validate($id)
     {
+        $User = new User();
+
         if (isset($id) && is_numeric($id)) {
             if ($this->isAdmin()) {
-                $User = new User();
                 $toast = $User->validate((int) $id);
             } else {
                 $toast = ['status' => 'error', 'class' => 'danger', 'message' => 'You need admin role to validate users!'];
             }
         }
+        
+        $users = $User->list();
+        $amount = $User->amount();
 
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/index.php';

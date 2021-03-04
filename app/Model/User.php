@@ -248,10 +248,14 @@ class User extends Model
 
     public function validate($id)
     {
-        if ($this->get($id)->valid === 1) {}
         $sql = "UPDATE " . USERS_TABLE . " SET temp = :hash, valid = :valid WHERE id = :id";
         $query = $this->db->prepare($sql);
-        $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);
+
+        if ($this->get($id)->valid == 1) {
+            $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 0, ':id' => $id]);
+        } else {
+            $query->execute([':hash' => md5(uniqid(rand(), TRUE)), ':valid' => 1, ':id' => $id]);
+        }
     }
 
     public function amount()
