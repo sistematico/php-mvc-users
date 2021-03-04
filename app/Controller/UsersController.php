@@ -66,16 +66,15 @@ class UsersController
     {
         $this->notLogged();
 
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
-
-        setcookie('id', '', time() - 3600);
-        setcookie('user', '', time() - 3600);
-
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
             $result = ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
         } else {
             $result = ['status' => 'error', 'message' => "You not logged."];
         }
+
+        setcookie('id', '', time() - 3600);
+        setcookie('user', '', time() - 3600);
+        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
 
         $toast = $result;
 
