@@ -12,7 +12,11 @@
 
     <div class="card">
         <div class="card-body" style="position: relative; max-height: 100px; overflow-y: auto">
-            <div style="top: 0;">
+            <div style="  width: 100%;
+  overflow-y: scroll;
+  background-color: red;
+  flex: 1 auto;
+  height: 100%;">
 
             <?php
             if (isset($messages)) {
