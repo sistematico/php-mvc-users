@@ -46,13 +46,19 @@ class UsersController
             $result = json_decode($User->login($_POST["email"], $_POST["password"], $remember));
 
             if ($result->status === 'success') {
-                header('location: ' . URL);
+                require APP . 'view/_templates/header.php';
+                require APP . 'view/users/index.php';
+                require APP . 'view/_templates/footer.php';
+            } else {
+                require APP . 'view/_templates/header.php';
+                require APP . 'view/users/login.php';
+                require APP . 'view/_templates/footer.php';
             }
+        } else {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/login.php';
+            require APP . 'view/_templates/footer.php';
         }
-
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/login.php';
-        require APP . 'view/_templates/footer.php';
     }
 
     public function signup()
@@ -64,12 +70,19 @@ class UsersController
             $result = json_decode($User->signup($_POST["login"], $_POST["email"], $_POST["password"]));
 
             if ($result->status === 'success') {
-                header('location: ' . URL);
+                require APP . 'view/_templates/header.php';
+                require APP . 'view/users/index.php';
+                require APP . 'view/_templates/footer.php';
+            } else {
+                require APP . 'view/_templates/header.php';
+                require APP . 'view/users/signup.php';
+                require APP . 'view/_templates/footer.php';
             }
+        } else {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/users/signup.php';
+            require APP . 'view/_templates/footer.php';
         }
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/users/signup.php';
-        require APP . 'view/_templates/footer.php';
     }
 
     public function verify($hash = null)
@@ -182,7 +195,7 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function logged(): bool
+    public function logged()
     {
         if (isset($_SESSION['logged'])) {
             header('location: ' . URL);
