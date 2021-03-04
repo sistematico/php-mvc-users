@@ -15,9 +15,9 @@
     <div class="toast-container position-absolute p-3 bottom-0 end-0">
         <div class="toast">
             <div class="toast-header">
-                <img src="" class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
+                <img src="<?php echo URL; ?>img/silhouette.png" class="rounded me-2" alt="PHP MVC Users">
+                <strong class="me-auto">PHP MVC Users</strong>
+                <small>now</small>
             </div>
             <div class="toast-body">
                 <?php echo $result->message; ?>
