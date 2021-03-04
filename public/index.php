@@ -2,8 +2,10 @@
 
 use App\Core\Application;
 
-$config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
-define('SESSIONLIMIT', (int) $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
+if (file_exists(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env'))
+    $config = parse_ini_file(dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
+
+define('SESSIONLIMIT', $config['SESSIONLIMIT'] ?? 3600); // 3600 secs = 1 hour
 
 session_start();
 
@@ -23,8 +25,8 @@ define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('MODE', $config['MODE'] ?? 'development');
 define('USERS_TABLE', $config['USERS_TABLE'] ?? 'users');
-define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . $config['DB_FILE'] ?? ROOT . 'db' . DIRECTORY_SEPARATOR . 'database.sqlite');
-define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . $config['SQL_FILE'] ?? ROOT . 'sql' . DIRECTORY_SEPARATOR . 'users.sql');
+define('DB_FILE', isset($config['DB_FILE']) ? ROOT . 'db' . DIRECTORY_SEPARATOR . $config['DB_FILE'] : ROOT . 'db' . DIRECTORY_SEPARATOR . 'database.sqlite');
+define('SQL_FILE', isset($config['SQL_FILE']) ? ROOT . 'sql' . DIRECTORY_SEPARATOR . $config['SQL_FILE'] : ROOT . 'sql' . DIRECTORY_SEPARATOR . 'users.sql');
 
 require APP . DIRECTORY_SEPARATOR . 'autoload.php';
 require APP . DIRECTORY_SEPARATOR . 'config.php';
