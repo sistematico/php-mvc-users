@@ -198,7 +198,7 @@ class User extends Model
         try {
             $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM " . USERS_TABLE . " WHERE id = :id LIMIT 1");
             $query->execute([':id' => $id]);
-            return $query->fetch();
+            return (array) $query->fetch();
         } catch (PDOException $e) {
             unset($e);
             return false;
