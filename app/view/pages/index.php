@@ -7,7 +7,7 @@
     </nav>
 
     <h1>Index</h1>
-    <p class="lead">Welcome...</p>
+    <p class="lead"><?php echo TESTE; ?> Welcome...</p>
 </main>
 
 <?php if (isset($result->message)) { ?>

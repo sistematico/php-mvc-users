@@ -1,6 +1,7 @@
 <?php
 
 define('TESTE', dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
+
 $config = parse_ini_file(__DIR__ . '.env');
 define('MODE', $config['MODE'] ?? 'development');
 
