@@ -12,7 +12,7 @@ class User extends Model
 
     public function login($email, $password, $remember): array
     {
-        $sql = "SELECT id, user, email, role, hash, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, role, tmphash, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
