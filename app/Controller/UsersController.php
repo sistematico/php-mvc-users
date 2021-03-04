@@ -50,6 +50,13 @@ class UsersController
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/pages/index.php';
                 require APP . 'view/_templates/footer.php';
+            } else if ($result['status'] === 'error' && isset($result['error_code']) && $result['error_code'] === 'validate') {
+                if (MODE === 'development') {
+                    $code = $result['hash_code'] ?? '';
+                }
+                require APP . 'view/_templates/header.php';
+                require APP . 'view/users/verify.php';
+                require APP . 'view/_templates/footer.php';
             } else {
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/users/login.php';
