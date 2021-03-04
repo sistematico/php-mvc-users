@@ -17,7 +17,7 @@
                     <th scope="col">User</th>
                     <th scope="col">E-mail</th>
                     <th scope="col">Role</th>
-                    <?php if ($mode === 'development') { ?>
+                    <?php if (MODE === 'development') { ?>
                     <th scope="col">Hash</th>
                     <?php } ?>
                     <th scope="col">Valid</th>

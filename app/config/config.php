@@ -1,13 +1,10 @@
 <?php
 
-// Change to false in production, this disable e-mail function
-define('DEBUG', true);
-
-$teste = dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env';
+define('TESTE', dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env');
 $config = parse_ini_file(__DIR__ . '.env');
-$mode = $config['MODE'] ?? 'development';
+define('MODE', $config['MODE'] ?? 'development');
 
-if ($mode === 'development') {
+if (MODE === 'development') {
     ini_set('display_errors', 'On');
     error_reporting(E_ALL);
 }
