@@ -1,7 +1,7 @@
 (function() {
     const unixTimestamp = (item) => {
-        let timestamp = parseInt(item.innerHTML);
-        if (typeof timestamp === 'number') {
+        if (typeof parseInt(item.innerHTML) === 'number') {
+            let timestamp = parseInt(item.innerHTML);
             let date = new Date(timestamp * 1000);
             let years = date.getFullYear();
             let months = "0" + (date.getMonth() + 1);

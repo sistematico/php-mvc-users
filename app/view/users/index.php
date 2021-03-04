@@ -46,11 +46,6 @@
                     </td>
                     <?php if (MODE === 'development') { ?>
                     <td><?php echo (isset($user->temp) ? $user->temp : ''); ?></td>
-                    <td>
-                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                        <?php echo (isset($user->password) ? $user->password : ''); ?>
-                        </span>
-                    </td>
                     <?php } ?>
                     <td><i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>-circle"></i></td>
                     <td class="ts"><?php echo $user->created ?? 'n/a'; ?></td>
