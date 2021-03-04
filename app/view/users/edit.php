@@ -10,6 +10,11 @@
 
     <h1>Users</h1>
     <h3>Edit a user</h3>
+
+    <?php if (isset($result['message'])) { ?>
+        <div class="alert alert-primary" role="alert"><?php echo $result['message']; ?></div>
+    <?php } ?>
+
     <form class="form-inline" action="<?php echo URL; ?>users/update" method="post">
         <div class="form-group mb-2 mr-2">        
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') { ?>
