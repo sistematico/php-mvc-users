@@ -71,19 +71,12 @@ class UsersController
 
     public function logout()
     {
-        $this->notLogged();
+        $User = new User();
+        $toast = $User->logout();
 
-        if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
-            $result = ['status' => 'success', 'class' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
-        } else {
-            $result = ['status' => 'error', 'class' => 'danger', 'message' => "You not logged."];
-        }
-
-        $toast = $result;
-
-        setcookie('id', '', time() - 3600);
-        setcookie('user', '', time() - 3600);
-        unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
+        // setcookie('id', '', time() - 3600);
+        // setcookie('user', '', time() - 3600);
+        // unset($_COOKIE['id'], $_COOKIE['user'], $_COOKIE['role'], $_SESSION['logged'], $_SESSION['id'], $_SESSION['user'], $_SESSION['role']);
 
         require APP . 'view/_templates/header.php';
         require APP . 'view/pages/index.php';
