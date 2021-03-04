@@ -12,7 +12,7 @@ class User extends Model
 
     public function login($email, $password, $remember): array
     {
-        $sql = "SELECT id, user, email, role, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
+        $sql = "SELECT id, user, email, role, hash, password, valid FROM user WHERE email LIKE :email OR user LIKE :email LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute([':email' => $email]);
 
@@ -21,7 +21,7 @@ class User extends Model
         }
 
         if (isset($result->valid) && $result->valid == 0) {
-            return ['status' => 'error', 'message' => 'Validate first'];
+            return ['status' => 'error', 'error_code' => 'validate', 'message' => 'Validate first', 'hash_code' => $result->tmphash];
         }
 
         if (isset($result->id) && isset($result->password) && password_verify($password, $result->password)) {
