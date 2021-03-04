@@ -22,6 +22,17 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
 if (isset($toast))
     var_dump($toast);
 
+if (isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
+    var_dump($_COOKIE['id']);
+}
+
+if (isset($_COOKIE['user'])) {
+    //var_dump($_COOKIE['user']);
+}
+
+//var_dump($_SESSION['LAST_ACTIVITY']);
+
+
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
 define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'banco.sqlite');
