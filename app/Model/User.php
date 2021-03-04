@@ -96,7 +96,7 @@ class User extends Model
             } else  {
                 return [
                     'status' => 'success',
-                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
+                    'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}.<br />New Hash: <strong>{$user->hash}</strong>"
                 ];
             }
         } else {
