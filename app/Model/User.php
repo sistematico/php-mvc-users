@@ -170,7 +170,7 @@ class User extends Model
         $_SESSION['user'] = $login;
         
         $sql = "UPDATE " . USERS_TABLE . " SET user = :user, email = :email, role = :role, valid = :valid WHERE id = :id";
-        $params = array(':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id);
+        $params = [':user' => $login, ':email' => $email, ':role' => $role, ':valid' => $valid, ':id' => $id];
         
         if ($password != null && strlen($password) > 0) {
             $temp = md5(uniqid(rand(), TRUE));
@@ -178,8 +178,14 @@ class User extends Model
             $params = [':user' => $login, ':email' => $email, ':role' => $role, ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $temp, ':valid' => $valid, ':id' => $id];
         }
 
-        $query = $this->db->prepare($sql);
-        $query->execute($params);
+        try {
+            $query = $this->db->prepare($sql);
+            $query->execute($params);
+        } catch (PDOException $e) {
+            return ['status' => 'error', 'message' => "Error editing user {$login}: " . $e->getMessage()];
+        }
+
+        return ['status' => 'success', 'message' => "User {$login} sucessfull updated."];
     }
 
     public function access($id)
