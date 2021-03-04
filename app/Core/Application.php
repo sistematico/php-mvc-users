@@ -9,16 +9,14 @@ class Application
     private $url_controller = null;
     private $url_action = '';
     private $url_params = array();
-    public $toast = new stdClass();
 
-    public function __construct($toast = [])
+    public function __construct()
     {
-        $this->toast = (object) $toast;
         $this->splitUrl();
 
         if (!$this->url_controller) {
             $page = new PagesController();
-            $page->index($this->toast);
+            $page->index();
         } else if (file_exists(APP . 'Controller/' . ucfirst($this->url_controller) . 'Controller.php')) {
             $controller = "\\App\\Controller\\" . ucfirst($this->url_controller) . 'Controller';
             $this->url_controller = new $controller();
