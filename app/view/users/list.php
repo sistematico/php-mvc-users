@@ -48,8 +48,8 @@
                     <td><?php echo (isset($user->temp) ? $user->temp : ''); ?></td>
                     <?php } ?>
                     <td>
-                        <span style="color: <?php echo ($user->valid == 1 ? 'blue' : 'red'); ?>;">
-                            <i class="fas fa-<?php echo ($user->valid == 1 ? 'check' : 'times'); ?>"></i>
+                        <span class="fg-<?php echo ($user->valid == 1 ? 'success' : 'danger'); ?>;">
+                            <i class="fas fa-<?php echo ($user->valid == 1 ? 'check text-success' : 'times text-danger'); ?>"></i>
                         </span>
                     </td>
                     <td class="ts"><?php echo $user->created ?? 'n/a'; ?></td>
