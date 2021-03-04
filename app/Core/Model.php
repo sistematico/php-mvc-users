@@ -11,7 +11,7 @@ class Model
         try {
             self::open();
         } catch (\PDOException $e) {
-            exit('A conexão com o banco de dados não pode ser feita.');
+            exit('Connection with database cannot be made.');
         }
     }
 

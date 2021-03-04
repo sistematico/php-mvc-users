@@ -16,5 +16,5 @@ jobs:
           script: |
             mkdir -p /var/www/users.lucasbrum.net
             cd /var/www/users.lucasbrum.net
-            #git checkout HEAD^ package-lock.json
+            git checkout HEAD^ db/database.sqlite
             git pull
