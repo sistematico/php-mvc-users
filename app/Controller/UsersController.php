@@ -30,7 +30,7 @@ class UsersController
     public function prune()
     {
         $User = new User();
-        $result = json_decode($User->prune());
+        $result = $User->prune();
         require APP . 'view/_templates/header.php';
         require APP . 'view/pages/index.php';
         require APP . 'view/_templates/footer.php';
@@ -43,9 +43,9 @@ class UsersController
         if (isset($_POST["submit_login_user"])) {
             $remember = isset($_POST['remember']);
             $User = new User();
-            $result = json_decode($User->login($_POST["email"], $_POST["password"], $remember));
+            $result = $User->login($_POST["email"], $_POST["password"], $remember);
 
-            if ($result->status === 'success') {
+            if ($result['status'] === 'success') {
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/pages/index.php';
                 require APP . 'view/_templates/footer.php';
@@ -71,9 +71,9 @@ class UsersController
         setcookie('user', '', time() - 3600);
 
         if (isset($_SESSION['logged']) && isset($_SESSION['user'])) {
-            $result = (object) ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
+            $result = ['status' => 'success', 'message' => "User {$_SESSION['user']} has logged off successfully."];
         } else {
-            $result = (object) ['status' => 'error', 'message' => "You not logged."];
+            $result = ['status' => 'error', 'message' => "You not logged."];
         }
 
         $toast = $result;
@@ -90,8 +90,9 @@ class UsersController
         if (isset($_POST["submit_signup_user"])) {
             $User = new User();
             $result = $User->signup($_POST["login"], $_POST["email"], $_POST["password"]);
+            $toast = $result;
 
-            if ($result->status === 'success') {
+            if ($result['status'] === 'success') {
                 $toast = $result;
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/pages/index.php';
@@ -116,10 +117,10 @@ class UsersController
 
         if (isset($_POST["submit_verify_user"]) && isset($_POST["verify"]) && !empty($_POST["verify"])) {
             $User = new User();
-            $result = json_decode($User->verify(trim($_POST["verify"])));
+            $result = $User->verify(trim($_POST["verify"]));
         } else if ($hash) {
             $User = new User();
-            $result = json_decode($User->verify(trim($hash)));
+            $result = $User->verify(trim($hash));
         }
 
         require APP . 'view/_templates/header.php';
@@ -131,7 +132,7 @@ class UsersController
     {
         if (isset($_POST["submit_reset_user"])) {
             $User = new User();
-            $result = json_encode($User->reset($_POST['email']));
+            $result = $User->reset($_POST['email']);
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/reset.php';
