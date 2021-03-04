@@ -217,7 +217,7 @@ class UsersController
                 $toast = ['status' => 'error', 'class' => 'danger', 'message' => 'You need admin role to validate users!'];
             }
         }
-        
+
         $users = $User->list();
         $amount = $User->amount();
 
