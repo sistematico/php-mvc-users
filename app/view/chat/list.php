@@ -10,8 +10,9 @@
     <h1>Chat</h1>
 
 
-    <div class="card" style="postition: relative">
-        <div class="card-body" style="position: absolute; bottom: 0; max-height: 100px; overflow-y: auto">
+    <div class="card">
+        <div class="card-body" style="position: relative; max-height: 100px; overflow-y: auto">
+            <div style="top: 0;">
 
             <?php
             if (isset($messages)) {
@@ -20,6 +21,7 @@
                 }
             }
             ?>
+            </div>
 
 
 
