@@ -64,7 +64,7 @@ class User extends Model
             $query->execute([':user' => $login, ':email' => $email, ':role' => 'user', ':password' => password_hash($password, PASSWORD_DEFAULT), ':temp' => $hash, ':valid' => 0, ':access' => $ts, ':created' => $ts]);
         } catch (PDOException $e) {
             unset($e);
-            if (defined('DEBUG') && DEBUG !== true) {
+            if (MODE === 'development') {
                 if (!Mail::send($email, $login, 'Error inserting hash', 'Error sending hash! Re-send please.')) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail."], JSON_FORCE_OBJECT);
                 }
@@ -72,7 +72,7 @@ class User extends Model
             return json_encode(['status' => 'error', 'message' => "Error adding user {$login}"], JSON_FORCE_OBJECT);
         }
 
-        if (defined('DEBUG') && DEBUG === true) {
+        if (MODE === 'development') {
             return json_encode(['status' => 'success', 'message' => "Success adding user ${login}, verification e-mail NOT sent to {$email}, Hash: {$hash}"], JSON_FORCE_OBJECT);
         } else {
             return json_encode([
@@ -87,13 +87,13 @@ class User extends Model
         $user = $this->getUserId($email);
         
         if ($user) {
-            if (defined('DEBUG') && DEBUG !== true) {
+            if (MODE === 'development') {
                 if (!Mail::sendHash($user->email, $user->user, $user->hash)) {
                     return json_encode(['status' => 'error', 'message' => "Error sending e-mail to {$user->email}"], JSON_FORCE_OBJECT);
                 }
             }
 
-            if (defined('DEBUG') && DEBUG === true) {
+            if (MODE === 'development') {
                 return json_encode([
                     'status' => 'success',
                     'message' => "Success resetting user {$user->user} password verification e-mail NOT sent to {$user->email}, New Hash: {$user->hash}"
