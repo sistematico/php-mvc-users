@@ -40,4 +40,7 @@
             </div>
         </div>
     </div>
-<?php } ?>
+<?php
+unset($_SESSION['LAST_MESSAGE'], $_SESSION['LAST_CLASS']);
+}
+?>

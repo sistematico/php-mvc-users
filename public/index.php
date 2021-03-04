@@ -16,7 +16,6 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
         session_start();
         $_SESSION['LAST_MESSAGE'] = 'Automatically logged out due to afk.';
         $_SESSION['LAST_CLASS'] = 'text-white bg-danger';
-        $toast = ['status' => 'success', 'class' => 'text-white bg-danger border-0', 'message' => 'Automatically logged out due to afk.'];
     }
     $_SESSION['LAST_ACTIVITY'] = $time;
 }
