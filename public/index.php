@@ -22,7 +22,7 @@ if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
 define('APP', ROOT . 'app' . DIRECTORY_SEPARATOR);
-define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'banco.sqlite');
+define('DB_FILE', ROOT . 'db' . DIRECTORY_SEPARATOR . 'database.sqlite');
 define('SQL_FILE', ROOT . 'sql' . DIRECTORY_SEPARATOR . 'database.sql');
 
 require APP . DIRECTORY_SEPARATOR . 'autoload.php';
