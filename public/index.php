@@ -10,14 +10,14 @@ session_start();
 
 if (!isset($_COOKIE['id']) && !isset($_COOKIE['user'])) {
     $time = $_SERVER['REQUEST_TIME'];
-    if (isset($_SESSION['LAST_ACTIVITY']) && ($time - $_SESSION['LAST_ACTIVITY']) > SESSIONLIMIT) {
+    if (isset($_SESSION['last_activity']) && ($time - $_SESSION['last_activity']) > SESSIONLIMIT) {
         session_unset();
         session_destroy();
         session_start();
         $_SESSION['last_message'] = 'Automatically logged out due to afk, the inactive time limit is ' . SESSIONLIMIT . 'secs.';
         $_SESSION['last_class'] = 'text-white bg-danger';
     }
-    $_SESSION['LAST_ACTIVITY'] = $time;
+    $_SESSION['last_activity'] = $time;
 }
 
 define('ROOT', dirname(__DIR__) . DIRECTORY_SEPARATOR);
