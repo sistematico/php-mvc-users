@@ -46,6 +46,7 @@ class UsersController
             $result = $User->login($_POST["email"], $_POST["password"], $remember);
 
             if ($result['status'] === 'success') {
+                $toast = $result;
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/pages/index.php';
                 require APP . 'view/_templates/footer.php';
