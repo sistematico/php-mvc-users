@@ -25,10 +25,6 @@
     </div>
 </div>
 
-<?php
-App\Helper\Log::consoleRaw($result);
-?>
-
 <script>
     let result = "<?php echo isset($result->status) ? $result->status : ''; ?>";
 </script>

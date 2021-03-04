@@ -46,8 +46,6 @@ class UsersController
             $User = new User();
             $result = json_decode($User->login($_POST["email"], $_POST["password"], $remember));
 
-            //Log::consoleRaw($result);
-
             if ($result->status === 'success') {
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/pages/index.php';
