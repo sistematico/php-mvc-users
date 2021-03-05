@@ -31,6 +31,13 @@ class ChatController
         require APP . 'view/_templates/footer.php';
     }
 
+    public function delete($id)
+    {
+        $Chat = new Chat();
+        $messages = $Chat->delete($id);
+        $this->index();
+    }
+
     public function isLogged()
     {
         if (isset($_SESSION['logged'])) {
