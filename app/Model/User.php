@@ -160,8 +160,8 @@ class User extends Model
         $html = '';
         $perPage = 3;
         $offset = ($page-1) * $perPage;
-        $next = ($page + 1);
-        $prev = ($page - 1);
+        $next = ++$page;
+        $prev = --$page;
         $total_records = $this->amount();
         $total_no_of_pages = ceil($total_records / $perPage);
 
