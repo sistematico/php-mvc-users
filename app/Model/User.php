@@ -189,7 +189,11 @@ class User extends Model
             $this->results[] = $row;
         }
 
-        return $this->results;
+        $tmparr = ['data', $this->results];
+        $tmparr2 = ['pagination', $html];
+        $tmparr3 = ['data' => $tmparr, 'pagination' => $tmparr2];
+
+        return $tmparr3;
         //return ['data' => $this->results, 'pagination' => $html];
     }
 
