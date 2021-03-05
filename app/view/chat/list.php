@@ -8,7 +8,7 @@
         </nav>
         <h1>Chat</h1>
         <div class="card">
-            <div class="card-body mh-50 overflow-auto">
+            <div class="card-body overflow-auto" style="height: auto">
                 <?php
                 if (isset($messages)) {
                     foreach ($messages as $message) {
