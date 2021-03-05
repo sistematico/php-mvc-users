@@ -6,11 +6,11 @@ use App\Model\User;
 
 class UsersController
 {
-    public function index()
+    public function index($page = 1)
     {
         $User = new User();
 
-        $users = $User->list();
+        $users = $User->list($page);
 //        $users = $data['data'];
 //        $pagination = $data['pagination'];
 
