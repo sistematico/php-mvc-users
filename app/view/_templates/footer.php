@@ -1,4 +1,5 @@
-<footer class="footer">
+<footer class="footer mt-auto py-3 bg-light">
+<!--<footer class="footer">-->
     <div class="container">
         <span class="text-muted">
             Made with <i class="fas fa-heart"></i> by <a href="https://lucasbrum.net" target="_blank">Lucas</a> in <a href="https://pt.wikipedia.org/wiki/Terenos" target="_blank">Terenos</a>.

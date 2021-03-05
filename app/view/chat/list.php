@@ -1,4 +1,5 @@
-<main role="main" class="container pb-4">
+<main class="flex-shrink-0">
+<!--<main role="main" class="container pb-4">-->
 
     <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
