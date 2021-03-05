@@ -28,7 +28,7 @@
 
 
 
-        <div class="card overflow-hidden">
+        <div class="card mh-100">
             <div class="card-body overflow-hidden">
                     <?php
                         if (isset($messages)) {
