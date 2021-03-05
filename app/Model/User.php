@@ -162,6 +162,11 @@ class User extends Model
         $next_page = $page + 1;
         $adjacents = "2";
 
+        $total_records = $this->amount();
+        $total_no_of_pages = ceil($total_records / $perPage);
+
+        $second_last = $total_no_of_pages - 1; // total pages minus 1
+
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . "");
         $query->execute();
         while ($row = $query->fetch()) {
