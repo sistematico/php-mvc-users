@@ -9,14 +9,14 @@
 
     <h1>Chat</h1>
     <div class="card">
-        <div class="card-body" style=" width: 100%; height: 200px; max-height: 200px; display: -webkit-flex; display: flex; -webkit-flex-flow: column nowrap; flex-flow: column nowrap;">
+        <div class="card-body" style="display: flex; flex-flow: column nowrap; width: 100%; height: 200px; max-height: 200px;">
             <div style="width: 100%; overflow-y: scroll; flex: 1 auto; height: 100%;">
-            <?php
-                if (isset($messages)) {
-                    foreach ($messages as $message) {
-                        echo $message->message . '<br />';
+                <?php
+                    if (isset($messages)) {
+                        foreach ($messages as $message) {
+                            echo $message->message . '<br />';
+                        }
                     }
-                }
                 ?>
             </div>
         </div>
