@@ -1,42 +1,21 @@
 <main class="flex-shrink-0">
     <div class="container">
-
-        <div class="row">
-            <div class="col">
-                <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Chat</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col">
-                <h1>Chat</h1>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col">
-
-
-
-
-
-
-        <div class="card mh-100">
-            <div class="card-body overflow-hidden">
-                    <?php
-                        if (isset($messages)) {
-                            foreach ($messages as $message) {
-                                echo $message->message . '<br />';
-                            }
-                        }
-                    ?>
+        <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chat</li>
+            </ol>
+        </nav>
+        <h1>Chat</h1>
+        <div class="card overflow-hidden">
+            <div class="card-body mh-100">
+                <?php
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo $message->message . '<br />';
+                    }
+                }
+                ?>
             </div>
             <div class="card-footer">
                 <form action="<?php echo URL; ?>chat/send" method="post">
@@ -47,11 +26,5 @@
                 </form>
             </div>
         </div>
-
-
-            </div>
-        </div>
-
-
     </div>
 </main>
