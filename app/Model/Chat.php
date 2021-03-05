@@ -16,6 +16,8 @@ class Chat extends Model
 
     public function list(): array
     {
+        $this->cleanOlder();
+
         $query = $this->db->prepare("SELECT id, user_id, message, timestamp FROM " . CHAT_TABLE);
         $query->execute();
         while ($row = $query->fetch()) {
