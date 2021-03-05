@@ -35,7 +35,7 @@ class Chat extends Model
     public function cleanOlder()
     {
         if ($this->amount() > 5) {
-            $query = $this->db->prepare("DELETE FROM " . USERS_TABLE . " WHERE id IS NOT NULL ORDER BY timestamp LIMIT 1");
+            $query = $this->db->prepare("DELETE FROM " . CHAT_TABLE . " WHERE id IS NOT NULL ORDER BY timestamp LIMIT 1");
             $query->execute();
         }
     }
