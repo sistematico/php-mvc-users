@@ -7,7 +7,7 @@
             </ol>
         </nav>
         <h1>Chat</h1>
-        <div class="card">
+        <div class="card my-auto">
             <div class="card-body h-100">
                 <?php
                 if (isset($messages)) {
