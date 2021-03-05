@@ -156,7 +156,12 @@ class User extends Model
 
     public function list($page = 1): object
     {
-        
+        $perPage = 3;
+        $offset = ($page-1) * $perPage;
+        $previous_page = $page - 1;
+        $next_page = $page + 1;
+        $adjacents = "2";
+
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . "");
         $query->execute();
         while ($row = $query->fetch()) {
