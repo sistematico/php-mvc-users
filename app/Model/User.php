@@ -189,7 +189,8 @@ class User extends Model
             $this->results[] = $row;
         }
 
-        return ['data' => $this->results, 'pagination' => $html];
+        return $this->results;
+        //return ['data' => $this->results, 'pagination' => $html];
     }
 
     public function delete($id)
