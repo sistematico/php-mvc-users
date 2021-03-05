@@ -14,9 +14,9 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            git clone git@github.com:sistematico/php-mvc-users.git /var/www/users.lucasbrum.net
             mkdir -p /var/www/users.lucasbrum.net/db
             cd /var/www/users.lucasbrum.net
-            git clone git@github.com:sistematico/php-mvc-users.git
             git checkout HEAD^ db/database.sqlite
             git pull
             touch /var/www/users.lucasbrum.net/db/database.sqlite
