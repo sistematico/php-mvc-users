@@ -44,6 +44,12 @@ class Chat extends Model
         }
     }
 
+    public function deleteOlder()
+    {
+        $query = $this->db->prepare("DELETE FROM " . USERS_TABLE . " ORDER BY timestamp ASC LIMIT 1");
+        $query->execute();
+    }
+
     public function amount()
     {
         $sql = "SELECT COUNT(id) AS amount FROM " . CHAT_TABLE . ";";
