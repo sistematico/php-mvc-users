@@ -154,8 +154,9 @@ class User extends Model
         return ['status' => 'error', 'class' => 'danger', 'message' => 'Undefined error.'];
     }
 
-    public function list(): object
+    public function list($page = 1): object
     {
+        
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . "");
         $query->execute();
         while ($row = $query->fetch()) {
