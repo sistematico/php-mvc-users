@@ -20,8 +20,8 @@
             <div class="card-footer">
                 <form action="<?php echo URL; ?>chat/send" method="post">
                     <div class="input-group m-0">
-                        <input name="message" type="text" class="form-control" placeholder="Fale alguma coisa..." aria-label="Fale alguma coisa..." aria-describedby="button-addon" <?php echo isset($_SESSION['logged']) ? '' : 'disabled'; ?>>
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon">Enviar</button>
+                        <input name="message" type="text" class="form-control" placeholder="<?php echo isset($_SESSION['logged']) ? 'Fale alguma coisa...' : 'Você precisa fazer login para conversar!'; ?>" aria-label="Fale alguma coisa..." aria-describedby="button-addon" <?php echo isset($_SESSION['logged']) ? '' : 'disabled'; ?>>
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon" <?php echo isset($_SESSION['logged']) ? '' : 'disabled'; ?>>Enviar</button>
                     </div>
                 </form>
             </div>
