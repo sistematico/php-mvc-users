@@ -1,6 +1,7 @@
 <main class="flex-shrink-0">
 <!--<main role="main" class="container pb-4">-->
 
+    <div class="container">
     <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
@@ -9,9 +10,8 @@
     </nav>
 
     <h1>Chat</h1>
-    <div class="card">
-        <div class="card-body">
-            <div class="bottom-0">
+    <div class="card mb-auto">
+        <div class="card-body overflow-hidden">
                 <?php
                     if (isset($messages)) {
                         foreach ($messages as $message) {
@@ -19,7 +19,6 @@
                         }
                     }
                 ?>
-            </div>
         </div>
         <div class="card-footer">
             <form action="<?php echo URL; ?>chat/send" method="post">
@@ -29,5 +28,6 @@
                 </div>
             </form>
         </div>
+    </div>
     </div>
 </main>
