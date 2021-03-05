@@ -183,15 +183,13 @@ class User extends Model
             $html .= '<a href="' . URL . 'users/list/"' . $next . '>' . $next . '</a> ';
         }
 
-        $this->results['pagination'] = $html;
-
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
-            $this->results['data'][] = $row;
+            $this->results[] = $row;
         }
 
-        return $this->results;
+        return ['data' => $this->results, 'pagination' => $html];
     }
 
     public function delete($id)
