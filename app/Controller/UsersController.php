@@ -23,7 +23,7 @@ class UsersController
     public function list($page = 1)
     {
         $User = new User();
-        $users = $User->list($page);
+        $users = $User->list(intval($page));
         $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/list.php';

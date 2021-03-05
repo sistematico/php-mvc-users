@@ -156,8 +156,8 @@ class User extends Model
 
     public function list($page): array
     {
+        $page = is_numeric($page) ?? 1;
         $html = '';
-        $page = intval($page);
         $perPage = 3;
         $offset = ($page-1) * $perPage;
         $next = ($page + 1);
