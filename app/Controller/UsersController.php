@@ -9,7 +9,11 @@ class UsersController
     public function index()
     {
         $User = new User();
-        $users = $User->list();
+
+        $data = $User->list();
+        $users = $data['data'];
+        $pagination = $data['pagination'];
+
         $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/list.php';
