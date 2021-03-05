@@ -10,7 +10,7 @@ class UsersController
     {
         $User = new User();
 
-        $users = $User->list($page);
+        $users = $User->list((int) $page);
 //        $users = $data['data'];
 //        $pagination = $data['pagination'];
 
@@ -20,7 +20,7 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function list($page)
+    public function list($page = 1)
     {
         $User = new User();
         $users = $User->list((int) $page);
