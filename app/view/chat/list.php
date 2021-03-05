@@ -12,7 +12,7 @@
                 <?php
                 if (isset($messages)) {
                     foreach ($messages as $message) {
-                        echo $message->user . ': ' . $message->message . ((isset($_SESSION['role']) && $_SESSION['role'] === 'admin') ? ' <a href="' . URL . 'chat/delete/' . $message->id . '">del</a>' : '') . '<br />';
+                        echo '[' . $message->timestamp . '] ' . $message->user . ': ' . $message->message . ((isset($_SESSION['role']) && $_SESSION['role'] === 'admin') ? ' <a href="' . URL . 'chat/delete/' . $message->id . '">del</a>' : '') . '<br />';
                     }
                 }
                 ?>
