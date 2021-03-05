@@ -154,8 +154,9 @@ class User extends Model
         return ['status' => 'error', 'class' => 'danger', 'message' => 'Undefined error.'];
     }
 
-    public function list($page = 1): array
+    public function list($page): array
     {
+        $html = '';
         $page = intval($page);
         $perPage = 3;
         $offset = ($page-1) * $perPage;
@@ -165,7 +166,7 @@ class User extends Model
         $total_no_of_pages = ceil($total_records / $perPage);
 
         if ($page > 1) {
-            $html = '<a href="' . URL . 'users/list/' . $prev . '">Anterior</a>';
+            $html .= '<a href="' . URL . 'users/list/' . $prev . '">Anterior</a>';
         }
 
         if ($page < $total_no_of_pages) {
