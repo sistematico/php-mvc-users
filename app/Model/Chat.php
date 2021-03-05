@@ -32,22 +32,10 @@ class Chat extends Model
         $query->execute([':id' => $id]);
     }
 
-    public function get($id)
-    {
-        try {
-            $query = $this->db->prepare("SELECT id, user, email, password, role, temp, valid FROM " . USERS_TABLE . " WHERE id = :id LIMIT 1");
-            $query->execute([':id' => $id]);
-            return $query->fetch();
-        } catch (PDOException $e) {
-            unset($e);
-            return false;
-        }
-    }
-
     public function cleanOlder()
     {
         if ($this->amount() > 5) {
-            $query = $this->db->prepare("DELETE FROM " . USERS_TABLE . " WHERE id IS NOT NULL ORDER BY ts ASC LIMIT 1");
+            $query = $this->db->prepare("DELETE FROM " . USERS_TABLE . " WHERE id IS NOT NULL ORDER BY timestamp LIMIT 1");
             $query->execute();
         }
     }
