@@ -156,11 +156,11 @@ class User extends Model
 
     public function list($page = 1): array
     {
+        $page = intval($page);
         $perPage = 3;
         $offset = ($page-1) * $perPage;
-        $next = $page + 1;
-        $prev = $page + 1;
-
+        $next = ($page + 1);
+        $prev = ($page - 1);
         $total_records = $this->amount();
         $total_no_of_pages = ceil($total_records / $perPage);
 
