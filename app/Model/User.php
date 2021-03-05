@@ -188,7 +188,7 @@ class User extends Model
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
-            $this->results['data'] = $row;
+            $this->results['data'][] = $row;
         }
 
         return $this->results;
