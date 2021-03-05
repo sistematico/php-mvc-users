@@ -7,6 +7,10 @@
         </ol>
     </nav>
 
+
+
+<?php echo var_dump($users['data'][0]); ?>
+
     <h1>Users</h1>
     <?php if (isset($result['message'])) { ?>
         <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
@@ -66,8 +70,6 @@
         </tbody>
     </table>
     </div>
-
-    <?php var_dump($users); ?>
 
     <?php echo isset($amount) ? "<p><small>Users: {$amount}</small></p>" : ''; ?>
     <?php } else { ?>
