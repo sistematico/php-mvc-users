@@ -183,13 +183,13 @@ class User extends Model
             $html .= '<a href="' . URL . 'users/list/"' . $next . '>' . $next . '</a> ';
         }
 
+        $this->results[0]['html'] = $html;
+
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
         }
-
-        $this->results['html'] = $html;
 
         return (object) $this->results;
     }
