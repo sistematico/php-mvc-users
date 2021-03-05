@@ -14,9 +14,11 @@ CREATE TABLE IF NOT EXISTS {{USERS_TABLE}} (
 CREATE TABLE IF NOT EXISTS {{CHAT_TABLE}} (
     "id"		INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id"	INTEGER,
+    "user"      TEXT,
     "message"   TEXT,
     "timestamp" INTEGER,
-    FOREIGN KEY(user_id) REFERENCES {{USERS_TABLE}}(id)
+    FOREIGN KEY(user_id) REFERENCES {{USERS_TABLE}}(id),
+    FOREIGN KEY(user) REFERENCES {{USERS_TABLE}}(user)
 );
 
 INSERT OR IGNORE INTO {{USERS_TABLE}} (id, user, email, role, password, temp, valid, access, created) VALUES (1, 'admin', 'admin@google.com', 'admin', '$2y$10$uiPdSuBzk7v4Gf7xb6O9r.w9oVtyh1fKXXl2H/aH/0ulVd3o6YrIa', '{{TEMPID}}', 1, null, {{CREATED}});

@@ -10,15 +10,16 @@ class Chat extends Model
 
     public function send($message)
     {
-        $query = $this->db->prepare("INSERT INTO " . CHAT_TABLE . " (user_id, message, timestamp) VALUES (:user_id, :message, :timestamp);");
-        $query->execute([':user_id' => 1, ':message' => $message, ':timestamp' => time()]);
+        if (isset($_SESSION['user']) && isset($_SESSION['id'])) {
+        $query = $this->db->prepare("INSERT INTO " . CHAT_TABLE . " (user_id, user, message, timestamp) VALUES (:user_id, :user, :message, :timestamp);");
+        $query->execute([':user_id' => $_SESSION['user'], ':user' => $_SESSION['user'], ':message' => $message, ':timestamp' => time()]);
     }
 
     public function list(): array
     {
         $this->cleanOlder();
 
-        $query = $this->db->prepare("SELECT id, user_id, message, timestamp FROM " . CHAT_TABLE);
+        $query = $this->db->prepare("SELECT id, user_id, user, message, timestamp FROM " . CHAT_TABLE);
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
