@@ -6,7 +6,7 @@ use App\Model\User;
 
 class UsersController
 {
-    public function index($page)
+    public function index($page = 1)
     {
         $User = new User();
 
@@ -20,7 +20,7 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function list($page)
+    public function list($page = 1)
     {
         $User = new User();
         $users = $User->list((int)$page);
