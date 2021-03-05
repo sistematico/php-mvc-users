@@ -167,7 +167,9 @@ class User extends Model
 
         $second_last = $total_no_of_pages - 1; // total pages minus 1
 
-        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . "");
+        //"SELECT * FROM `pagination_table` LIMIT $offset, $total_records_per_page"
+
+        $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
