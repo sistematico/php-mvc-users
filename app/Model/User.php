@@ -157,23 +157,18 @@ class User extends Model
     public function list($page): array
     {
         //$page = !isset($page) ? 1 : (int) $page;
-        $page = $page;
         $html = '';
         $perPage = 3;
         $offset = ($page-1) * $perPage;
-
-        $next = ($page + 2);
-        $prev = ($page - 2);
-
         $total_records = $this->amount();
         $total_no_of_pages = ceil($total_records / $perPage);
 
         if ($page > 1) {
-            $html .= '<a href="' . URL . 'users/list/' . --$prev . '">Anterior</a>';
+            $html .= '<a href="' . URL . 'users/list/' . --$page . '">Anterior</a>';
         }
 
         if ($page < $total_no_of_pages) {
-            $html .= '<a href="' . URL . 'users/list/"' . $next . '>Próximo</a> ';
+            $html .= '<a href="' . URL . 'users/list/"' . ++$page . '">Próximo</a> ';
         }
 
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
