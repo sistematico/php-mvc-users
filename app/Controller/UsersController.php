@@ -6,11 +6,11 @@ use App\Model\User;
 
 class UsersController
 {
-    public function index($page = 1)
+    public function index($page)
     {
         $User = new User();
 
-        $users = $User->list($page);
+        $users = $User->list((int)$page);
 //        $users = $data['data'];
 //        $pagination = $data['pagination'];
 
@@ -20,10 +20,10 @@ class UsersController
         require APP . 'view/_templates/footer.php';
     }
 
-    public function list($page = 1)
+    public function list($page)
     {
         $User = new User();
-        $users = $User->list($page);
+        $users = $User->list((int)$page);
         $amount = $User->amount();
         require APP . 'view/_templates/header.php';
         require APP . 'view/users/list.php';
