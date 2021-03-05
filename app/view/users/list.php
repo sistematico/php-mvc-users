@@ -7,8 +7,6 @@
         </ol>
     </nav>
 
-<?php echo var_dump($users['pagination']); ?>
-
     <h1>Users</h1>
     <?php if (isset($result['message'])) { ?>
         <div class="alert alert-<?php echo $result['class'] ?? 'primary'; ?>" role="alert"><?php echo $result['message']; ?></div>
@@ -68,6 +66,8 @@
         </tbody>
     </table>
     </div>
+
+    <?php echo $users['pagination'] ?? ''; ?>
 
     <?php echo isset($amount) ? "<p><small>Users: {$amount}</small></p>" : ''; ?>
     <?php } else { ?>
