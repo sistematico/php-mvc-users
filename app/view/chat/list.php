@@ -1,5 +1,5 @@
 <main class="flex-shrink-0">
-    <div class="container">
+    <div class="container overflow-hidden">
         <nav aria-label="breadcrumb" class="mt-2" style="--bs-breadcrumb-divider: '>';">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?php echo URL; ?>">Home</a></li>
@@ -7,8 +7,8 @@
             </ol>
         </nav>
         <h1>Chat</h1>
-        <div class="card overflow-hidden">
-            <div class="card-body mh-100">
+        <div class="card h-50 overflow-auto">
+            <div class="card-body">
                 <?php
                 if (isset($messages)) {
                     foreach ($messages as $message) {
