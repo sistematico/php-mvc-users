@@ -165,22 +165,11 @@ class User extends Model
         $total_no_of_pages = ceil($total_records / $perPage);
 
         if ($page > 1) {
-            $html = '<a href="' . URL . 'users/list/' . $prev . '"><</a> ';
-            $html .= '<a href="' . URL . 'users/list/1">1</a> ';
-        } else {
-            $html = '< ';
+            $html = '<a href="' . URL . 'users/list/' . $prev . '">Anterior</a>';
         }
 
-        if ($total_no_of_pages > $page) {
-            $html .= '<a href="' . URL . 'users/list/"'. $next . '>'. $next . '</a> ';
-        }
-
-        if ($total_no_of_pages == $page) {
-            if ($prev > 0 && $prev < $page) {
-                $html .= '<a href="' . URL . 'users/list/"' . $prev . '>' . $prev . '</a> ';
-            }
-
-            $html .= '<a href="' . URL . 'users/list/"' . $next . '>' . $next . '</a> ';
+        if ($page < $total_no_of_pages) {
+            $html .= '<a href="' . URL . 'users/list/"' . $next . '>Próximo</a> ';
         }
 
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
@@ -189,10 +178,7 @@ class User extends Model
             $this->results[] = (array) $row;
         }
 
-        $tmparr = ['data' => $this->results, 'pagination' => $html];
-
-        return $tmparr;
-        //return ['data' => $this->results, 'pagination' => $html];
+        return ['data' => $this->results, 'pagination' => $html];
     }
 
     public function delete($id)
