@@ -10,9 +10,9 @@ class UsersController
     {
         $User = new User();
 
-        $data = $User->list();
-        $users = $data['data'];
-        $pagination = $data['pagination'];
+        $users = $User->list();
+//        $users = $data['data'];
+//        $pagination = $data['pagination'];
 
         $amount = $User->amount();
         require APP . 'view/_templates/header.php';

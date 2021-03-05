@@ -32,7 +32,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user) { ?>
+            <?php foreach ($users['data'] as $user) { ?>
                 <tr>
                     <th scope="row"><?php if (isset($user['id'])) echo htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?></th>
                     <td><?php if (isset($user['user'])) echo htmlspecialchars($user['user'], ENT_QUOTES, 'UTF-8'); ?></td>
@@ -67,7 +67,7 @@
     </table>
     </div>
 
-    <?php var_dump($user); ?>
+    <?php var_dump($users); ?>
 
     <?php echo isset($amount) ? "<p><small>Users: {$amount}</small></p>" : ''; ?>
     <?php } else { ?>
