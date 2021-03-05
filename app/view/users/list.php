@@ -7,9 +7,7 @@
         </ol>
     </nav>
 
-
-
-<?php echo var_dump($users['data'][0]); ?>
+<?php echo var_dump($users['pagination']); ?>
 
     <h1>Users</h1>
     <?php if (isset($result['message'])) { ?>

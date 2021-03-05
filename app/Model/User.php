@@ -186,14 +186,12 @@ class User extends Model
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
-            $this->results[] = $row;
+            $this->results[] = (array) $row;
         }
 
-        $tmparr = ['data', $this->results];
-        $tmparr2 = ['pagination', $html];
-        $tmparr3 = ['data' => $tmparr, 'pagination' => $tmparr2];
+        $tmparr = ['data' => $this->results, 'pagination' => $html];
 
-        return $tmparr3;
+        return $tmparr;
         //return ['data' => $this->results, 'pagination' => $html];
     }
 
