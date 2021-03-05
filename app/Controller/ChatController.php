@@ -30,4 +30,21 @@ class ChatController
         require APP . 'view/chat/list.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    public function isLogged()
+    {
+        if (isset($_SESSION['logged'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isAdmin()
+    {
+        if (isset($_SESSION['logged']) && isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+            return true;
+        }
+        return false;
+    }
 }
