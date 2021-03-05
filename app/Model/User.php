@@ -172,7 +172,8 @@ class User extends Model
         }
 
         if ($page < $total_no_of_pages) {
-            $html .= '<a href="' . URL . 'users/list/"' . $next . '">Próximo</a> ';
+            $html .= '<a href="' . URL . 'users/list/' . $next . '">Próximo</a> ';
+            //$html .= '<a href="' . URL . 'users/list/1">Próximo</a> ';
         }
 
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
