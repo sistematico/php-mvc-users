@@ -154,7 +154,7 @@ class User extends Model
         return ['status' => 'error', 'class' => 'danger', 'message' => 'Undefined error.'];
     }
 
-    public function list($page = 1): object
+    public function list($page = 1): array
     {
         $perPage = 3;
         $offset = ($page-1) * $perPage;
