@@ -67,7 +67,9 @@
     </table>
     </div>
 
-    <?php var_dump($user->html); ?>
+    <?php
+        $teste = (array) $user;
+        var_dump( $teste); ?>
 
     <?php echo isset($amount) ? "<p><small>Users: {$amount}</small></p>" : ''; ?>
     <?php } else { ?>
