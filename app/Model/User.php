@@ -158,22 +158,39 @@ class User extends Model
     {
         $perPage = 3;
         $offset = ($page-1) * $perPage;
-        $previous_page = $page - 1;
-        $next_page = $page + 1;
-        $adjacents = "2";
+        $next = $page + 1;
+        $prev = $page + 1;
 
         $total_records = $this->amount();
         $total_no_of_pages = ceil($total_records / $perPage);
 
-        $second_last = $total_no_of_pages - 1; // total pages minus 1
+        if ($page > 1) {
+            $html = '<a href="' . URL . 'users/list/' . $prev . '"><</a> ';
+            $html .= '<a href="' . URL . 'users/list/1">1</a> ';
+        } else {
+            $html = '< ';
+        }
 
-        //"SELECT * FROM `pagination_table` LIMIT $offset, $total_records_per_page"
+        if ($total_no_of_pages > $page) {
+            $html .= '<a href="' . URL . 'users/list/"'. $next . '>'. $next . '</a> ';
+        }
+
+        if ($total_no_of_pages == $page) {
+            if ($prev > 0 && $prev < $page) {
+                $html .= '<a href="' . URL . 'users/list/"' . $prev . '>' . $prev . '</a> ';
+            }
+
+            $html .= '<a href="' . URL . 'users/list/"' . $next . '>' . $next . '</a> ';
+        }
 
         $query = $this->db->prepare("SELECT id, user, email, role, password, temp, valid, access, created FROM " . USERS_TABLE . " LIMIT " . $offset . ", " . $perPage);
         $query->execute();
         while ($row = $query->fetch()) {
             $this->results[] = $row;
         }
+
+        $this->results['html'] = $html;
+
         return (object) $this->results;
     }
 
